@@ -184,7 +184,7 @@ const AccountsDetail = ({ navigation, route }) => {
 
   const bs = createRef();
   let fall = new Animated.Value(1);
-
+  console.warn("ldkfksd");
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <BottomSheet
