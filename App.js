@@ -1,15 +1,18 @@
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import RootStackScreen from "./navigation/RootStack";
 import { ContextProvider } from "./Contexts/ContextProvider";
+import { View } from "react-native-animatable";
 
 export default function App() {
   return (
     <ContextProvider>
+      {/* <StatusBar style="light" /> */}
       <SafeAreaProvider>
-        <StatusBar style="#00adef" hidden={true} />
+        {/* <View> */}
         <RootStackScreen />
+        {/* </View> */}
       </SafeAreaProvider>
     </ContextProvider>
   );

@@ -64,6 +64,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 8,
   },
+
+  // newHeader
+  textContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textName: { fontSize: 25, marginBottom: 15, fontStyle: "bold" },
 });
 
 export default styles;

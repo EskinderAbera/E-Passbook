@@ -7,6 +7,7 @@ import SignInScreen from "../screens/SignInScreen";
 import Home from "../screens/Home";
 import AccountsDetail from "../screens/AccountDetail";
 import RootTab from "./RootTab";
+import { ProductsList } from "../screens/ProductList";
 
 const Stack = createStackNavigator();
 
@@ -22,8 +23,7 @@ const RootStackScreen = () => {
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="Dashboard" component={RootTab} />
-        {/* <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Account" component={AccountsDetail} /> */}
+        <Stack.Screen name="ProductList" component={ProductsList} />
       </Stack.Navigator>
     </NavigationContainer>
   );
