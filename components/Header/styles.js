@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 16,
+    // paddingTop: 16,
     paddingLeft: 16,
   },
   accountContainer: {

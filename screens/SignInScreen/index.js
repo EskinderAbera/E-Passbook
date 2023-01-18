@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-  StyleSheet,
-  StatusBar,
-  Image,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -19,6 +9,8 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import axios from "axios";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
+import Loading from "../../components/Loader";
+import { StatusBar } from "expo-status-bar";
 
 const SignInScreen = ({ navigation }) => {
   const { handleUser, handleAccounts } = useStateContext();
@@ -113,8 +105,11 @@ const SignInScreen = ({ navigation }) => {
       }
     }
   };
-  return (
+  return loading ? (
+    <Loading msg="Please... Give us a moment" />
+  ) : (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#00adef" style="light" />
       <View style={styles.header}>
         <Image source={cooplogo} style={styles.cooplogo} />
       </View>
@@ -185,50 +180,47 @@ const SignInScreen = ({ navigation }) => {
             Forgot password?
           </Text>
         </TouchableOpacity>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <View style={styles.button}>
-            {error && (
-              <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
-                <Text>wrong username!</Text>
-              </Animatable.View>
-            )}
-            <TouchableOpacity style={styles.signIn} onPress={loginHandle}>
-              <LinearGradient
-                colors={["#00a3ef", "#00adef"]}
-                style={styles.signIn}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      color: COLORS.white,
-                    },
-                  ]}
-                >
-                  Sign In
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen1")}
-              style={[styles.signIn, styles.signup]}
+        <View style={styles.button}>
+          {error && (
+            <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
+              <Text>wrong username!</Text>
+            </Animatable.View>
+          )}
+          <TouchableOpacity style={styles.signIn} onPress={loginHandle}>
+            <LinearGradient
+              colors={["#00a3ef", "#00adef"]}
+              style={styles.signIn}
             >
               <Text
                 style={[
                   styles.textSign,
                   {
-                    color: COLORS.primary,
+                    color: COLORS.white,
                   },
                 ]}
               >
-                Sign Up
+                Sign In
               </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+            </LinearGradient>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUpScreen1")}
+            style={[styles.signIn, styles.signup]}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.primary,
+                },
+              ]}
+            >
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </Animatable.View>
     </View>
   );

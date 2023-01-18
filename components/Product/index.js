@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   },
   thumb: {
     height: 260,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
+    // borderTopLeftRadius: 10,
+    // borderTopRightRadius: 10,
     width: "100%",
   },
   infoContainer: {
@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
   },
-  price: {
-    fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-  },
+  // price: {
+  //   fontSize: 16,
+  //   fontWeight: "600",
+  //   marginBottom: 8,
+  // },
 });

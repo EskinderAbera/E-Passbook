@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ImageBackground,
+} from "react-native";
 import { Product } from "../../components/Product";
 
 export function ProductsList({ navigation }) {
@@ -38,23 +45,32 @@ export function ProductsList({ navigation }) {
   ];
 
   return (
-    <FlatList
-      style={styles.productsList}
-      contentContainerStyle={styles.productsListContainer}
-      keyExtractor={(item) => item.id.toString()}
-      data={products}
-      renderItem={renderProduct}
-    />
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
+        <Image source={{ uri: products[0].image }} style={styles.image} />
+        <Text style={{ margin: 10 }}>Hello</Text>
+      </View>
+      <View style={styles.innerContainer}>
+        <Image source={{ uri: products[0].image }} style={styles.image} />
+        <Text style={{ margin: 10 }}>Hello</Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  productsList: {
-    backgroundColor: "#eeeeee",
+  container: {
+    flex: 1,
+    flexDirection: "column",
   },
-  productsListContainer: {
-    backgroundColor: "#eeeeee",
-    paddingVertical: 8,
-    marginHorizontal: 8,
+  innerContainer: {
+    // flex: 1,
+    margin: 20,
+    flexDirection: "row",
+    backgroundColor: "red",
+  },
+  image: {
+    height: 100,
+    width: 100,
   },
 });

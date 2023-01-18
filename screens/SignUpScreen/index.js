@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  ActivityIndicator,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -16,6 +9,7 @@ import styles from "./styles";
 import cooplogo from "../../assets/icons/cooplogo.png";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { COLORS } from "../../constants/theme";
+import Loading from "../../components/Loader";
 
 const SignUpScreen = ({ navigation, route }) => {
   const { Phonenumber } = route.params;
@@ -111,7 +105,9 @@ const SignUpScreen = ({ navigation, route }) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  return (
+  return showLoading ? (
+    <Loading msg="We're getting you Onboard" />
+  ) : (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
@@ -206,18 +202,15 @@ const SignUpScreen = ({ navigation, route }) => {
                 <Text>Your password won't match!</Text>
               </Animatable.View>
             )}
-            {showLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
-                <LinearGradient
-                  colors={[COLORS.primary, COLORS.primary]}
-                  style={styles.signIn}
-                >
-                  <Text style={[styles.textSign, styles.signup]}>Sign Up</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
+
+            <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
+              <LinearGradient
+                colors={[COLORS.primary, COLORS.primary]}
+                style={styles.signIn}
+              >
+                <Text style={[styles.textSign, styles.signup]}>Sign Up</Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </View>
       </Animatable.View>

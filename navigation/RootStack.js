@@ -4,8 +4,6 @@ import OTPVerification from "../screens/OTPVerification";
 import SignUpScreen1 from "../screens/SignUpSceen1";
 import SignUpScreen from "../screens/SignUpScreen";
 import SignInScreen from "../screens/SignInScreen";
-import Home from "../screens/Home";
-import AccountsDetail from "../screens/AccountDetail";
 import RootTab from "./RootTab";
 import { ProductsList } from "../screens/ProductList";
 

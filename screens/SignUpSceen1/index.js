@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -18,6 +17,7 @@ import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import PropTypes from "prop-types";
+import Loading from "../../components/Loader";
 
 const SignUpScreen1 = ({ navigation }) => {
   const { handleName } = useStateContext();
@@ -70,7 +70,9 @@ const SignUpScreen1 = ({ navigation }) => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading msg="Please... Give us a moment" />
+  ) : (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
@@ -138,45 +140,40 @@ const SignUpScreen1 = ({ navigation }) => {
 
           <View style={styles.button}>
             {wrongNumber && <Text>Wrong Phone Number!</Text>}
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <>
-                <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
-                  <LinearGradient
-                    colors={["#00abef", COLORS.primary]}
-                    style={styles.signIn}
-                  >
-                    <Text
-                      style={[
-                        styles.textSign,
-                        {
-                          color: COLORS.white,
-                        },
-                      ]}
-                    >
-                      Sign Up
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("SignInScreen")}
-                  style={[styles.signIn, styles.signin]}
+            <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
+              <LinearGradient
+                colors={["#00abef", COLORS.primary]}
+                style={styles.signIn}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: COLORS.white,
+                    },
+                  ]}
                 >
-                  <Text
-                    style={[
-                      styles.textSign,
-                      {
-                        color: COLORS.primary,
-                      },
-                    ]}
-                  >
-                    Sign In
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
+                  Sign Up
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignInScreen")}
+              style={[styles.signIn, styles.signin]}
+            >
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: COLORS.primary,
+                  },
+                ]}
+              >
+                Sign In
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </Animatable.View>

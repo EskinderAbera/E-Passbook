@@ -28,7 +28,7 @@ const Header = ({ navigation, accounts }) => {
         ref={refRBSheet}
         height={400}
         closeOnDragDown={true}
-        closeOnPressMask={false}
+        closeOnPressMask={true}
         customStyles={{
           wrapper: {
             backgroundColor: "rgba(33, 26, 27, 0.35)",

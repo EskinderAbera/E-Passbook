@@ -22,14 +22,15 @@ const styles = StyleSheet.create({
   },
   productContainer: {
     width: width,
-    height: 230,
+    // width: "100%",
+    // height: "100%",
     alignItems: "center",
     justifyContent: "center",
   },
   images: {
-    width: "200%",
-    height: "100%",
-    resizeMode: "contain",
+    width: width,
+    height: "70%",
+    // resizeMode: "contain",
   },
   accountContainer: {
     paddingHorizontal: 16,

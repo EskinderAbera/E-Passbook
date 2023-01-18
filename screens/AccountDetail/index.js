@@ -7,6 +7,7 @@ import TransactionInfo from "../../components/TransactionInfo";
 import Header from "../../components/Header";
 import styles from "./styles";
 import Animated from "react-native-reanimated";
+import { StatusBar } from "expo-status-bar";
 
 const AccountsDetail = ({ navigation, route }) => {
   const { accounts } = route.params;
@@ -73,6 +74,7 @@ const AccountsDetail = ({ navigation, route }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <StatusBar backgroundColor="#00adef" style="light" />
       <Animated.View>
         <Header navigation={navigation} accounts={accounts} />
         <View>
