@@ -15,14 +15,15 @@ import cooplogo from "../../assets/icons/cooplogo.png";
 import Ethiopia from "../../assets/icons/Ethiopia.png";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import PropTypes from "prop-types";
 import Loading from "../../components/Loader";
+import { validatePhone } from "../../features/phoneVerification/phoneSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 const SignUpScreen1 = ({ navigation }) => {
-  const { handleName } = useStateContext();
   const [wrongNumber, setWrongNumber] = useState(false);
   const [loading, setLoading] = useState(false);
+  const phone = useSelector((state) => state.phone);
+  const dispatch = useDispatch();
 
   const [data, setData] = useState({
     account: "",
@@ -51,28 +52,17 @@ const SignUpScreen1 = ({ navigation }) => {
     if (data.phone < 9) {
       setWrongNumber(true);
     } else {
-      setLoading(true);
-      try {
-        const response = await axios.post(
-          "https://auth-atrt.onrender.com/checkphone",
-          { Phonenumber: data.phone }
-        );
-        handleName(response.data.fullName);
-        setLoading(false);
-        navigation.navigate("OTPVerification", {
-          Phonenumber: data.phone,
-          type: "SignUp",
-        });
-      } catch (error) {
-        setLoading(false);
-        console.log(error);
+      dispatch(validatePhone(data.phone));
+      if (!phone.loading && phone.fullName.length > 0) {
+        console.log("hello");
+        navigation.navigate("SignUpScreen");
       }
     }
   };
 
-  return loading ? (
-    <Loading msg="Please... Give us a moment" />
-  ) : (
+  phone.loading &&  return <Loading msg="Please... give us a moment!" />
+
+  return  (
     <View style={styles.container}>
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
@@ -181,8 +171,8 @@ const SignUpScreen1 = ({ navigation }) => {
   );
 };
 
-SignUpScreen1.propTypes = {
-  Phonenumber: PropTypes.string,
-};
+// SignUpScreen1.propTypes = {
+//   Phonenumber: PropTypes.string,
+// };
 
 export default SignUpScreen1;

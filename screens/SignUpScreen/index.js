@@ -13,7 +13,7 @@ import Loading from "../../components/Loader";
 
 const SignUpScreen = ({ navigation, route }) => {
   const { Phonenumber } = route.params;
-  const { name } = useStateContext();
+  // const { name } = useStateContext();
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -72,37 +72,36 @@ const SignUpScreen = ({ navigation, route }) => {
   };
 
   const handleSignUp = async () => {
-    if (
-      (data.confirm_password !== data.password) |
-      (data.password.length < 4)
-    ) {
-      setPasswordMismatch(true);
-    } else if (data.username.length < 4) {
-      setShowWrongUsername(true);
-    } else {
-      setShowLoading(true);
-      try {
-        const response = await axios.post(
-          "https://auth-atrt.onrender.com/signup",
-          {
-            Phonenumber: Phonenumber,
-            username: data.username,
-            password: data.password,
-          }
-        );
-        setShowLoading(false);
-        // navigation.navigate("SignInScreen");
-      } catch (error) {
-        setShowLoading(false);
-        console.log(error);
-      }
-    }
+    // if (
+    //   (data.confirm_password !== data.password) |
+    //   (data.password.length < 4)
+    // ) {
+    //   setPasswordMismatch(true);
+    // } else if (data.username.length < 4) {
+    //   setShowWrongUsername(true);
+    // } else {
+    //   setShowLoading(true);
+    //   try {
+    //     const response = await axios.post(
+    //       "https://auth-atrt.onrender.com/signup",
+    //       {
+    //         Phonenumber: Phonenumber,
+    //         username: data.username,
+    //         password: data.password,
+    //       }
+    //     );
+    //     setShowLoading(false);
+    //     // navigation.navigate("SignInScreen");
+    //   } catch (error) {
+    //     setShowLoading(false);
+    //     console.log(error);
+    //   }
+    // }
   };
 
   function Capitalize(str) {
-    const name = str.toLowerCase();
-
-    return name.charAt(0).toUpperCase() + name.slice(1);
+    // const name = str.toLowerCase();
+    // return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   return showLoading ? (
@@ -114,9 +113,10 @@ const SignUpScreen = ({ navigation, route }) => {
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View>
-          <Text style={styles.text_header}>{`Hello, ${Capitalize(
-            name.split(" ").shift()
-          )}`}</Text>
+          <Text style={styles.text_header}>{`Hello, ${
+            Capitalize()
+            // name.split(" ").shift()
+          }`}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.text_footer}>Username</Text>
