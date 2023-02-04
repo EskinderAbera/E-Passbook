@@ -16,14 +16,14 @@ import Ethiopia from "../../assets/icons/Ethiopia.png";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
-import { validatePhone } from "../../features/phoneVerification/phoneSlice";
-import { useSelector, useDispatch } from "react-redux";
+import baseUrl from "../../constants/url";
+import { StatusBar } from "expo-status-bar";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const SignUpScreen1 = ({ navigation }) => {
   const [wrongNumber, setWrongNumber] = useState(false);
   const [loading, setLoading] = useState(false);
-  const phone = useSelector((state) => state.phone);
-  const dispatch = useDispatch();
+  const { handleName } = useStateContext();
 
   const [data, setData] = useState({
     account: "",
@@ -49,21 +49,31 @@ const SignUpScreen1 = ({ navigation }) => {
   };
 
   const handleSignUp = async () => {
-    if (data.phone < 9) {
+    if ((data.phone.length < 9) | (data.phone.length > 10)) {
       setWrongNumber(true);
     } else {
-      dispatch(validatePhone(data.phone));
-      if (!phone.loading && phone.fullName.length > 0) {
-        console.log("hello");
-        navigation.navigate("SignUpScreen");
+      setWrongNumber(false);
+      setLoading(true);
+      try {
+        const response = await axios.post(`${baseUrl}/checkphone`, {
+          phonenumber: data.phone,
+        });
+
+        handleName(response.data["fullName"]);
+        setLoading(false);
+        navigation.navigate("SignUpScreen", { Phonenumber: data.phone });
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
       }
     }
   };
 
-  phone.loading &&  return <Loading msg="Please... give us a moment!" />
-
-  return  (
+  return loading ? (
+    <Loading msg="Please... give us a moment!" />
+  ) : (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#00adef" hideTransitionAnimation="slide" />
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
       </View>
@@ -170,9 +180,5 @@ const SignUpScreen1 = ({ navigation }) => {
     </View>
   );
 };
-
-// SignUpScreen1.propTypes = {
-//   Phonenumber: PropTypes.string,
-// };
 
 export default SignUpScreen1;

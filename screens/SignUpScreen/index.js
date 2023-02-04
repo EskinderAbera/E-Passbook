@@ -10,10 +10,12 @@ import cooplogo from "../../assets/icons/cooplogo.png";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
+import { useEffect } from "react";
+import SignUpModal from "../../components/SignupModal";
 
 const SignUpScreen = ({ navigation, route }) => {
   const { Phonenumber } = route.params;
-  // const { name } = useStateContext();
+  const { name } = useStateContext();
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -22,10 +24,11 @@ const SignUpScreen = ({ navigation, route }) => {
     secureTextEntry: true,
     confirm_secureTextEntry: true,
   });
-
   const [isPasswordMismatch, setPasswordMismatch] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [showWrongUsername, setShowWrongUsername] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const textInputChange = (val) => {
     if (val.length >= 4) {
@@ -71,52 +74,68 @@ const SignUpScreen = ({ navigation, route }) => {
     });
   };
 
+  useEffect(() => {
+    if (
+      (data.username.length >= 4) &
+      (data.confirm_password.length > 4) &
+      (data.password.length > 4)
+    ) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [data.username, data.password, data.confirm_password]);
+
   const handleSignUp = async () => {
-    // if (
-    //   (data.confirm_password !== data.password) |
-    //   (data.password.length < 4)
-    // ) {
-    //   setPasswordMismatch(true);
-    // } else if (data.username.length < 4) {
-    //   setShowWrongUsername(true);
-    // } else {
-    //   setShowLoading(true);
-    //   try {
-    //     const response = await axios.post(
-    //       "https://auth-atrt.onrender.com/signup",
-    //       {
-    //         Phonenumber: Phonenumber,
-    //         username: data.username,
-    //         password: data.password,
-    //       }
-    //     );
-    //     setShowLoading(false);
-    //     // navigation.navigate("SignInScreen");
-    //   } catch (error) {
-    //     setShowLoading(false);
-    //     console.log(error);
-    //   }
-    // }
+    if (
+      (data.confirm_password !== data.password) |
+      (data.password.length < 4)
+    ) {
+      setPasswordMismatch(true);
+    } else if (data.username.length < 4) {
+      setShowWrongUsername(true);
+    } else {
+      setShowLoading(true);
+
+      try {
+        await axios.post("https://auth-atrt.onrender.com/signup", {
+          phonenumber: Phonenumber,
+          username: data.username,
+          password: data.password,
+        });
+        setShowLoading(false);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigation.navigate("SignInScreen");
+        }, 3000);
+      } catch (error) {
+        setShowLoading(false);
+        console.log(error);
+        setShowModal(false);
+      }
+    }
   };
 
   function Capitalize(str) {
-    // const name = str.toLowerCase();
-    // return name.charAt(0).toUpperCase() + name.slice(1);
+    const name = str.toLowerCase();
+    return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   return showLoading ? (
     <Loading msg="We're getting you Onboard" />
   ) : (
     <View style={styles.container}>
+      {showModal && <SignUpModal navigation={navigation} />}
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
       </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+      <Animatable.View
+        animation={showModal ? "" : "fadeInUpBig"}
+        style={styles.footer}
+      >
         <View>
-          <Text style={styles.text_header}>{`Hello, ${
-            Capitalize()
-            // name.split(" ").shift()
-          }`}</Text>
+          <Text style={styles.text_header}>{`Hello, ${Capitalize(name)}`}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.text_footer}>Username</Text>
@@ -203,12 +222,28 @@ const SignUpScreen = ({ navigation, route }) => {
               </Animatable.View>
             )}
 
-            <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={handleSignUp}
+              disabled={disable}
+            >
               <LinearGradient
-                colors={[COLORS.primary, COLORS.primary]}
+                colors={
+                  disable
+                    ? [COLORS.darkgray, COLORS.darkgray]
+                    : [COLORS.primary, COLORS.primary]
+                }
                 style={styles.signIn}
               >
-                <Text style={[styles.textSign, styles.signup]}>Sign Up</Text>
+                <Text
+                  style={
+                    disable
+                      ? [styles.textSign, { color: COLORS.backgroundDark }]
+                      : [styles.textSign, styles.signup]
+                  }
+                >
+                  Sign Up
+                </Text>
               </LinearGradient>
             </TouchableOpacity>
           </View>

@@ -1,12 +1,11 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import RootStackScreen from "./navigation/RootStack";
-import { Provider } from "react-redux";
-import store from "./store";
+import { ContextProvider } from "./Contexts/ContextProvider";
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <ContextProvider>
       <SafeAreaView
         style={{
           flex: 1,
@@ -14,6 +13,6 @@ export default function App() {
       >
         <RootStackScreen />
       </SafeAreaView>
-    </Provider>
+    </ContextProvider>
   );
 }
