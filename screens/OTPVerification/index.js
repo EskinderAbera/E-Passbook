@@ -78,7 +78,9 @@ const OTPVerification = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <ScrollView>
           {renderHeader()}
           <SafeAreaView style={styles.root}>

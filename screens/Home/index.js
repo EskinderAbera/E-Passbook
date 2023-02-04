@@ -12,7 +12,6 @@ import ShowBalance from "../../components/ShowBalance";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
 import { StatusBar } from "expo-status-bar";
-import { ImageBackground } from "react-native";
 
 let CurrentSlide = 0;
 let IntervalTime = 4000;
@@ -28,6 +27,7 @@ const Home = ({ navigation }) => {
     };
   }, []);
 
+  console.log(accounts);
   const flatList = createRef();
 
   const [product, setProduct] = useState({
@@ -114,7 +114,7 @@ const Home = ({ navigation }) => {
           );
         })}
       </ScrollView>
-      <StatusBar />
+      {/* <StatusBar /> */}
     </View>
   );
 };

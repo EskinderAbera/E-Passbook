@@ -20,7 +20,7 @@ const HomeInfo = ({ navigation }) => {
         ref={refRBSheet}
         height={500}
         closeOnDragDown={true}
-        closeOnPressMask={false}
+        closeOnPressMask={true}
         customStyles={{
           wrapper: {
             backgroundColor: "rgba(33, 26, 27, 0.35)",
@@ -30,7 +30,9 @@ const HomeInfo = ({ navigation }) => {
           },
         }}
       >
-        {data.isClicked && <BottomContent type={data.type} />}
+        {data.isClicked && (
+          <BottomContent type={data.type} navigation={navigation} />
+        )}
       </RBSheet>
       <View style={styles.innerContainer}>
         <TouchableOpacity
@@ -52,7 +54,7 @@ const HomeInfo = ({ navigation }) => {
         <Line />
         <TouchableOpacity
           onPress={() => {
-            setData({ ...data, isClicked: true, type: "ATM" });
+            setData({ ...data, isClicked: true, type: "Statement" });
             refRBSheet.current.open();
           }}
         >

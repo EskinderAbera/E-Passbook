@@ -8,17 +8,17 @@ import styles from "./styles";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-const BottomContent = ({ type }) => {
-  if (type === "ATM") {
+const BottomContent = ({ type, navigation }) => {
+  if (type === "Statement") {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const [isChanged, setIsChanged] = useState("");
+    const [email, setEmail] = useState("");
 
     const StartDates = (event, selectedDate) => {
       const currentDate = selectedDate;
       setShow(false);
-
       setStartDate(currentDate);
     };
 
@@ -45,7 +45,7 @@ const BottomContent = ({ type }) => {
             placeholder="Your Email"
             style={styles.textInput}
             autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
+            onChangeText={(val) => setEmail(val)}
           />
         </View>
         <Text style={[styles.text_footer, { marginTop: 35 }]}>Start date</Text>
@@ -82,7 +82,10 @@ const BottomContent = ({ type }) => {
           </View>
         </TouchableOpacity>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.signIn}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => navigation.navigate("OTPVerification", { type: "" })}
+          >
             <LinearGradient
               colors={["#00abef", "#00adef"]}
               style={styles.signIn}
