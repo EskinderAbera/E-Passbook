@@ -83,7 +83,8 @@ const SignInScreen = ({ navigation }) => {
 
   const loginHandle = async () => {
     if ((data.username < 4) | (data.password < 4)) {
-      setError(true);
+      // setError(true);
+      setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       setLoading(true);
       try {
