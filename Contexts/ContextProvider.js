@@ -6,6 +6,13 @@ export const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState({});
   const [accounts, setAccounts] = useState([]);
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [photo, setPhoto] = useState(null);
+  const [idFront, setIdFront] = useState(null);
+  const [idBack, setIdBack] = useState(null);
+  const [signature, setSignature] = useState(null);
 
   const handleUser = (user) => {
     setUser(user);
@@ -28,6 +35,20 @@ export const ContextProvider = ({ children }) => {
         handleUser,
         accounts,
         handleAccounts,
+        openModal,
+        setOpenModal,
+        activeStepIndex,
+        setActiveStepIndex,
+        formData,
+        setFormData,
+        photo,
+        setPhoto,
+        idFront,
+        setIdFront,
+        idBack,
+        setIdBack,
+        signature,
+        setSignature,
       }}
     >
       {children}

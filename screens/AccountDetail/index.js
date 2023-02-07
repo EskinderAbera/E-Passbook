@@ -8,28 +8,51 @@ import Header from "../../components/Header";
 import styles from "./styles";
 import Animated from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
+import EarlyPay from "../../components/EarlyPay";
 
 const AccountsDetail = ({ navigation, route }) => {
   const { accounts } = route.params;
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  const categories = ["Home", "Account Info", "Transaction"];
+  const categories = ["Home", "Account", "Transaction", "Early-Pay"];
   const [data, setData] = useState({
     home: true,
     transaction: false,
     account: false,
+    earlyPay: false,
   });
 
   const CategoryList = () => {
     const handleOnPress = (index) => {
       setSelectedCategoryIndex(index);
       if (index === 0) {
-        setData({ ...data, home: true, transaction: false, account: false });
+        setData({
+          ...data,
+          home: true,
+          transaction: false,
+          account: false,
+          earlyPay: false,
+        });
       } else if (index === 1) {
-        setData({ ...data, account: true, home: false, transaction: false });
-      } else {
+        setData({
+          ...data,
+          account: true,
+          home: false,
+          transaction: false,
+          earlyPay: false,
+        });
+      } else if (index === 2) {
         setData({
           ...data,
           transaction: true,
+          home: false,
+          account: false,
+          earlyPay: false,
+        });
+      } else {
+        setData({
+          ...data,
+          earlyPay: true,
+          transaction: false,
           home: false,
           account: false,
         });
@@ -59,7 +82,7 @@ const AccountsDetail = ({ navigation, route }) => {
                 <View
                   style={{
                     height: 3,
-                    width: index === 0 ? 40 : 90,
+                    width: index === 2 ? 90 : 40,
                     backgroundColor: COLORS.primary,
                     marginTop: 2,
                   }}
@@ -88,6 +111,7 @@ const AccountsDetail = ({ navigation, route }) => {
           {data.transaction && (
             <TransactionInfo navigation={navigation} accounts={accounts} />
           )}
+          {data.earlyPay && <EarlyPay navigation={navigation} />}
         </View>
       </Animated.View>
     </ScrollView>

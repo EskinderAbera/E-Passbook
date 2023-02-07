@@ -58,10 +58,14 @@ const SignUpScreen1 = ({ navigation }) => {
         const response = await axios.post(`${baseUrl}/checkphone`, {
           phonenumber: data.phone,
         });
-
-        handleName(response.data["fullName"]);
-        setLoading(false);
-        navigation.navigate("SignUpScreen", { Phonenumber: data.phone });
+        if (response.data["fullName"].length > 0) {
+          handleName(response.data["fullName"]);
+          setLoading(false);
+          navigation.navigate("SignUpScreen", { Phonenumber: data.phone });
+        } else {
+          setLoading(false);
+          navigation.navigate("Registeration");
+        }
       } catch (error) {
         setLoading(false);
         console.log(error);

@@ -45,6 +45,7 @@ const BottomContent = ({ type, navigation }) => {
             placeholder="Your Email"
             style={styles.textInput}
             autoCapitalize="none"
+            keyboardType="email-address"
             onChangeText={(val) => setEmail(val)}
           />
         </View>
