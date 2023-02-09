@@ -9,11 +9,13 @@ import styles from "./styles";
 import Animated from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import EarlyPay from "../../components/EarlyPay";
+import EarlyPayModal from "../../components/EarlyPayModal";
 
 const AccountsDetail = ({ navigation, route }) => {
   const { accounts } = route.params;
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categories = ["Home", "Account", "Transaction", "Early-Pay"];
+  const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState({
     home: true,
     transaction: false,
@@ -98,6 +100,7 @@ const AccountsDetail = ({ navigation, route }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <StatusBar backgroundColor="#00adef" style="light" />
+      {showModal && <EarlyPayModal onPress={() => setShowModal(false)} />}
       <Animated.View>
         <Header navigation={navigation} accounts={accounts} />
         <View>
@@ -111,7 +114,7 @@ const AccountsDetail = ({ navigation, route }) => {
           {data.transaction && (
             <TransactionInfo navigation={navigation} accounts={accounts} />
           )}
-          {data.earlyPay && <EarlyPay navigation={navigation} />}
+          {data.earlyPay && <EarlyPay />}
         </View>
       </Animated.View>
     </ScrollView>

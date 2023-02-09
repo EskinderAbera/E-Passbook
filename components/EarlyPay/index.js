@@ -1,23 +1,18 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import styles from "./styles";
 import { FAB } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
-const EarlyPay = ({ navigation }) => {
+const EarlyPay = () => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text>hey</Text>
-      <Text>hey</Text>
-      <Text>hey</Text>
-      <Text>hey</Text>
-      <Text>hey</Text>
-      <Text>hey</Text>
-      <Text>hey</Text>
-
       <FAB
         icon="plus"
         style={styles.fab}
         color="white"
-        onPress={() => console.log("Pressed")}
+        cus
+        onPress={() => navigation.navigate("EarlyPay")}
       />
     </View>
   );

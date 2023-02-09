@@ -23,7 +23,6 @@ const SignInScreen = ({ navigation }) => {
     isValidPassword: true,
   });
 
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const textInputChange = (val) => {
@@ -83,11 +82,11 @@ const SignInScreen = ({ navigation }) => {
 
   const loginHandle = async () => {
     if ((data.username < 4) | (data.password < 4)) {
-      // setError(true);
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       setLoading(true);
       try {
+        console.log("api");
         const response = await axios.post(
           "https://auth-atrt.onrender.com/login",
           {
@@ -97,8 +96,6 @@ const SignInScreen = ({ navigation }) => {
         );
         handleUser(response.data.response[0].user[0]);
         handleAccounts(response.data.response[1].accounts);
-        setLoading(false);
-        navigation.navigate("Dashboard");
         navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
         console.log(error);
@@ -183,11 +180,6 @@ const SignInScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <View style={styles.button}>
-          {error && (
-            <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
-              <Text>wrong username!</Text>
-            </Animatable.View>
-          )}
           <TouchableOpacity style={styles.signIn} onPress={loginHandle}>
             <LinearGradient
               colors={["#00a3ef", "#00adef"]}
