@@ -160,6 +160,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 16,
   },
+  uploadTitle: {},
 });
 
 export default styles;

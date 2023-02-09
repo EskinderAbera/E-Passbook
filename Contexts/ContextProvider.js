@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import * as LocalAuthentication from "expo-local-authentication";
 
 const StateContext = createContext();
 
@@ -13,6 +20,38 @@ export const ContextProvider = ({ children }) => {
   const [idFront, setIdFront] = useState(null);
   const [idBack, setIdBack] = useState(null);
   const [signature, setSignature] = useState(null);
+  const [earlyPhoto, setEarlyPhoto] = useState(null);
+  const [apply, setApply] = useState(false);
+  const [isBiometric, setIsBiometric] = useState(false);
+  const [fingerPrint, setFingerPrint] = useState(false);
+
+  useEffect(() => {
+    const checkBiometric = async () => {
+      let result = await LocalAuthentication.hasHardwareAsync();
+      if (result) setIsBiometric(true);
+    };
+    checkBiometric();
+  }, []);
+
+  const checkEnrolledLevel = useCallback(async () => {
+    let result = await LocalAuthentication.isEnrolledAsync();
+    result && setFingerPrint(true);
+  }, [isBiometric]);
+
+  const LoginWithFingerPrint = async () => {
+    if (fingerPrint) {
+      let result = await LocalAuthentication.authenticateAsync();
+      console.log("hey", result);
+    }
+  };
+
+  useEffect(() => {
+    fingerPrint && LoginWithFingerPrint();
+  }, [fingerPrint]);
+
+  useEffect(() => {
+    isBiometric && checkEnrolledLevel();
+  }, [isBiometric]);
 
   const handleUser = (user) => {
     setUser(user);
@@ -49,6 +88,12 @@ export const ContextProvider = ({ children }) => {
         setIdBack,
         signature,
         setSignature,
+        earlyPhoto,
+        setEarlyPhoto,
+        apply,
+        setApply,
+        isBiometric,
+        fingerPrint,
       }}
     >
       {children}

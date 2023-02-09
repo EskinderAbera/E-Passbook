@@ -10,16 +10,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     position: "relative",
   },
-  innerContainer: {
-    width: "100%",
-    backgroundColor: COLORS.backgroundLight,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    position: "relative",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 4,
-  },
   productContainer: {
     width: width,
     height: 230,
@@ -43,6 +33,27 @@ const styles = StyleSheet.create({
   accountText: {
     fontSize: 20,
     color: COLORS.black,
+  },
+
+  sliderContainer: {
+    height: 200,
+    width: "100%",
+    marginTop: 10,
+    justifyContent: "center",
+    alignSelf: "center",
+    borderRadius: 8,
+  },
+  slide: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    borderRadius: 8,
+  },
+  sliderImage: {
+    height: "100%",
+    width: "100%",
+    alignSelf: "center",
+    borderRadius: 8,
   },
 });
 

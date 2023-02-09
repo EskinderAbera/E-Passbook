@@ -42,7 +42,7 @@ const Header = ({ navigation, accounts }) => {
       </RBSheet>
       <ImageBackground style={styles.background} source={banner}>
         <View style={styles.bannerView}>
-          <TouchableOpacity onPress={() => navigation.navigate("HomeAccount")}>
+          {/* <TouchableOpacity onPress={() => navigation.navigate("HomeAccount")}>
             <Entypo
               name="chevron-left"
               style={{
@@ -51,7 +51,7 @@ const Header = ({ navigation, accounts }) => {
                 borderRadius: 10,
               }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.accountContainer}>
           <View style={styles.innerAccount}>

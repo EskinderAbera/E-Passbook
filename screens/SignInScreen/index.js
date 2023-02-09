@@ -86,7 +86,6 @@ const SignInScreen = ({ navigation }) => {
     } else {
       setLoading(true);
       try {
-        console.log("api");
         const response = await axios.post(
           "https://auth-atrt.onrender.com/login",
           {
@@ -98,8 +97,12 @@ const SignInScreen = ({ navigation }) => {
         handleAccounts(response.data.response[1].accounts);
         navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
-        console.log(error);
         setLoading(false);
+        if (error.message === "Network Error") {
+          console.log("network error");
+        } else {
+          console.log(error);
+        }
       }
     }
   };

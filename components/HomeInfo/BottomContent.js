@@ -7,8 +7,9 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import styles from "./styles";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import * as ImagePicker from "expo-image-picker";
 
-const BottomContent = ({ type, navigation }) => {
+const BottomContent = ({ type, navigation, onPress }) => {
   if (type === "Statement") {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
@@ -85,7 +86,10 @@ const BottomContent = ({ type, navigation }) => {
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.signIn}
-            onPress={() => navigation.navigate("OTPVerification", { type: "" })}
+            onPress={() => {
+              onPress();
+              navigation.navigate("OTPVerification", { type: "" });
+            }}
           >
             <LinearGradient
               colors={["#00abef", "#00adef"]}
@@ -115,7 +119,7 @@ const BottomContent = ({ type, navigation }) => {
         )}
       </View>
     );
-  } else {
+  } else if (type === "product") {
     const data = [
       { label: "Item 1", value: "1" },
       { label: "Item 2", value: "2" },
@@ -172,6 +176,61 @@ const BottomContent = ({ type, navigation }) => {
             />
           )}
         />
+      </View>
+    );
+  } else {
+    const UploadPhoto = async (type) => {
+      try {
+        if (type === "library") {
+          let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            base64: true,
+            // aspect: [4, 3],
+            quality: 1,
+          });
+          const base64 = result.assets[0].base64;
+          onPress();
+          navigation.navigate("ImageViewer", {
+            invoker: base64,
+            type: "earlypay",
+          });
+        } else {
+          let result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            base64: true,
+            // aspect: [4, 3],
+            quality: 1,
+          });
+          const base64 = result.assets[0].base64;
+          onPress();
+          navigation.navigate("ImageViewer", {
+            invoker: base64,
+            type: "earlypay",
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    return (
+      <View style={styles.panel}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.uploadTitle}>Upload Company Letter</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.panelButton}
+          onPress={() => UploadPhoto("camera")}
+        >
+          <Text style={styles.panelButtonTitle}>Take Photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.panelButton}
+          onPress={() => UploadPhoto("library")}
+        >
+          <Text style={styles.panelButtonTitle}>Choose From Library</Text>
+        </TouchableOpacity>
       </View>
     );
   }

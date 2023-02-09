@@ -1,5 +1,9 @@
 import { View, TouchableOpacity, SafeAreaView } from "react-native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 import { ListItem } from "react-native-elements";
 import { COLORS } from "../../constants/theme";
 import styles from "./styles";
@@ -18,7 +22,7 @@ const HomeInfo = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <RBSheet
         ref={refRBSheet}
-        height={500}
+        height={data.type === "earlypay" ? 300 : 500}
         closeOnDragDown={true}
         closeOnPressMask={true}
         customStyles={{
@@ -31,7 +35,11 @@ const HomeInfo = ({ navigation }) => {
         }}
       >
         {data.isClicked && (
-          <BottomContent type={data.type} navigation={navigation} />
+          <BottomContent
+            type={data.type}
+            navigation={navigation}
+            onPress={() => refRBSheet.current.close()}
+          />
         )}
       </RBSheet>
       <View style={styles.innerContainer}>
@@ -110,9 +118,6 @@ const HomeInfo = ({ navigation }) => {
         </TouchableOpacity>
         <Line />
         <TouchableOpacity
-          // onPress={() => {
-          //   refRBSheet.current.open();
-          // }}
           onPress={() => {
             setData({ ...data, isClicked: true, type: "product" });
             refRBSheet.current.open();
@@ -122,6 +127,20 @@ const HomeInfo = ({ navigation }) => {
             <AntDesign name="plus" size={28} color={COLORS.primary} />
             <ListItem.Content>
               <ListItem.Title>New Product</ListItem.Title>
+            </ListItem.Content>
+            <ListItem.Chevron />
+          </ListItem>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            setData({ ...data, isClicked: true, type: "earlypay" });
+            refRBSheet.current.open();
+          }}
+        >
+          <ListItem>
+            <FontAwesome5 name="amazon-pay" size={27} color={COLORS.primary} />
+            <ListItem.Content>
+              <ListItem.Title>Early Pay-Day</ListItem.Title>
             </ListItem.Content>
             <ListItem.Chevron />
           </ListItem>
