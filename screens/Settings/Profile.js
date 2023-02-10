@@ -17,6 +17,7 @@ import Shares from "./Share";
 import ContactUs from "./ContactUs";
 import Logout from "./Logout";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import Biometric from "./Biometric";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -97,7 +98,8 @@ const styles = StyleSheet.create({
 });
 
 const Profile = ({ navigation }) => {
-  const { user } = useStateContext();
+  const { user, isBiometric } = useStateContext();
+  console.log(isBiometric);
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
@@ -133,6 +135,7 @@ const Profile = ({ navigation }) => {
           <Password navigation={navigation} />
           <Shares />
           <ContactUs />
+          {isBiometric && <Biometric />}
           <Logout navigation={navigation} />
         </Card>
       </View>

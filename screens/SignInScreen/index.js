@@ -1,15 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  Platform,
-  StyleSheet,
-  StatusBar,
-  Image,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -19,6 +9,8 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import axios from "axios";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
+import Loading from "../../components/Loader";
+import { StatusBar } from "expo-status-bar";
 
 const SignInScreen = ({ navigation }) => {
   const { handleUser, handleAccounts } = useStateContext();
@@ -31,7 +23,6 @@ const SignInScreen = ({ navigation }) => {
     isValidPassword: true,
   });
 
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const textInputChange = (val) => {
@@ -91,7 +82,7 @@ const SignInScreen = ({ navigation }) => {
 
   const loginHandle = async () => {
     if ((data.username < 4) | (data.password < 4)) {
-      setError(true);
+      setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       setLoading(true);
       try {
@@ -104,17 +95,22 @@ const SignInScreen = ({ navigation }) => {
         );
         handleUser(response.data.response[0].user[0]);
         handleAccounts(response.data.response[1].accounts);
-        setLoading(false);
-        navigation.navigate("Dashboard");
         navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
-        console.log(error);
         setLoading(false);
+        if (error.message === "Network Error") {
+          console.log("network error");
+        } else {
+          console.log(error);
+        }
       }
     }
   };
-  return (
+  return loading ? (
+    <Loading msg="Please... Give us a moment" />
+  ) : (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#00adef" style="light" />
       <View style={styles.header}>
         <Image source={cooplogo} style={styles.cooplogo} />
       </View>
@@ -185,50 +181,42 @@ const SignInScreen = ({ navigation }) => {
             Forgot password?
           </Text>
         </TouchableOpacity>
-        {loading ? (
-          <ActivityIndicator />
-        ) : (
-          <View style={styles.button}>
-            {error && (
-              <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
-                <Text>wrong username!</Text>
-              </Animatable.View>
-            )}
-            <TouchableOpacity style={styles.signIn} onPress={loginHandle}>
-              <LinearGradient
-                colors={["#00a3ef", "#00adef"]}
-                style={styles.signIn}
-              >
-                <Text
-                  style={[
-                    styles.textSign,
-                    {
-                      color: COLORS.white,
-                    },
-                  ]}
-                >
-                  Sign In
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => navigation.navigate("SignUpScreen1")}
-              style={[styles.signIn, styles.signup]}
+        <View style={styles.button}>
+          <TouchableOpacity style={styles.signIn} onPress={loginHandle}>
+            <LinearGradient
+              colors={["#00a3ef", "#00adef"]}
+              style={styles.signIn}
             >
               <Text
                 style={[
                   styles.textSign,
                   {
-                    color: COLORS.primary,
+                    color: COLORS.white,
                   },
                 ]}
               >
-                Sign Up
+                Sign In
               </Text>
-            </TouchableOpacity>
-          </View>
-        )}
+            </LinearGradient>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SignUpScreen1")}
+            style={[styles.signIn, styles.signup]}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.primary,
+                },
+              ]}
+            >
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
       </Animatable.View>
     </View>
   );

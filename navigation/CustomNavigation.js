@@ -9,7 +9,13 @@ const HomeScreenNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeAccount" component={Home} />
-      <Stack.Screen name="Account" component={AccountsDetail} />
+      <Stack.Screen
+        name="Account"
+        component={AccountsDetail}
+        options={{
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </Stack.Navigator>
   );
 };

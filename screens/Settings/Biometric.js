@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const ContactUs = () => {
+const Biometric = () => {
   return (
     <TouchableOpacity>
       <View style={[styles.container]}>
         <Icon name="contact-support" size={30} style={styles.emailIcon} />
         <View style={styles.emailRow}>
           <View style={styles.emailColumn}>
-            <Text style={styles.emailText}>Contact Us</Text>
+            <Text style={styles.emailText}>Biometric</Text>
           </View>
         </View>
       </View>
@@ -57,4 +57,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default Biometric;

@@ -1,33 +1,12 @@
-import React, { createRef, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  FlatList,
-  Image,
-  Dimensions,
-  Animated,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, ScrollView, Image } from "react-native";
 import ShowBalance from "../../components/ShowBalance";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
-
-let CurrentSlide = 0;
-let IntervalTime = 4000;
-let _timerId = 0;
+import Swiper from "react-native-swiper";
 
 const Home = ({ navigation }) => {
   const { accounts } = useStateContext();
-  useEffect(() => {
-    _stopAutoPlay();
-    _startAutoPlay();
-    return () => {
-      _stopAutoPlay();
-    };
-  }, []);
-
-  const flatList = createRef();
-
   const [product, setProduct] = useState({
     productImageList: [
       require("../../assets/icons/michu.png"),
@@ -36,51 +15,11 @@ const Home = ({ navigation }) => {
     ],
   });
 
-  const _goToNextPage = () => {
-    if (CurrentSlide >= product.productImageList.length - 1) {
-      CurrentSlide = 0;
-      flatList?.current?.scrollToIndex({
-        index: CurrentSlide,
-        animated: true,
-      });
-    } else {
-      flatList?.current?.scrollToIndex({
-        index: ++CurrentSlide,
-        animated: true,
-      });
-    }
-  };
-  const _startAutoPlay = () => {
-    _timerId = setInterval(_goToNextPage, IntervalTime);
-  };
-  const _stopAutoPlay = () => {
-    if (_timerId) {
-      clearInterval(_timerId);
-      _timerId = null;
-    }
-  };
-
-  const _keyExtractor = (item, index) => {
-    return index.toString();
-  };
-
-  const width = Dimensions.get("window").width;
-
-  const scrollX = new Animated.Value(0);
-
-  const renderProduct = ({ item, index }) => {
-    return (
-      <View style={styles.productContainer}>
-        <Image source={item} style={styles.images} />
-      </View>
-    );
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView>
-        <View style={styles.innerContainer}>
-          <FlatList
+        {/* <View style={styles.innerContainer}> */}
+        {/* <FlatList
             data={product.productImageList ? product.productImageList : null}
             horizontal
             renderItem={renderProduct}
@@ -95,7 +34,39 @@ const Home = ({ navigation }) => {
             keyExtractor={_keyExtractor}
             flatListRef={createRef()}
             ref={flatList}
-          />
+          /> */}
+        {/* </View> */}
+        <View style={styles.sliderContainer}>
+          <Swiper
+            autoplay
+            autoplayTimeout={3}
+            horizontal={true}
+            height={200}
+            activeDotColor="#FF6347"
+            showsPagination={false}
+          >
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/icons/michu.png")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/icons/sinqee.png")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+            <View style={styles.slide}>
+              <Image
+                source={require("../../assets/icons/farmer.png")}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+          </Swiper>
         </View>
         <View style={styles.accountContainer}>
           <View style={styles.innerAccountContainer}>
@@ -112,6 +83,7 @@ const Home = ({ navigation }) => {
           );
         })}
       </ScrollView>
+      {/* <StatusBar /> */}
     </View>
   );
 };

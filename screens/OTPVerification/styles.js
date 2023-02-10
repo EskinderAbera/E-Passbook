@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
   back: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 50,
     padding: 20,
   },
   codeFiledRoot: {

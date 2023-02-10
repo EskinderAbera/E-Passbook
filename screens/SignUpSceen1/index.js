@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,13 +15,15 @@ import cooplogo from "../../assets/icons/cooplogo.png";
 import Ethiopia from "../../assets/icons/Ethiopia.png";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
+import Loading from "../../components/Loader";
+import baseUrl from "../../constants/url";
+import { StatusBar } from "expo-status-bar";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import PropTypes from "prop-types";
 
 const SignUpScreen1 = ({ navigation }) => {
-  const { handleName } = useStateContext();
   const [wrongNumber, setWrongNumber] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { handleName } = useStateContext();
 
   const [data, setData] = useState({
     account: "",
@@ -48,21 +49,23 @@ const SignUpScreen1 = ({ navigation }) => {
   };
 
   const handleSignUp = async () => {
-    if (data.phone < 9) {
+    if ((data.phone.length < 9) | (data.phone.length > 10)) {
       setWrongNumber(true);
     } else {
+      setWrongNumber(false);
       setLoading(true);
       try {
-        const response = await axios.post(
-          "https://auth-atrt.onrender.com/checkphone",
-          { Phonenumber: data.phone }
-        );
-        handleName(response.data.fullName);
-        setLoading(false);
-        navigation.navigate("OTPVerification", {
-          Phonenumber: data.phone,
-          type: "SignUp",
+        const response = await axios.post(`${baseUrl}/checkphone`, {
+          phonenumber: data.phone,
         });
+        if (response.data["fullName"].length > 0) {
+          handleName(response.data["fullName"]);
+          setLoading(false);
+          navigation.navigate("SignUpScreen", { Phonenumber: data.phone });
+        } else {
+          setLoading(false);
+          navigation.navigate("Registeration");
+        }
       } catch (error) {
         setLoading(false);
         console.log(error);
@@ -70,8 +73,11 @@ const SignUpScreen1 = ({ navigation }) => {
     }
   };
 
-  return (
+  return loading ? (
+    <Loading msg="Please... give us a moment!" />
+  ) : (
     <View style={styles.container}>
+      <StatusBar backgroundColor="#00adef" hideTransitionAnimation="slide" />
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
       </View>
@@ -138,54 +144,45 @@ const SignUpScreen1 = ({ navigation }) => {
 
           <View style={styles.button}>
             {wrongNumber && <Text>Wrong Phone Number!</Text>}
-            {loading ? (
-              <ActivityIndicator />
-            ) : (
-              <>
-                <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
-                  <LinearGradient
-                    colors={["#00abef", COLORS.primary]}
-                    style={styles.signIn}
-                  >
-                    <Text
-                      style={[
-                        styles.textSign,
-                        {
-                          color: COLORS.white,
-                        },
-                      ]}
-                    >
-                      Sign Up
-                    </Text>
-                  </LinearGradient>
-                </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("SignInScreen")}
-                  style={[styles.signIn, styles.signin]}
+            <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
+              <LinearGradient
+                colors={["#00abef", COLORS.primary]}
+                style={styles.signIn}
+              >
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: COLORS.white,
+                    },
+                  ]}
                 >
-                  <Text
-                    style={[
-                      styles.textSign,
-                      {
-                        color: COLORS.primary,
-                      },
-                    ]}
-                  >
-                    Sign In
-                  </Text>
-                </TouchableOpacity>
-              </>
-            )}
+                  Sign Up
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate("SignInScreen")}
+              style={[styles.signIn, styles.signin]}
+            >
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: COLORS.primary,
+                  },
+                ]}
+              >
+                Sign In
+              </Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </Animatable.View>
     </View>
   );
-};
-
-SignUpScreen1.propTypes = {
-  Phonenumber: PropTypes.string,
 };
 
 export default SignUpScreen1;

@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 16,
     paddingLeft: 16,
   },
   accountContainer: {
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: "flex-end",
     color: COLORS.white,
-    // marginTop: 20,
     fontSize: 20,
     fontweight: "1500",
     marginRight: 20,
@@ -64,6 +62,15 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginBottom: 8,
   },
+
+  // newHeader
+  textContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textName: { fontSize: 25, marginBottom: 15, fontStyle: "bold" },
 });
 
 export default styles;

@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  ActivityIndicator,
-  Image,
-} from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -16,6 +9,9 @@ import styles from "./styles";
 import cooplogo from "../../assets/icons/cooplogo.png";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import { COLORS } from "../../constants/theme";
+import Loading from "../../components/Loader";
+import { useEffect } from "react";
+import SignUpModal from "../../components/SignupModal";
 
 const SignUpScreen = ({ navigation, route }) => {
   const { Phonenumber } = route.params;
@@ -28,10 +24,11 @@ const SignUpScreen = ({ navigation, route }) => {
     secureTextEntry: true,
     confirm_secureTextEntry: true,
   });
-
   const [isPasswordMismatch, setPasswordMismatch] = useState(false);
   const [showLoading, setShowLoading] = useState(false);
   const [showWrongUsername, setShowWrongUsername] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const textInputChange = (val) => {
     if (val.length >= 4) {
@@ -77,6 +74,18 @@ const SignUpScreen = ({ navigation, route }) => {
     });
   };
 
+  useEffect(() => {
+    if (
+      (data.username.length >= 4) &
+      (data.confirm_password.length > 4) &
+      (data.password.length > 4)
+    ) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [data.username, data.password, data.confirm_password]);
+
   const handleSignUp = async () => {
     if (
       (data.confirm_password !== data.password) |
@@ -87,40 +96,46 @@ const SignUpScreen = ({ navigation, route }) => {
       setShowWrongUsername(true);
     } else {
       setShowLoading(true);
+
       try {
-        const response = await axios.post(
-          "https://auth-atrt.onrender.com/signup",
-          {
-            Phonenumber: Phonenumber,
-            username: data.username,
-            password: data.password,
-          }
-        );
+        await axios.post("https://auth-atrt.onrender.com/signup", {
+          phonenumber: Phonenumber,
+          username: data.username,
+          password: data.password,
+        });
         setShowLoading(false);
-        // navigation.navigate("SignInScreen");
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigation.navigate("SignInScreen");
+        }, 3000);
       } catch (error) {
         setShowLoading(false);
         console.log(error);
+        setShowModal(false);
       }
     }
   };
 
   function Capitalize(str) {
     const name = str.toLowerCase();
-
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  return (
+  return showLoading ? (
+    <Loading msg="We're getting you Onboard" />
+  ) : (
     <View style={styles.container}>
+      {showModal && <SignUpModal navigation={navigation} />}
       <View style={styles.header}>
         <Image source={cooplogo} style={{ width: 200, height: 200 }} />
       </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+      <Animatable.View
+        animation={showModal ? "" : "fadeInUpBig"}
+        style={styles.footer}
+      >
         <View>
-          <Text style={styles.text_header}>{`Hello, ${Capitalize(
-            name.split(" ").shift()
-          )}`}</Text>
+          <Text style={styles.text_header}>{`Hello, ${Capitalize(name)}`}</Text>
         </View>
         <View style={styles.card}>
           <Text style={styles.text_footer}>Username</Text>
@@ -206,18 +221,31 @@ const SignUpScreen = ({ navigation, route }) => {
                 <Text>Your password won't match!</Text>
               </Animatable.View>
             )}
-            {showLoading ? (
-              <ActivityIndicator />
-            ) : (
-              <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
-                <LinearGradient
-                  colors={[COLORS.primary, COLORS.primary]}
-                  style={styles.signIn}
+
+            <TouchableOpacity
+              style={styles.signIn}
+              onPress={handleSignUp}
+              disabled={disable}
+            >
+              <LinearGradient
+                colors={
+                  disable
+                    ? [COLORS.darkgray, COLORS.darkgray]
+                    : [COLORS.primary, COLORS.primary]
+                }
+                style={styles.signIn}
+              >
+                <Text
+                  style={
+                    disable
+                      ? [styles.textSign, { color: COLORS.backgroundDark }]
+                      : [styles.textSign, styles.signup]
+                  }
                 >
-                  <Text style={[styles.textSign, styles.signup]}>Sign Up</Text>
-                </LinearGradient>
-              </TouchableOpacity>
-            )}
+                  Sign Up
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </View>
       </Animatable.View>

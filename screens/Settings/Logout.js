@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/Octicons";
-import PropTypes from "prop-types";
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +44,11 @@ const styles = StyleSheet.create({
 
 const Logout = ({ navigation }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("SignInScreen")}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.reset({ index: 0, routes: [{ name: "SignInScreen" }] })
+      }
+    >
       <View style={[styles.container]}>
         <Icon name="sign-out" size={30} style={styles.emailIcon} />
         <View style={styles.emailRow}>
