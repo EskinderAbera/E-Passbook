@@ -1,89 +1,59 @@
-import React, { useState } from "react";
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Dimensions } from "react-native";
 import ShowBalance from "../../components/ShowBalance";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
-import Swiper from "react-native-swiper";
+import SetPrimaryAccount from "../../components/SetPrimaryAccount";
+import Carousel from "react-native-reanimated-carousel";
 
 const Home = ({ navigation }) => {
   const { accounts } = useStateContext();
-  const [product, setProduct] = useState({
-    productImageList: [
-      require("../../assets/icons/michu.png"),
-      require("../../assets/icons/sinqee.png"),
-      require("../../assets/icons/farmer.png"),
-    ],
-  });
+  const width = Dimensions.get("window").width;
+  const products = [
+    {
+      image: require("../../assets/icons/michu.png"),
+    },
+    {
+      image: require("../../assets/icons/sinqee.png"),
+    },
+    {
+      image: require("../../assets/icons/farmer.png"),
+    },
+  ];
 
   return (
     <View style={styles.container}>
+      <View style={styles.sliderContainer}>
+        <Carousel
+          width={width}
+          autoPlay={true}
+          data={products}
+          renderItem={({ item, index }) => (
+            <View style={styles.slide}>
+              <Image
+                source={item.image}
+                resizeMode="cover"
+                style={styles.sliderImage}
+              />
+            </View>
+          )}
+        />
+      </View>
+      <View style={styles.accountContainer}>
+        <View style={styles.innerAccountContainer}>
+          <Text style={styles.accountText}>Your Payment Credentials</Text>
+          <SetPrimaryAccount />
+        </View>
+        <View style={styles.innerAccountContainer}>
+          <Text style={styles.accountText}>Your Account</Text>
+        </View>
+      </View>
       <ScrollView>
-        {/* <View style={styles.innerContainer}> */}
-        {/* <FlatList
-            data={product.productImageList ? product.productImageList : null}
-            horizontal
-            renderItem={renderProduct}
-            showsHorizontalScrollIndicator={false}
-            decelerationRate={0.8}
-            snapToInterval={width}
-            bounces={false}
-            onScroll={Animated.event(
-              [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-              { useNativeDriver: false }
-            )}
-            keyExtractor={_keyExtractor}
-            flatListRef={createRef()}
-            ref={flatList}
-          /> */}
-        {/* </View> */}
-        <View style={styles.sliderContainer}>
-          <Swiper
-            autoplay
-            autoplayTimeout={3}
-            horizontal={true}
-            height={200}
-            activeDotColor="#FF6347"
-            showsPagination={false}
-          >
-            <View style={styles.slide}>
-              <Image
-                source={require("../../assets/icons/michu.png")}
-                resizeMode="cover"
-                style={styles.sliderImage}
-              />
-            </View>
-            <View style={styles.slide}>
-              <Image
-                source={require("../../assets/icons/sinqee.png")}
-                resizeMode="cover"
-                style={styles.sliderImage}
-              />
-            </View>
-            <View style={styles.slide}>
-              <Image
-                source={require("../../assets/icons/farmer.png")}
-                resizeMode="cover"
-                style={styles.sliderImage}
-              />
-            </View>
-          </Swiper>
-        </View>
-        <View style={styles.accountContainer}>
-          <View style={styles.innerAccountContainer}>
-            <Text style={styles.accountText}>Your Account</Text>
-          </View>
-        </View>
-        {accounts.map((account) => {
+        {accounts.map((accountsf) => {
           return (
-            <ShowBalance
-              account={account}
-              navigation={navigation}
-              key={account.openingDate}
-            />
+            <ShowBalance navigation={navigation} key={accountsf.openingDate} />
           );
         })}
       </ScrollView>
-      {/* <StatusBar /> */}
     </View>
   );
 };

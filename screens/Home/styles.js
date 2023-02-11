@@ -23,11 +23,10 @@ const styles = StyleSheet.create({
   },
   accountContainer: {
     paddingHorizontal: 16,
-    marginTop: 6,
+    marginTop: 20,
   },
   innerAccountContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
     marginVertical: 14,
   },
   accountText: {

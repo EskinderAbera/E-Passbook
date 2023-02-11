@@ -12,7 +12,7 @@ import { ProductsList } from "../screens/ProductList";
 import EarlyPayScreen from "../screens/EarlyPayScreen";
 // import { FormPagination, SigniturePad } from "../components";
 // import AgreementPolicy from "../components/AgreementPolicy";
-import ImageViewer from "../components/ImageViewer";
+// import ImageViewer from "../components/ImageViewer";
 
 const Stack = createStackNavigator();
 
@@ -21,7 +21,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="SignInScreen"
+        initialRouteName="Dashboard"
       >
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
         <Stack.Screen name="OTPVerification" component={OTPVerification} />
@@ -40,8 +40,7 @@ const RootStackScreen = () => {
           name="Agreement"
           component={AgreementPolicy}
         />
-        */}
-        <Stack.Screen name="ImageViewer" component={ImageViewer} />
+        <Stack.Screen name="ImageViewer" component={ImageViewer} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

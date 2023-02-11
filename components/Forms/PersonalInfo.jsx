@@ -119,7 +119,7 @@ export const PersonalInfo = () => {
       phoneNumber: formData?.phoneNumber ? formData.phoneNumber : "",
       email: formData?.email ? formData.email : "",
     },
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
       setFormData(data);
