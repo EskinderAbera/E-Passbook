@@ -95,6 +95,7 @@ const SignInScreen = ({ navigation }) => {
         );
         handleUser(response.data.response[0].user[0]);
         handleAccounts(response.data.response[1].accounts);
+        localStorage.setItem('AuthToken', JSON.stringify(res.data));
         navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
         setLoading(false);
