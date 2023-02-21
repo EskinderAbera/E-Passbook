@@ -8,6 +8,8 @@ const success = require("../assets/icons/success.png");
 const Ethiopia = require("../assets/icons/Ethiopia.png");
 const Upload = require("../assets/icons/Upload.svg");
 const Eye = require("../assets/icons/Eye.svg");
+const error = require("../assets/icons/error.png");
+// const loading = require("../assets/icons/loading.gif");
 
 const icons = {
   back,
@@ -20,6 +22,8 @@ const icons = {
   Ethiopia,
   Upload,
   Eye,
+  error,
+  // loading,
 };
 
 export default icons;

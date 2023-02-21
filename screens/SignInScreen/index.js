@@ -11,9 +11,11 @@ import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
+import * as LocalAuthentication from "expo-local-authentication";
 
 const SignInScreen = ({ navigation }) => {
-  const { handleUser, handleAccounts } = useStateContext();
+  const { handleUser, handleAccounts, fingerPrint } = useStateContext();
+
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -107,6 +109,12 @@ const SignInScreen = ({ navigation }) => {
       }
     }
   };
+
+  const LoginWithFingerPrint = async () => {
+    let result = await LocalAuthentication.authenticateAsync();
+    console.log("hey", result);
+  };
+
   return loading ? (
     <Loading msg="Please... Give us a moment" />
   ) : (
@@ -217,6 +225,11 @@ const SignInScreen = ({ navigation }) => {
               Sign Up
             </Text>
           </TouchableOpacity>
+          {fingerPrint && (
+            <TouchableOpacity onPress={() => LoginWithFingerPrint()}>
+              <Text>login with fingerprint</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </Animatable.View>
     </View>
