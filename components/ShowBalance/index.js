@@ -13,7 +13,7 @@ import ErrorModal from "../Error";
 const ShowBalance = ({ navigation }) => {
   const [balanceVisible, setBalanceVisible] = useState(false);
   const [account, setAccount] = useState(null);
-  const [accountNo, setAccoutNo] = useState("");
+  const [accountNo, setAccoutNo] = useState("1000089352733");
   const [showModal, setShowModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [isInputFocus, setIsInputFocus] = useState(false);
@@ -124,7 +124,7 @@ const ShowBalance = ({ navigation }) => {
           }
           style={styles.card}
         >
-          <View style={{ flex: 1 }}>
+          <View>
             <View style={styles.details}>
               <Image source={coopLogo} style={styles.coopLogo} />
               <Text style={styles.bankDetail}> Bank Details</Text>

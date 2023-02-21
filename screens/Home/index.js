@@ -4,9 +4,13 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
 import SetPrimaryAccount from "../../components/SetPrimaryAccount";
 import Carousel from "react-native-reanimated-carousel";
+import HomeSkeleton from "../../components/HomeSkeleton";
+import { useState } from "react";
+import { TouchableOpacity } from "react-native";
 
 const Home = ({ navigation }) => {
   const { accounts } = useStateContext();
+  const [isLoaded, setIsLoaded] = useState(false);
   const width = Dimensions.get("window").width;
   const products = [
     {
@@ -28,13 +32,16 @@ const Home = ({ navigation }) => {
           autoPlay={true}
           data={products}
           renderItem={({ item, index }) => (
-            <View style={styles.slide}>
+            <TouchableOpacity
+              style={styles.slide}
+              onPress={() => setIsLoaded(!isLoaded)}
+            >
               <Image
                 source={item.image}
                 resizeMode="cover"
                 style={styles.sliderImage}
               />
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>
@@ -48,11 +55,23 @@ const Home = ({ navigation }) => {
         </View>
       </View>
       <ScrollView>
-        {accounts.map((accountsf) => {
+        {!isLoaded
+          ? accounts.map((acc, index) => {
+              return <HomeSkeleton key={index} />;
+            })
+          : accounts.map((accountsf) => {
+              return (
+                <ShowBalance
+                  navigation={navigation}
+                  key={accountsf.openingDate}
+                />
+              );
+            })}
+        {/* {accounts.map((accountsf) => {
           return (
             <ShowBalance navigation={navigation} key={accountsf.openingDate} />
           );
-        })}
+        })} */}
       </ScrollView>
     </View>
   );

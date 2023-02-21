@@ -27,7 +27,7 @@ const SignUpScreen1 = ({ navigation }) => {
 
   const [data, setData] = useState({
     account: "",
-    phone: "919584347",
+    phone: "",
     check_PhoneTextChange: false,
     isValidAccount: true,
   });

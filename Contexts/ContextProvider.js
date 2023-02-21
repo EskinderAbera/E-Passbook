@@ -1,11 +1,6 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import * as LocalAuthentication from "expo-local-authentication";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const StateContext = createContext();
 
@@ -294,25 +289,35 @@ export const ContextProvider = ({ children }) => {
     checkBiometric();
   }, []);
 
-  const checkEnrolledLevel = useCallback(async () => {
-    let result = await LocalAuthentication.isEnrolledAsync();
-    result && setFingerPrint(true);
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem("@enrolled");
+        if (value !== null) {
+          console.log("tr", value);
+          value ? setFingerPrint(false) : setFingerPrint(true);
+        }
+      } catch (e) {
+        console.log("err", e);
+      }
+    };
+    isBiometric && getData();
   }, [isBiometric]);
 
-  const LoginWithFingerPrint = async () => {
-    if (fingerPrint) {
-      let result = await LocalAuthentication.authenticateAsync();
-      console.log("hey", result);
-    }
-  };
+  // const LoginWithFingerPrint = async () => {
+  //   if (fingerPrint) {
+  //     let result = await LocalAuthentication.authenticateAsync();
+  //     console.log("hey", result);
+  //   }
+  // };
 
-  useEffect(() => {
-    fingerPrint && LoginWithFingerPrint();
-  }, [fingerPrint]);
+  // useEffect(() => {
+  //   fingerPrint && LoginWithFingerPrint();
+  // }, [fingerPrint]);
 
-  useEffect(() => {
-    isBiometric && checkEnrolledLevel();
-  }, [isBiometric]);
+  // useEffect(() => {
+  //   isBiometric && checkEnrolledLevel();
+  // }, [isBiometric]);
 
   const handleUser = (user) => {
     setUser(user);
@@ -362,6 +367,7 @@ export const ContextProvider = ({ children }) => {
         isBiometric,
         fingerPrint,
         updateAccounts,
+        fingerPrint,
       }}
     >
       {children}
