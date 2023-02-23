@@ -1,15 +1,15 @@
 import { View, Modal, Text, Image } from "react-native";
-import icons from "../../constants/icons";
+import icons from "../../../constants/icons";
 import styles from "./styles";
 
-const ErrorModal = () => {
+const SignUpModal = () => {
   return (
     <Modal visible={true} transparent={true} animationType={"slide"}>
       <View style={styles.modalBackGround}>
         <View style={[styles.modalContainer]}>
           <View style={{ alignItems: "center" }}>
             <Image
-              source={icons.error}
+              source={icons.success}
               style={{ height: 150, width: 150, marginVertical: 10 }}
             />
           </View>
@@ -25,4 +25,4 @@ const ErrorModal = () => {
   );
 };
 
-export default ErrorModal;
+export default SignUpModal;

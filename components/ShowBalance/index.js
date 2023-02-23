@@ -7,8 +7,10 @@ import { View, Text, Image, TouchableOpacity, TextInput } from "react-native";
 import { COLORS } from "../../constants/theme";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import RBSheet from "react-native-raw-bottom-sheet";
-import SignUpModal from "../SignupModal";
-import ErrorModal from "../Error";
+import SignUpModal from "../Modals/SignupModal";
+import ErrorModal from "../Modals/Error";
+// import SignUpModal from "../SignupModal";
+// import ErrorModal from "../Error";
 
 const ShowBalance = ({ navigation }) => {
   const [balanceVisible, setBalanceVisible] = useState(false);

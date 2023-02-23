@@ -11,7 +11,7 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { useEffect } from "react";
-import SignUpModal from "../../components/SignupModal";
+import SignUpModal from "../../components/Modals/SignupModal";
 
 const SignUpScreen = ({ navigation, route }) => {
   const { Phonenumber } = route.params;

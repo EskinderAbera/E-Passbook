@@ -5,11 +5,12 @@ import RegisterReducer from './Slices/RegisterSlice';
 const store = configureStore({
     reducer: {
         account: accountReducer,
-        register: RegisterReducer
+        register: RegisterReducer,
+        user: userReducer,
     },
 });
 
-export * from './Actions';
-export * from './Slices';
+// export * from "./Actions";
+// export * from "./Slices";
 
 export default store;

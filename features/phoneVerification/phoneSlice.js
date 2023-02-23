@@ -18,7 +18,6 @@ export const validatePhone = createAsyncThunk(
     const response = await axios.post(`${baseUrl}/checkphone/`, {
       phonenumber: phoneNo,
     });
-
     return response.data;
   }
 );
