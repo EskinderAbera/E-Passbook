@@ -4,8 +4,6 @@ import axios from "axios";
 import { CheckUserExistenceAPI } from "../../lib/api-calls/CheckUser";
 
 const initialState = {
-  loading: false,
-  error: "",
   userInfo: {},
 };
 
