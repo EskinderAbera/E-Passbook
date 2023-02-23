@@ -48,6 +48,7 @@ const SignUpScreen1 = ({ navigation }) => {
     }
   };
 
+
   const handleSignUp = async () => {
     if ((data.phone.length < 9) | (data.phone.length > 10)) {
       setWrongNumber("phone or username is wrong");

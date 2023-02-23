@@ -12,6 +12,8 @@ import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
 import * as LocalAuthentication from "expo-local-authentication";
+import store from "../../store";
+import setUpInterceptor from "../../lib/axios_interceptors";
 
 const SignInScreen = ({ navigation }) => {
   const { handleUser, handleAccounts, fingerPrint } = useStateContext();
@@ -26,6 +28,11 @@ const SignInScreen = ({ navigation }) => {
   });
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setUpInterceptor({ store });
+
+  }, [])
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
