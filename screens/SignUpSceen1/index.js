@@ -19,6 +19,8 @@ import Loading from "../../components/Loader";
 import baseUrl from "../../constants/url";
 import { StatusBar } from "expo-status-bar";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { useDispatch } from "react-redux";
+import { checkUserExistance } from "../../store";
 
 const SignUpScreen1 = ({ navigation }) => {
   const [wrongNumber, setWrongNumber] = useState(false);
@@ -47,6 +49,8 @@ const SignUpScreen1 = ({ navigation }) => {
       });
     }
   };
+
+  const dispatch = useDispatch();
 
   const handleSignUp = async () => {
     if ((data.phone.length < 9) | (data.phone.length > 10)) {
@@ -144,6 +148,7 @@ const SignUpScreen1 = ({ navigation }) => {
 
           <View style={styles.button}>
             {wrongNumber && <Text>Wrong Phone Number!</Text>}
+            <TouchableOpacity onPress={() => dispatch(checkUserExistance("942177936"))}><Text>Check</Text></TouchableOpacity>
 
             <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
               <LinearGradient
