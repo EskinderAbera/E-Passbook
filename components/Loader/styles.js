@@ -1,14 +1,19 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  loader: {
+  modalBackGround: {
     flex: 1,
-    flexDirection: "column",
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignItems: "center",
   },
-  headerText: {
-    marginBottom: 5,
+  modalContainer: {
+    width: "80%",
+    // backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    // borderRadius: 20,
+    // elevation: 20,
   },
 });
 

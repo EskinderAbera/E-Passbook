@@ -10,8 +10,10 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
 import { Modal } from "react-native";
 import { COLORS } from "../../constants/theme";
-import SignUpModal from "../SignupModal";
-import ErrorModal from "../Error";
+import SignUpModal from "../Modals/SignupModal";
+import ErrorModal from "../Modals/Error";
+// import SignUpModal from "../SignupModal";
+// import ErrorModal from "../Error";
 
 const SetPrimaryAccount = () => {
   const { accounts } = useStateContext();

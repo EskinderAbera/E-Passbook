@@ -4,7 +4,7 @@ import RootStackScreen from "./navigation/RootStack";
 import { ContextProvider } from "./Contexts/ContextProvider";
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
-import store from "./store"
+import store from "./store";
 import setUpInterceptor from "./lib/axios_interceptors";
 
 export default function App() {

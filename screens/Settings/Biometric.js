@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import SignUpModal from "../../components/SignupModal";
-import ErrorModal from "../../components/Error";
+import SignUpModal from "../../components/Modals/SignupModal";
+import ErrorModal from "../../components/Modals/Error";
+// import SignUpModal from "../../components/SignupModal";
+// import ErrorModal from "../../components/Error";
 import * as LocalAuthentication from "expo-local-authentication";
 
 const styles = StyleSheet.create({
