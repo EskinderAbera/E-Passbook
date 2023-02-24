@@ -8,22 +8,13 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  extraReducers: (builder) => {
-    builder.addCase(CheckUserExistenceAPI.pending, (state) => {
-      state.loading = true;
-      state.error = "";
-    });
-    builder.addCase(CheckUserExistenceAPI.fulfilled, (state, action) => {
-      state.loading = false;
-      state.userInfo = action.payload;
-      state.error = "";
-    });
-    builder.addCase(CheckUserExistenceAPI.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-      state.userInfo = {};
-    });
+  reducers: {
+    setUserInfo: (state, { payload }) => {
+      state.userInfo = payload;
+    },
   },
 });
 
-export default userSlice.reducer;
+const { reducer, actions } = userSlice;
+export const { setUserInfo } = actions;
+export default reducer;

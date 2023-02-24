@@ -18,12 +18,19 @@ import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
 import ErrorModal from "../../components/Modals/Error/index";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckUserExistenceAPI } from "../../lib/api-calls/CheckUser";
+import CheckPhone from "../../components/Modals/SuccessModal/CheckPhone";
+import checkPhoneAction from "../../store/Actions/PhoneAction";
+import { useEffect } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+import { setUserInfo } from "../../store/Slices";
+import Modals from "../../components/Modals";
 
 const SignUpScreen1 = ({ navigation }) => {
   const user = useSelector((state) => state.user);
-  const [wrongNumber, setWrongNumber] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const status = useSelector((state) => state.loading);
+  const [disable, setDisable] = useState(true);
+  const [ModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const [data, setData] = useState({
     account: "",
@@ -42,52 +49,23 @@ const SignUpScreen1 = ({ navigation }) => {
     } else {
       setData({
         ...data,
-        username: val,
+        phone: val,
         check_PhoneTextChange: false,
       });
     }
   };
 
-
-  const handleSignUp = async () => {
-    if ((data.phone.length < 9) | (data.phone.length > 10)) {
-      setWrongNumber("phone or username is wrong");
-      setShowModal(true);
+  useEffect(() => {
+    if (data.phone.length < 9) {
+      setDisable(true);
     } else {
-      dispatch(CheckUserExistenceAPI(data.phone));
+      setDisable(false);
     }
-  };
-
-  // const handleSignUp = async () => {
-  //   if ((data.phone.length < 9) | (data.phone.length > 10)) {
-  //     setWrongNumber("phone or username is wrong");
-  //     setShowModal(true);
-  //   } else {
-  //     setLoading(true);
-  //     try {
-  //       const response = await axios.post(`${baseUrl}/checkphone`, {
-  //         phonenumber: data.phone,
-  //       });
-  //       if (response.data["fullName"].length > 0) {
-  //         handleName(response.data["fullName"]);
-  //         setLoading(false);
-  //         navigation.navigate("SignUpScreen", { Phonenumber: data.phone });
-  //       } else {
-  //         setLoading(false);
-  //         navigation.navigate("Registeration");
-  //       }
-  //     } catch (error) {
-  //       setLoading(false);
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+  }, [data.phone]);
 
   function renderBody() {
     return (
       <View style={styles.container}>
-        {showModal && <ErrorModal msg={wrongNumber} />}
-
         <StatusBar backgroundColor="#00adef" hideTransitionAnimation="slide" />
         <View style={styles.header}>
           <Image source={cooplogo} style={{ width: 200, height: 200 }} />
@@ -152,18 +130,28 @@ const SignUpScreen1 = ({ navigation }) => {
             </View>
 
             <View style={styles.button}>
-              <TouchableOpacity style={styles.signIn} onPress={handleSignUp}>
+              <TouchableOpacity
+                style={styles.signIn}
+                onPress={() => {
+                  setModalOpen(true);
+                  dispatch(checkPhoneAction(data.phone));
+                }}
+                disabled={disable}
+              >
                 <LinearGradient
-                  colors={["#00abef", COLORS.primary]}
+                  colors={
+                    disable
+                      ? [COLORS.darkgray, COLORS.darkgray]
+                      : [COLORS.primary, COLORS.primary]
+                  }
                   style={styles.signIn}
                 >
                   <Text
-                    style={[
-                      styles.textSign,
-                      {
-                        color: COLORS.white,
-                      },
-                    ]}
+                    style={
+                      disable
+                        ? [styles.textSign]
+                        : [styles.textSign, styles.signup]
+                    }
                   >
                     Sign Up
                   </Text>
@@ -192,12 +180,31 @@ const SignUpScreen1 = ({ navigation }) => {
     );
   }
 
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(setUserInfo({}));
+    }, [])
+  );
+
   return (
     <>
-      {user.loading && <Loading msg={"Loading"} />}
+      {status.loading && <Loading msg={"Loading"} />}
       {renderBody()}
-      {!user.loading && user.error && <ErrorModal msg={user.error} />}
-      {!user.loading && user.userInfo.length && console.log("success")}
+      {!status.loading && Object.keys(status.error).length > 0 && ModalOpen && (
+        <Modals props={{ modalType: "error", type: "SignUp", setModalOpen }} />
+      )}
+      {!status.loading &&
+        Object.keys(user.userInfo).length > 0 &&
+        ModalOpen && (
+          <Modals
+            props={{
+              modalType: "success",
+              type: "CheckPhone",
+              ModalOpen,
+              setModalOpen,
+            }}
+          />
+        )}
     </>
   );
 };
