@@ -11,9 +11,10 @@ import RootTab from "./RootTab";
 import { ProductsList } from "../screens/ProductList";
 import EarlyPayScreen from "../screens/EarlyPayScreen";
 // import Skeleton from "../components/Skeleton";
-// import { FormPagination, SigniturePad } from "../components";
-// import AgreementPolicy from "../components/AgreementPolicy";
-// import ImageViewer from "../components/ImageViewer";
+import { SigniturePad } from "../components/OnBoarding";
+import { FormPagination } from "../components/Forms";
+import AgreementPolicy from "../components/OnBoarding/AgreementPolicy";
+import ImageViewer from "../components/OnBoarding/ImageViewer";
 
 const Stack = createStackNavigator();
 
@@ -22,7 +23,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="SignUpScreen1"
+        initialRouteName="Registeration"
       >
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
         <Stack.Screen name="OTPVerification" component={OTPVerification} />
@@ -33,7 +34,7 @@ const RootStackScreen = () => {
         <Stack.Screen name="EarlyPay" component={EarlyPayScreen} />
         {/* <Stack.Screen name="Skeleton" component={Skeleton} /> */}
 
-        {/* <Stack.Screen name="Registeration" component={FormPagination} />
+        <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
         <Stack.Screen
           options={{
@@ -43,7 +44,7 @@ const RootStackScreen = () => {
           name="Agreement"
           component={AgreementPolicy}
         />
-        <Stack.Screen name="ImageViewer" component={ImageViewer} /> */}
+        <Stack.Screen name="ImageViewer" component={ImageViewer} />
       </Stack.Navigator>
     </NavigationContainer>
   );

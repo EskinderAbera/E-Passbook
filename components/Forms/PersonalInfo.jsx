@@ -14,15 +14,18 @@ import * as yup from "yup";
 import { TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { differenceInYears, format } from "date-fns";
-import { DropDown, FormNavigation } from "../../components";
+import { DropDown } from "./DropDown";
+import { FormNavigation } from "./FormNavigation";
 import icons from "../../constants/icons";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import { setActiveStepIndex, setFormData } from "../../store/Slices/OnBoardingSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const PersonalInfo = () => {
-  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
-    useStateContext();
+  const { activeStepIndex, formData } = useSelector(state => state.onBoard)
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const dispatch = useDispatch();
+
 
   const showDate = () => {
     setShow(!show);
@@ -122,8 +125,8 @@ export const PersonalInfo = () => {
     // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
-      setFormData(data);
-      setActiveStepIndex(activeStepIndex + 1);
+      dispatch(setFormData(data));
+      dispatch(setActiveStepIndex(activeStepIndex + 1));
     },
   });
 

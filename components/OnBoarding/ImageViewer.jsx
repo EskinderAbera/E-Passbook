@@ -1,13 +1,11 @@
 import { View, TouchableOpacity, Text, Image } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { COLORS, SIZES } from "../constants/theme";
+import { COLORS, SIZES } from "../../constants/theme";
 import { useNavigation } from "@react-navigation/native";
-import { useStateContext } from "../Contexts/ContextProvider";
 
 const ImageViewer = ({ route }) => {
   const { invoker, type } = route.params;
   const navigation = useNavigation();
-  const { setApply } = useStateContext();
 
   return type ? (
     <View style={styles.earlyContainer}>
@@ -28,7 +26,6 @@ const ImageViewer = ({ route }) => {
         <TouchableOpacity
           style={styles.applyBtn}
           onPress={() => {
-            setApply(true);
             navigation.goBack();
           }}
         >

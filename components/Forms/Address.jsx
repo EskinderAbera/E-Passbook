@@ -3,12 +3,13 @@ import React from "react";
 import { Text, Button, StyleSheet, ScrollView, View } from "react-native";
 import { Stack, Input, WarningOutlineIcon } from "native-base";
 import * as yup from "yup";
-import { FormNavigation } from "../FormNavigation";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import { FormNavigation } from "./FormNavigation"
+import { setActiveStepIndex, setFormData } from "../../store/Slices/OnBoardingSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Address = () => {
-  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
-    useStateContext();
+  const { activeStepIndex, formData } = useSelector((state) => state?.onBoard)
+  const dispatch = useDispatch();
 
   const ValidationSchema = yup.object().shape({
     postCode: yup.string().max(5, "invalid postcode"),
@@ -35,8 +36,8 @@ export const Address = () => {
     // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
-      setFormData(data);
-      setActiveStepIndex(activeStepIndex + 1);
+      dispatch(setFormData(data));
+      dispatch(setActiveStepIndex(activeStepIndex + 1));
     },
   });
 

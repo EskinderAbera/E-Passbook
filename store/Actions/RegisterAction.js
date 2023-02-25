@@ -1,7 +1,7 @@
 import {
     checkUser
 } from '../../lib'
-import { setAccounts } from '../Slices'
+import { setLoading } from '../Slices'
 
 export const checkUserExistance = (phoneNumber) => {
     return async (dispatch) => {

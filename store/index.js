@@ -3,6 +3,7 @@ import accountReducer from './Slices/Accounts';
 import RegisterReducer from './Slices/RegisterSlice';
 import LoadingReducer from './Slices/loadingSlice';
 import userReducer from './Slices/CheckUser';
+import onBoardingReducer from './Slices/OnBoardingSlice'
 
 const store = configureStore({
     reducer: {
@@ -10,10 +11,11 @@ const store = configureStore({
         register: RegisterReducer,
         user: userReducer,
         loading: LoadingReducer,
+        onBoard: onBoardingReducer
     },
 });
 
 // export * from "./Actions";
-// export * from "./Slices";
+export * from "./Slices";
 
 export default store;
