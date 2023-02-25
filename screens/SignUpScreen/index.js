@@ -4,14 +4,11 @@ import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
-import axios from "axios";
 import styles from "./styles";
 import cooplogo from "../../assets/icons/cooplogo.png";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { useEffect } from "react";
-import SignUpModal from "../../components/Modals/SignupModal";
 import SignUpAction from "../../store/Actions/SignupAction";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../store/Slices";
@@ -27,7 +24,6 @@ const SignUpScreen = ({ navigation }) => {
     confirm_secureTextEntry: true,
   });
   const [isPasswordMismatch, setPasswordMismatch] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
   const [showWrongUsername, setShowWrongUsername] = useState(false);
   const [disable, setDisable] = useState(false);
   const [ModalOpen, setModalOpen] = useState(false);
@@ -36,7 +32,7 @@ const SignUpScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const loader = useSelector((state) => state.loading);
   const signup = useSelector((state) => state.signup);
-
+  console.log("hello", signup.statusCode);
   const textInputChange = (val) => {
     if (val.length >= 4) {
       setData({
@@ -102,37 +98,18 @@ const SignUpScreen = ({ navigation }) => {
     } else if (data.username.length < 4) {
       setShowWrongUsername(true);
     } else {
+      setModalOpen(true);
       dispatch(
         SignUpAction(
           dispatch(
-            setUserInfo(
-              Object.assign({}, user.userInfo, {
-                username: data.username,
-                password: data.password,
-              })
-            )
+            setUserInfo({
+              ...user.userInfo,
+              username: data.username,
+              password: data.password,
+            })
           )
         )
       );
-      //   setShowLoading(true);
-
-      //   try {
-      //     await axios.post("https://auth-atrt.onrender.com/signup", {
-      //       phonenumber: Phonenumber,
-      //       username: data.username,
-      //       password: data.password,
-      //     });
-      //     setShowLoading(false);
-      //     setShowModal(true);
-      //     setTimeout(() => {
-      //       setShowModal(false);
-      //       navigation.navigate("SignInScreen");
-      //     }, 3000);
-      //   } catch (error) {
-      //     setShowLoading(false);
-      //     console.log(error);
-      //     setShowModal(false);
-      //   }
     }
   };
 
@@ -270,11 +247,11 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <>
       {renderBody()}
-      {loader.loading && <Loading msg={"give us a moment"} />}
+      {/* {loader.loading && <Loading msg={"give us a moment"} />} */}
       {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
         <Modals props={{ modalType: "error", setModalOpen, type: "signup" }} />
       )}
-      {!loader.loading && signup.res === "201" && ModalOpen && (
+      {!loader.loading && signup.statusCode === 200 && ModalOpen && (
         <Modals
           props={{
             modalType: "success",

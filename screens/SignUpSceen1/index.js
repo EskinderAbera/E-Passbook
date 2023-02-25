@@ -191,7 +191,9 @@ const SignUpScreen1 = ({ navigation }) => {
       {status.loading && <Loading msg={"Loading"} />}
       {renderBody()}
       {!status.loading && Object.keys(status.error).length > 0 && ModalOpen && (
-        <Modals props={{ modalType: "error", type: "SignUp", setModalOpen }} />
+        <Modals
+          props={{ modalType: "error", type: "CheckPhone", setModalOpen }}
+        />
       )}
       {!status.loading &&
         Object.keys(user.userInfo).length > 0 &&

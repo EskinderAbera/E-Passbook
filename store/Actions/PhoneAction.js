@@ -9,9 +9,8 @@ const checkPhoneAction = (phoneNumber) => {
       dispatch(setUserInfo(res));
       dispatch(setLoading(false));
     } catch (e) {
-      console.log(e);
       dispatch(setLoading(false));
-      dispatch(setError(e.response.data));
+      dispatch(setError({ msg: e.response.status }));
     }
   };
 };

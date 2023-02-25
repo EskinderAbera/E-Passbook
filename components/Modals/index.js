@@ -61,6 +61,7 @@ const Modals = ({ props }) => {
         </View>
       );
     } else if (props.type === "signup") {
+      console.log("I am here");
       const navigation = useNavigation();
       const user = useSelector((state) => state.user);
       setTimeout(() => {
@@ -89,7 +90,7 @@ const Modals = ({ props }) => {
   }
   function ErrorModal() {
     if (props.type === "CheckPhone") {
-      const error = useSelector((state) => state.loading);
+      const loader = useSelector((state) => state.loading);
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -102,7 +103,7 @@ const Modals = ({ props }) => {
               style={{ height: 150, width: 150, marginVertical: 10 }}
             />
           </View>
-          {error.status === "404" ? (
+          {loader.error.msg === "404" ? (
             <Text style={{ fontSize: 20, textAlign: "center" }}>
               Hmm... you don't have account! {"\n"} {"\n"} please Onboard
               yourself
