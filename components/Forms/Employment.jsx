@@ -7,7 +7,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { WarningOutlineIcon } from "native-base";
 import { setActiveStepIndex, setFormData } from "../../store/Slices/OnBoardingSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export const Employment = ({ navigation }) => {
@@ -36,7 +36,7 @@ export const Employment = ({ navigation }) => {
       employeerName: formData?.employeerName ? formData?.employeerName : "",
       tinNumber: formData?.tinNumber ? formData?.tinNumber : "",
     },
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
       dispatch(setFormData(data));

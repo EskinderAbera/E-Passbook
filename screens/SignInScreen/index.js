@@ -29,10 +29,10 @@ const SignInScreen = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setUpInterceptor({ store });
+  // useEffect(() => {
+  //   setUpInterceptor({ store });
 
-  }, [])
+  // }, [])
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -104,7 +104,7 @@ const SignInScreen = ({ navigation }) => {
         );
         handleUser(response.data.response[0].user[0]);
         handleAccounts(response.data.response[1].accounts);
-        localStorage.setItem('AuthToken', JSON.stringify(res.data));
+        localStorage.setItem("AuthToken", JSON.stringify(res.data));
         navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
         setLoading(false);

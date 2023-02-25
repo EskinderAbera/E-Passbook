@@ -10,7 +10,9 @@ import { DropDown } from "./DropDown";
 import { ImageP } from "./ImagePicker";
 import { FormNavigation } from "./FormNavigation";
 import icons from "../../constants/icons";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import Upload from "../../assets/icons/Upload";
+import Eye from "../../assets/icons/Eye.svg";
+
 import { setOpenModal, setFormData, setActiveStepIndex } from "../../store/Slices/OnBoardingSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -68,7 +70,7 @@ export const Documents = ({ navigation }) => {
       issueDate: formData?.issueDate ? formData?.issueDate : "",
       expiryDate: formData?.expiryDate ? formData?.expiryDate : "",
     },
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
       dispatch(setFormData(data));
@@ -196,14 +198,15 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("photo")}>
-                <icons.Upload width={22} height={22} />
+                {/* <icons.Upload width={22} height={22} /> */}
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: photo });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Photo</Text>
@@ -217,14 +220,14 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("idFront")}>
-                <icons.Upload width={22} height={22} />
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: idFront });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Id front</Text>
@@ -238,14 +241,14 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("idBack")}>
-                <icons.Upload width={22} height={22} />
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: idBack });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Id Back</Text>

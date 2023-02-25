@@ -12,10 +12,12 @@ import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { useEffect } from "react";
 import SignUpModal from "../../components/Modals/SignupModal";
+import SignUpAction from "../../store/Actions/SignupAction";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../../store/Slices";
+import Modals from "../../components/Modals";
 
-const SignUpScreen = ({ navigation, route }) => {
-  const { Phonenumber } = route.params;
-  const { name } = useStateContext();
+const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -28,7 +30,12 @@ const SignUpScreen = ({ navigation, route }) => {
   const [showLoading, setShowLoading] = useState(false);
   const [showWrongUsername, setShowWrongUsername] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [ModalOpen, setModalOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const loader = useSelector((state) => state.loading);
+  const signup = useSelector((state) => state.signup);
 
   const textInputChange = (val) => {
     if (val.length >= 4) {
@@ -95,25 +102,37 @@ const SignUpScreen = ({ navigation, route }) => {
     } else if (data.username.length < 4) {
       setShowWrongUsername(true);
     } else {
-      setShowLoading(true);
+      dispatch(
+        SignUpAction(
+          dispatch(
+            setUserInfo(
+              Object.assign({}, user.userInfo, {
+                username: data.username,
+                password: data.password,
+              })
+            )
+          )
+        )
+      );
+      //   setShowLoading(true);
 
-      try {
-        await axios.post("https://auth-atrt.onrender.com/signup", {
-          phonenumber: Phonenumber,
-          username: data.username,
-          password: data.password,
-        });
-        setShowLoading(false);
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-          navigation.navigate("SignInScreen");
-        }, 3000);
-      } catch (error) {
-        setShowLoading(false);
-        console.log(error);
-        setShowModal(false);
-      }
+      //   try {
+      //     await axios.post("https://auth-atrt.onrender.com/signup", {
+      //       phonenumber: Phonenumber,
+      //       username: data.username,
+      //       password: data.password,
+      //     });
+      //     setShowLoading(false);
+      //     setShowModal(true);
+      //     setTimeout(() => {
+      //       setShowModal(false);
+      //       navigation.navigate("SignInScreen");
+      //     }, 3000);
+      //   } catch (error) {
+      //     setShowLoading(false);
+      //     console.log(error);
+      //     setShowModal(false);
+      //   }
     }
   };
 
@@ -122,134 +141,149 @@ const SignUpScreen = ({ navigation, route }) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
-  return showLoading ? (
-    <Loading msg="We're getting you Onboard" />
-  ) : (
-    <View style={styles.container}>
-      {showModal && <SignUpModal navigation={navigation} />}
-      <View style={styles.header}>
-        <Image source={cooplogo} style={{ width: 200, height: 200 }} />
-      </View>
-      <Animatable.View
-        animation={showModal ? "" : "fadeInUpBig"}
-        style={styles.footer}
-      >
-        <View>
+  function renderBody() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image source={cooplogo} style={{ width: 200, height: 200 }} />
+        </View>
+        <Animatable.View animation={"fadeInUpBig"} style={styles.footer}>
+          {/* <View>
           <Text style={styles.text_header}>{`Hello, ${Capitalize(name)}`}</Text>
-        </View>
-        <View style={styles.card}>
-          <Text style={styles.text_footer}>Username</Text>
-          <View style={styles.action}>
-            <FontAwesome name="user-o" color="#05375a" size={20} />
-            <TextInput
-              placeholder="Your Username"
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => textInputChange(val)}
-            />
-            {data.check_textInputChange ? (
-              <Animatable.View animation="bounceIn">
-                <Feather name="check-circle" color="green" size={20} />
-              </Animatable.View>
-            ) : null}
-          </View>
+        </View> */}
+          <View style={styles.card}>
+            <Text style={styles.text_footer}>Username</Text>
+            <View style={styles.action}>
+              <FontAwesome name="user-o" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Your Username"
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => textInputChange(val)}
+              />
+              {data.check_textInputChange ? (
+                <Animatable.View animation="bounceIn">
+                  <Feather name="check-circle" color="green" size={20} />
+                </Animatable.View>
+              ) : null}
+            </View>
 
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                marginTop: 35,
-              },
-            ]}
-          >
-            Password
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
-            <TextInput
-              placeholder="Your Password"
-              secureTextEntry={data.secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => handlePasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <Text
-            style={[
-              styles.text_footer,
-              {
-                marginTop: 35,
-              },
-            ]}
-          >
-            Confirm Password
-          </Text>
-          <View style={styles.action}>
-            <Feather name="lock" color="#05375a" size={20} />
-            <TextInput
-              placeholder="Confirm Your Password"
-              secureTextEntry={data.confirm_secureTextEntry ? true : false}
-              style={styles.textInput}
-              autoCapitalize="none"
-              onChangeText={(val) => handleConfirmPasswordChange(val)}
-            />
-            <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
-              {data.secureTextEntry ? (
-                <Feather name="eye-off" color="grey" size={20} />
-              ) : (
-                <Feather name="eye" color="grey" size={20} />
-              )}
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.button}>
-            {showWrongUsername && (
-              <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
-                <Text>wrong username!</Text>
-              </Animatable.View>
-            )}
-            {isPasswordMismatch && (
-              <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
-                <Text>Your password won't match!</Text>
-              </Animatable.View>
-            )}
-
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={handleSignUp}
-              disabled={disable}
+            <Text
+              style={[
+                styles.text_footer,
+                {
+                  marginTop: 35,
+                },
+              ]}
             >
-              <LinearGradient
-                colors={
-                  disable
-                    ? [COLORS.darkgray, COLORS.darkgray]
-                    : [COLORS.primary, COLORS.primary]
-                }
+              Password
+            </Text>
+            <View style={styles.action}>
+              <Feather name="lock" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Your Password"
+                secureTextEntry={data.secureTextEntry ? true : false}
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => handlePasswordChange(val)}
+              />
+              <TouchableOpacity onPress={updateSecureTextEntry}>
+                {data.secureTextEntry ? (
+                  <Feather name="eye-off" color="grey" size={20} />
+                ) : (
+                  <Feather name="eye" color="grey" size={20} />
+                )}
+              </TouchableOpacity>
+            </View>
+
+            <Text
+              style={[
+                styles.text_footer,
+                {
+                  marginTop: 35,
+                },
+              ]}
+            >
+              Confirm Password
+            </Text>
+            <View style={styles.action}>
+              <Feather name="lock" color="#05375a" size={20} />
+              <TextInput
+                placeholder="Confirm Your Password"
+                secureTextEntry={data.confirm_secureTextEntry ? true : false}
+                style={styles.textInput}
+                autoCapitalize="none"
+                onChangeText={(val) => handleConfirmPasswordChange(val)}
+              />
+              <TouchableOpacity onPress={updateConfirmSecureTextEntry}>
+                {data.secureTextEntry ? (
+                  <Feather name="eye-off" color="grey" size={20} />
+                ) : (
+                  <Feather name="eye" color="grey" size={20} />
+                )}
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.button}>
+              {showWrongUsername && (
+                <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
+                  <Text>wrong username!</Text>
+                </Animatable.View>
+              )}
+              {isPasswordMismatch && (
+                <Animatable.View animation="fadeInUpBig" style={{ margin: 10 }}>
+                  <Text>Your password won't match!</Text>
+                </Animatable.View>
+              )}
+
+              <TouchableOpacity
                 style={styles.signIn}
+                onPress={handleSignUp}
+                disabled={disable}
               >
-                <Text
-                  style={
+                <LinearGradient
+                  colors={
                     disable
-                      ? [styles.textSign, { color: COLORS.backgroundDark }]
-                      : [styles.textSign, styles.signup]
+                      ? [COLORS.darkgray, COLORS.darkgray]
+                      : [COLORS.primary, COLORS.primary]
                   }
+                  style={styles.signIn}
                 >
-                  Sign Up
-                </Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                  <Text
+                    style={
+                      disable
+                        ? [styles.textSign, { color: COLORS.backgroundDark }]
+                        : [styles.textSign, styles.signup]
+                    }
+                  >
+                    Sign Up
+                  </Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Animatable.View>
-    </View>
+        </Animatable.View>
+      </View>
+    );
+  }
+
+  return (
+    <>
+      {renderBody()}
+      {loader.loading && <Loading msg={"give us a moment"} />}
+      {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
+        <Modals props={{ modalType: "error", setModalOpen, type: "signup" }} />
+      )}
+      {!loader.loading && signup.res === "201" && ModalOpen && (
+        <Modals
+          props={{
+            modalType: "success",
+            type: "signup",
+            setModalOpen,
+          }}
+        />
+      )}
+    </>
   );
 };
 

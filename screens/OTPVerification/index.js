@@ -16,16 +16,12 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
-import PropTypes from "prop-types";
-// import {
-//   getHash,
-//   requestHint,
-//   startOtpListener,
-//   useOtpVerify,
-// } from "react-native-otp-verify";
+import OtpVerifyAction from "../../store/Actions/OtpAction";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../components/Loader";
+import Modals from "../../components/Modals";
 
 const CELL_COUNT = 5;
 const source = {
@@ -33,25 +29,18 @@ const source = {
 };
 
 const OTPVerification = ({ route, navigation }) => {
-  const { Phonenumber, type } = route.params;
+  const { type } = route.params;
   const [value, setValue] = useState("");
-  // const [hashFromMethod, setHashFromMethod] = useState("");
-  // const [hint, setHint] = useState("");
+  const dispatch = useDispatch();
+  const loader = useSelector((state) => state.loading);
+  const checkStatus = useSelector((state) => state.otp);
+  const [ModalOpen, setModalOpen] = useState(false);
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
-
-  // const { hash, otp, timeoutError, stopListener, startListener } =
-  //   useOtpVerify();
-
-  // useEffect(() => {
-  //   getHash().then(setHashFromMethod).catch(console.log);
-  //   requestHint().then(setHint).catch(console.log);
-  //   startOtpListener(setValue);
-  // }, []);
 
   function renderHeader() {
     return (
@@ -63,10 +52,9 @@ const OTPVerification = ({ route, navigation }) => {
   }
 
   const handleVerification = () => {
+    setModalOpen(true);
     if (type === "SignUp") {
-      navigation.navigate("SignUpScreen", {
-        Phonenumber: Phonenumber,
-      });
+      dispatch(OtpVerifyAction(value));
     } else if (type === "ATM") {
       navigation.navigate("Home");
     } else if (type === "Account") {
@@ -76,8 +64,8 @@ const OTPVerification = ({ route, navigation }) => {
     }
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
+  function renderBody() {
+    return (
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
@@ -121,12 +109,29 @@ const OTPVerification = ({ route, navigation }) => {
           </SafeAreaView>
         </ScrollView>
       </KeyboardAvoidingView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.container}>
+      {renderBody()}
+      {loader.loading && <Loading msg={"give us a moment"} />}
+      {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
+        <Modals props={{ modalType: "error", setModalOpen }} />
+      )}
+      {!loader.loading &&
+        Object.keys(checkStatus.res).length > 0 &&
+        ModalOpen && (
+          <Modals
+            props={{
+              modalType: "success",
+              type: "checkPhoneOtp",
+              setModalOpen,
+            }}
+          />
+        )}
     </SafeAreaView>
   );
-};
-
-OTPVerification.propTypes = {
-  Phonenumber: PropTypes.string,
 };
 
 export default OTPVerification;

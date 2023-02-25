@@ -1,22 +1,23 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import tw from "twrnc";
 import { setActiveStepIndex } from "../../store/Slices/OnBoardingSlice";
 
 export const FormNavigation = () => {
   const { activeStepIndex, formData } = useSelector((state) => state?.onBoard)
+  const dispatch = useDispatch();
   const changeScreen = (index) => {
     if (index === 0) {
-      setActiveStepIndex(index);
+      dispatch(setActiveStepIndex(index));
     } else if (index === 1 && formData.title !== undefined) {
-      setActiveStepIndex(index);
+      dispatch(setActiveStepIndex(index));
     } else if (index === 2 && formData.country !== undefined) {
-      setActiveStepIndex(index);
+      dispatch(setActiveStepIndex(index));
     } else if (index === 3) {
-      setActiveStepIndex(index);
+      dispatch(setActiveStepIndex(index));
     } else if (index === 4) {
-      setActiveStepIndex(index);
+      dispatch(setActiveStepIndex(index));
     } else {
       alert("please complete the previous form");
     }
