@@ -1,21 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useStateContext } from "../Contexts/ContextProvider";
 
 import RBSheet from "react-native-raw-bottom-sheet";
-
 import * as ImagePicker from "expo-image-picker";
-
+import { useSelector } from "react-redux";
+import { setIdBack, setIdFront, setOpenModal, setPhoto, setSignature } from "../../store/Slices/OnBoardingSlice";
 export const ImageP = ({ invoker, navigation }) => {
   const [image, setImage] = useState(null);
   const {
-    openModal,
-    setOpenModal,
-    setPhoto,
-    setIdFront,
-    setIdBack,
-    setSignature,
-  } = useStateContext();
+    openModal
+  } = useSelector((state) => state?.onBoard);
 
   useEffect(() => {
     if (openModal) {

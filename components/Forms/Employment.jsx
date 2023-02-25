@@ -1,16 +1,18 @@
 import { Text, ScrollView, Button, View } from "react-native";
 import React from "react";
 import { Input, Stack } from "native-base";
-import { DropDown } from "../DropDown";
+import { DropDown } from "./DropDown";
+import { FormNavigation } from "./FormNavigation";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { WarningOutlineIcon } from "native-base";
-import { FormNavigation } from "../FormNavigation";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import { setActiveStepIndex, setFormData } from "../../store/Slices/OnBoardingSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export const Employment = ({ navigation }) => {
-  const { setActiveStepIndex, activeStepIndex, formData, setFormData } =
-    useStateContext();
+  const { activeStepIndex, formData } = useSelector(state => state.onBoard)
+  const dispatch = useDispatch();
 
   const ValidationSchema = yup.object().shape({
     employeeStatus: yup.string().required("Required"),
@@ -34,11 +36,11 @@ export const Employment = ({ navigation }) => {
       employeerName: formData?.employeerName ? formData?.employeerName : "",
       tinNumber: formData?.tinNumber ? formData?.tinNumber : "",
     },
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
-      setFormData(data);
-      setActiveStepIndex(activeStepIndex + 1);
+      dispatch(setFormData(data));
+      dispatch(setActiveStepIndex(activeStepIndex + 1));
     },
   });
 

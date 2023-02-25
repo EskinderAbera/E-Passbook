@@ -1,10 +1,9 @@
 import React from "react";
 import SignatureScreen from "react-native-signature-canvas";
 import { useRef } from "react";
-import { useStateContext } from "../Contexts/ContextProvider";
+import { setSignature } from "../../store/Slices/OnBoardingSlice";
 
 export const SigniturePad = ({ navigation }) => {
-  const { setSignature } = useStateContext();
   const ref = useRef();
 
   const handleOK = (signature) => {

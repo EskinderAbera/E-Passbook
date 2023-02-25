@@ -10,25 +10,25 @@ import {
 } from "react-native";
 import { Stack, WarningOutlineIcon } from "native-base";
 import { TouchableOpacity } from "react-native";
-import { ImageP } from "../ImagePicker";
-import { FormNavigation } from "../FormNavigation";
+import { ImageP } from "./ImagePicker";
+import { FormNavigation } from "./FormNavigation";
 import Checkbox from "expo-checkbox";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import { setOpenModal, setFormData } from "../../store/Slices/OnBoardingSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Agreement = ({ navigation }) => {
   const {
-    setOpenModal,
     photo,
     idFront,
     idBack,
     signature,
-    formData,
-    setFormData,
-  } = useStateContext();
+    formData
+  } = useSelector(state => state.onBoard);
   const [agreementCheck, setAgreementCheck] = useState(false);
   const [mergedImages, setMergedImages] = useState(null);
   const [submitButton, setSubmitMethod] = useState(false);
   const mergeImages = require("merge-base64");
+  const dispatch = useDispatch();
 
   const submitMethod = () => {
     setSubmitMethod(true);
@@ -38,7 +38,7 @@ export const Agreement = ({ navigation }) => {
   };
 
   const openImageModal = () => {
-    setOpenModal(true);
+    dispatch(setOpenModal(true));
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const Agreement = ({ navigation }) => {
     initialValues: {},
     onSubmit: (values) => {
       const data = { ...formData, mergedImages };
-      setFormData(data);
+      dispatch(setFormData(data));
       navigation.navigate("SignUpScreen");
     },
   });

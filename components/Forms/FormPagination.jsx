@@ -1,15 +1,13 @@
 import React from "react";
-import {
-  PersonalInfo,
-  Address,
-  Documents,
-  Employment,
-  Agreement,
-} from "../components";
-import { useStateContext } from "../Contexts/ContextProvider";
+import { useSelector } from "react-redux";
+import { PersonalInfo } from "./PersonalInfo";
+import { Address } from "./Address";
+import { Documents } from "./Documents";
+import { Employment } from "./Employment";
+import { Agreement } from "./Agreement";
 
 export const FormPagination = ({ navigation }) => {
-  const { activeStepIndex } = useStateContext();
+  const { activeStepIndex } = useSelector(state => state?.onBoard);
   let stepContent;
   switch (activeStepIndex) {
     case 0:

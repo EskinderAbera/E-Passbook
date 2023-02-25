@@ -6,29 +6,32 @@ import * as yup from "yup";
 import { TouchableOpacity } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { format } from "date-fns";
-import { DropDown } from "../DropDown";
-import { ImageP } from "../ImagePicker";
+import { DropDown } from "./DropDown";
+import { ImageP } from "./ImagePicker";
+import { FormNavigation } from "./FormNavigation";
 import icons from "../../constants/icons";
-import { FormNavigation } from "../FormNavigation";
-import { useStateContext } from "../../Contexts/ContextProvider";
+import Upload from "../../assets/icons/Upload";
+import Eye from "../../assets/icons/Eye.svg";
+
+import { setOpenModal, setFormData, setActiveStepIndex } from "../../store/Slices/OnBoardingSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export const Documents = ({ navigation }) => {
   const {
-    setOpenModal,
-    setActiveStepIndex,
     activeStepIndex,
     photo,
     idFront,
     idBack,
     formData,
-    setFormData,
-  } = useStateContext();
+  } = useSelector(state => state.onBoard);
   const [issueDate, setIssueDate] = useState(new Date());
   const [expiryDate, setExpiryDate] = useState(new Date());
   const [showIssue, setShowIssue] = useState(false);
   const [showExpiry, setShowExpiry] = useState(false);
   const [invoker, setInvoker] = useState(null);
   const [submitButton, setSubmitMethod] = useState(false);
+  const dispatch = useDispatch();
 
   const showDate = (invoker) => {
     if (invoker === "Issue") {
@@ -39,7 +42,7 @@ export const Documents = ({ navigation }) => {
   };
 
   const openImageModal = (invoker) => {
-    setOpenModal(true);
+    dispatch(setOpenModal(true));
     setInvoker(invoker);
   };
 
@@ -67,11 +70,11 @@ export const Documents = ({ navigation }) => {
       issueDate: formData?.issueDate ? formData?.issueDate : "",
       expiryDate: formData?.expiryDate ? formData?.expiryDate : "",
     },
-    validationSchema: ValidationSchema,
+    // validationSchema: ValidationSchema,
     onSubmit: (values) => {
       const data = { ...formData, ...values };
-      setFormData(data);
-      setActiveStepIndex(activeStepIndex + 1);
+      dispatch(setFormData(data));
+      dispatch(setActiveStepIndex(activeStepIndex + 1));
     },
   });
 
@@ -195,14 +198,15 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("photo")}>
-                <icons.Upload width={22} height={22} />
+                {/* <icons.Upload width={22} height={22} /> */}
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: photo });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Photo</Text>
@@ -216,14 +220,14 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("idFront")}>
-                <icons.Upload width={22} height={22} />
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: idFront });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Id front</Text>
@@ -237,14 +241,14 @@ export const Documents = ({ navigation }) => {
           <View style={styles.uploadContainer}>
             <View style={styles.photoButtons}>
               <TouchableOpacity onPress={() => openImageModal("idBack")}>
-                <icons.Upload width={22} height={22} />
+                <Upload width={22} height={22} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   navigation.navigate("ImageViewer", { invoker: idBack });
                 }}
               >
-                <icons.Eye width={22} height={22} />
+                <Eye width={22} height={22} />
               </TouchableOpacity>
             </View>
             <Text style={styles.label}>Applicant's Id Back</Text>
