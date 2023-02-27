@@ -12,23 +12,32 @@ import EarlyPay from "../../components/EarlyPay";
 import Donation from "../../components/Donation";
 
 const AccountsDetail = ({ navigation, route }) => {
-  // const { accounts } = route.params;
-  const accounts = { product: "product", openingDate: "date" }
-  const donations = [{
-    "campaignId": 359,
-    "title": "New",
-    "shortDescription": "ect and pre-launch pages. Potential backers will also see them if your project appears on category pages, se",
-    "city": "addis",
-    "imageUrl": "http://res.cloudinary.com/do394twgw/image/upload/v1676624263/o7zxj3m6fmvpoye2y3pt.jpg",
-    "goalAmount": 5000.0,
-    "owner": "hunda@gmail.com",
-    "projectType": "businness",
-    "campaignDuration": 30,
-    "raised_amount": 450.0,
-    "timeLeft": 14
-  }]
+  const { accounts } = route.params;
+  const donations = [
+    {
+      campaignId: 359,
+      title: "New",
+      shortDescription:
+        "ect and pre-launch pages. Potential backers will also see them if your project appears on category pages, se",
+      city: "addis",
+      imageUrl:
+        "http://res.cloudinary.com/do394twgw/image/upload/v1676624263/o7zxj3m6fmvpoye2y3pt.jpg",
+      goalAmount: 5000.0,
+      owner: "hunda@gmail.com",
+      projectType: "businness",
+      campaignDuration: 30,
+      raised_amount: 450.0,
+      timeLeft: 14,
+    },
+  ];
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  const categories = ["Home", "Account", "Transaction", "Early-Pay", "Donations"];
+  const categories = [
+    "Home",
+    "Account",
+    "Transaction",
+    "Early-Pay",
+    "Donations",
+  ];
   const [data, setData] = useState({
     home: true,
     transaction: false,
@@ -135,7 +144,7 @@ const AccountsDetail = ({ navigation, route }) => {
         <View>
           <CategoryList />
         </View>
-        <View style={{ height: "100%", display: 'flex' }}>
+        <View style={{ height: "100%", display: "flex" }}>
           {data.home && <HomeInfo navigation={navigation} />}
           {data.account && (
             <AccountInfo navigation={navigation} accounts={accounts} />
@@ -154,8 +163,7 @@ const AccountsDetail = ({ navigation, route }) => {
                 donationRaised={donation.raised_amount}
                 hoursLeft={donation.timeLeft}
               />
-            ))
-          }
+            ))}
         </View>
       </Animated.View>
     </ScrollView>

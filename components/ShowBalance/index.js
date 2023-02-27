@@ -36,7 +36,7 @@ const ShowBalance = ({ navigation, accountsf }) => {
   function handleAccount() {
     let account;
     if (accountNo)
-      account = totalAccounts.accounts.filter(
+      account = totalAccounts.accounts.accounts.filter(
         (account) => account.accountNumber === accountNo
       )[0];
     if (Object.keys(account).length > 0) {

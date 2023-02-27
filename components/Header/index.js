@@ -10,7 +10,6 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import RBSheet from "react-native-raw-bottom-sheet";
 
 const Header = ({ navigation, accounts }) => {
-  const { user } = useStateContext();
   const [balanceVisible, setBalanceVisible] = useState(false);
   const balance = "10200.125";
   const refRBSheet = useRef();
@@ -57,16 +56,16 @@ const Header = ({ navigation, accounts }) => {
           <View style={styles.innerAccount}>
             <View>
               <View style={styles.productText}>
-                <Text style={styles.header}>{accounts.product}</Text>
+                <Text style={styles.header}>{accounts?.product}</Text>
               </View>
-              <Text style={styles.accountNo}>{accounts.accountNo}</Text>
+              <Text style={styles.accountNo}>{accounts?.accountNumber}</Text>
             </View>
           </View>
           <View style={styles.balanceContainer}>
             <View style={styles.balanceText}>
               <Text style={styles.header}>BALANCE</Text>
               {balanceVisible ? (
-                <Text style={styles.visible}>{accounts.balance}</Text>
+                <Text style={styles.visible}>{accounts?.balance}</Text>
               ) : (
                 <Text style={styles.visible}>
                   {[...balance].map((c) => "*")}
@@ -81,7 +80,7 @@ const Header = ({ navigation, accounts }) => {
               onPress={() => setBalanceVisible(!balanceVisible)}
             />
           </View>
-          <Text style={styles.fullName}>{user.fullName}</Text>
+          {/* <Text style={styles.fullName}>{user.fullName}</Text> */}
           <TouchableOpacity
             onPress={() => {
               refRBSheet.current.open();

@@ -9,7 +9,8 @@ const HomeScreenNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false }}
-      initialRouteName="Account">
+      initialRouteName="HomeAccount"
+    >
       <Stack.Screen name="HomeAccount" component={Home} />
       <Stack.Screen
         name="Account"

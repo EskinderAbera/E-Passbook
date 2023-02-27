@@ -89,9 +89,14 @@ const SetPrimaryAccount = () => {
           >
             <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
           </TouchableOpacity>
-          <Text style={{ alignSelf: "center", fontSize: 15 }}>
-            {pinAccount}
-          </Text>
+          <View style={{ flexDirection: "column" }}>
+            <Text style={{ alignSelf: "center", fontSize: 15 }}>
+              {totalAccounts?.accounts?.primaryAccount?.passcode}
+            </Text>
+            <Text style={{ alignSelf: "center", fontSize: 15 }}>
+              {totalAccounts?.accounts?.primaryAccount?.accountNumber}
+            </Text>
+          </View>
         </View>
         <Modal visible={showModal} transparent={true} animationType={"slide"}>
           <TouchableOpacity
@@ -110,7 +115,7 @@ const SetPrimaryAccount = () => {
                 >
                   Select Primary Account
                 </Text>
-                {totalAccounts.accounts
+                {totalAccounts?.accounts?.accounts
                   ?.filter((acct) => acct.status === true)
                   .map((account, index) => (
                     <TouchableOpacity
@@ -122,16 +127,17 @@ const SetPrimaryAccount = () => {
                         setPinAccount(account?.accountNumber);
                       }}
                       style={
-                        selectedAccount?.[index]
+                        selectedAccount?.[index] | account?.isMainAccount
                           ? [styles.group, styles.selectedMember]
                           : styles.group
                       }
                     >
                       <Text
                         style={{
-                          color: selectedAccount?.[index]
-                            ? COLORS.white
-                            : COLORS.primary,
+                          color:
+                            selectedAccount?.[index] | account?.isMainAccount
+                              ? COLORS.white
+                              : COLORS.primary,
                           fontSize: 15,
                         }}
                       >

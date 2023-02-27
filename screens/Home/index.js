@@ -78,7 +78,7 @@ const Home = ({ navigation }) => {
           ? Array.from("coopass").map((acc, index) => (
               <HomeSkeleton key={index} />
             ))
-          : loadAccounts.accounts.map((accountsf) => {
+          : loadAccounts.accounts.accounts.map((accountsf) => {
               return (
                 <ShowBalance
                   navigation={navigation}

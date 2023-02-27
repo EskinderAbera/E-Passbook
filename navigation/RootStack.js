@@ -11,7 +11,6 @@ import { SigniturePad } from "../components/OnBoarding";
 import { FormPagination } from "../components/Forms";
 import AgreementPolicy from "../components/OnBoarding/AgreementPolicy";
 import ImageViewer from "../components/OnBoarding/ImageViewer";
-import SignUpModal from "../components/Modals/SignupModal";
 
 const Stack = createStackNavigator();
 
@@ -20,9 +19,8 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="modal"
+        initialRouteName="Dashboard"
       >
-        <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
         <Stack.Screen name="OTPVerification" component={OTPVerification} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
