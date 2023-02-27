@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckUserExistenceAPI } from "../../lib/api-calls/CheckUser";
 import { setError, setLoading, setUserInfo } from "../Slices";
 
@@ -7,6 +8,8 @@ const checkPhoneAction = (phoneNumber) => {
       dispatch(setLoading(true));
       const res = await CheckUserExistenceAPI(phoneNumber);
       dispatch(setUserInfo(res));
+      dispatch(setError({}));
+      await AsyncStorage.setItem("phone", phoneNumber);
       dispatch(setLoading(false));
     } catch (e) {
       dispatch(setLoading(false));

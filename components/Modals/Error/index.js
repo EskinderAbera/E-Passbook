@@ -15,17 +15,7 @@ const ErrorModal = () => {
               style={{ height: 150, width: 150, marginVertical: 10 }}
             />
           </View>
-          {error.status === "404" ? (
-            <Text style={{ fontSize: 20, textAlign: "center" }}>
-              Hmm... you don't have account! {"\n"} {"\n"} please Onboard
-              yourself
-            </Text>
-          ) : (
-            <Text style={{ fontSize: 20, textAlign: "center" }}>
-              you have already registered {"\n"} {"\n"}
-              please login!
-            </Text>
-          )}
+          <Text>Wrong Account Number!</Text>
         </View>
       </View>
     </Modal>

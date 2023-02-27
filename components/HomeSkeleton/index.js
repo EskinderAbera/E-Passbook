@@ -1,5 +1,4 @@
 import { View } from "react-native";
-import styles from "../ShowBalance/styles";
 import { createShimmerPlaceholder } from "react-native-shimmer-placeholder";
 import { LinearGradient } from "expo-linear-gradient";
 

@@ -32,7 +32,6 @@ const SignUpScreen = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const loader = useSelector((state) => state.loading);
   const signup = useSelector((state) => state.signup);
-  console.log("hello", signup.statusCode);
   const textInputChange = (val) => {
     if (val.length >= 4) {
       setData({
@@ -247,7 +246,6 @@ const SignUpScreen = ({ navigation }) => {
   return (
     <>
       {renderBody()}
-      {/* {loader.loading && <Loading msg={"give us a moment"} />} */}
       {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
         <Modals props={{ modalType: "error", setModalOpen, type: "signup" }} />
       )}

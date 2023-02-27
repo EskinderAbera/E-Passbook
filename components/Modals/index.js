@@ -4,6 +4,7 @@ import styles from "./styles";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 
 const Modals = ({ props }) => {
   const [showModal, setShowModal] = useState(true);
@@ -20,15 +21,17 @@ const Modals = ({ props }) => {
 
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.success}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="checkcircleo" size={70} color="white" />
           </View>
-
           <Text
-            style={{ marginVertical: 35, fontSize: 20, textAlign: "center" }}
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
           >
             Welcome, {user.userInfo.fullName} {"\n"}
             Please verify your phone
@@ -37,7 +40,6 @@ const Modals = ({ props }) => {
       );
     } else if (props.type === "checkPhoneOtp") {
       const navigation = useNavigation();
-      const user = useSelector((state) => state.user);
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -45,25 +47,26 @@ const Modals = ({ props }) => {
       }, 5000);
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.success}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
-          </View>
-
-          <Text
-            style={{ marginVertical: 35, fontSize: 20, textAlign: "center" }}
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
           >
-            Welldone, {user.userInfo.fullName} {"\n"}
-            Your phone is verified!
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Great! {"\n"}
+            Your Account is activated
           </Text>
         </View>
       );
     } else if (props.type === "signup") {
-      console.log("I am here");
       const navigation = useNavigation();
-      const user = useSelector((state) => state.user);
+      // const user = useSelector((state) => state.user);
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -71,18 +74,68 @@ const Modals = ({ props }) => {
       }, 5000);
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.success}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
-          </View>
-
-          <Text
-            style={{ marginVertical: 35, fontSize: 20, textAlign: "center" }}
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
           >
-            Hooray, {user.userInfo.fullName} {"\n"}
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Hooray! {"\n"}
             You have created account!
+          </Text>
+        </View>
+      );
+    } else if (props.type === "activateAccount") {
+      setTimeout(() => {
+        setShowModal(false);
+        props.setModalOpen(false);
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Great! {"\n"}
+            Account Activated
+          </Text>
+        </View>
+      );
+    } else if (props.type === "PrimaryAccount") {
+      setTimeout(() => {
+        setShowModal(false);
+        props.setIsModal(false);
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Well Done! {"\n"}
+            you have set primary account
           </Text>
         </View>
       );
@@ -97,19 +150,27 @@ const Modals = ({ props }) => {
       }, 5000);
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.error}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
           </View>
+
           {loader.error.msg === "404" ? (
-            <Text style={{ fontSize: 20, textAlign: "center" }}>
+            <Text
+              style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+            >
               Hmm... you don't have account! {"\n"} {"\n"} please Onboard
               yourself
             </Text>
           ) : (
-            <Text style={{ fontSize: 20, textAlign: "center" }}>
+            <Text
+              style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+            >
               you have already registered {"\n"} {"\n"}
               please login!
             </Text>
@@ -123,13 +184,45 @@ const Modals = ({ props }) => {
       }, 5000);
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.error}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
           </View>
-          <Text>username exist</Text>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Sorry! {"\n"}
+            Username already exist!
+          </Text>
+        </View>
+      );
+    } else if (props.type === "activateAccount") {
+      setTimeout(() => {
+        setShowModal(false);
+        props.setModalOpen(false);
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Are you sure it is Your Account? {"\n"} {"\n"}
+            Please, try again!
+          </Text>
         </View>
       );
     } else {
@@ -139,13 +232,20 @@ const Modals = ({ props }) => {
       }, 5000);
       return (
         <View style={styles.modalContainer}>
-          <View style={{ alignItems: "center" }}>
-            <Image
-              source={icons.error}
-              style={{ height: 150, width: 150, marginVertical: 10 }}
-            />
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
           </View>
-          <Text>Invalid Token</Text>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Invalid Token!
+          </Text>
         </View>
       );
     }

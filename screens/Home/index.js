@@ -1,17 +1,21 @@
 import { View, Text, ScrollView, Image, Dimensions } from "react-native";
 import ShowBalance from "../../components/ShowBalance";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import styles from "./styles";
 import SetPrimaryAccount from "../../components/SetPrimaryAccount";
 import Carousel from "react-native-reanimated-carousel";
-import HomeSkeleton from "../../components/HomeSkeleton";
-import { useState } from "react";
+import HomeSkeleton from "../../components/HomeSkeleton/index";
+import { useEffect, useState } from "react";
 import { TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AccountsAction from "../../store/Actions/AccountsAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = ({ navigation }) => {
-  const { accounts } = useStateContext();
-  const [isLoaded, setIsLoaded] = useState(false);
+  const loadAccounts = useSelector((state) => state.accounts);
+  const [phoneNumber, setPhoneNumber] = useState("");
   const width = Dimensions.get("window").width;
+  const dispatch = useDispatch();
+
   const products = [
     {
       image: require("../../assets/icons/michu.png"),
@@ -24,6 +28,24 @@ const Home = ({ navigation }) => {
     },
   ];
 
+  useEffect(() => {
+    const getPhone = async () => {
+      try {
+        const value = await AsyncStorage.getItem("phone");
+        if (value !== null) {
+          setPhoneNumber(value);
+        }
+      } catch (e) {
+        setPhoneNumber("");
+      }
+    };
+    getPhone();
+  }, []);
+
+  useEffect(() => {
+    if (Array.from(phoneNumber)) dispatch(AccountsAction(phoneNumber));
+  }, [phoneNumber]);
+
   return (
     <View style={styles.container}>
       <View style={styles.sliderContainer}>
@@ -32,10 +54,7 @@ const Home = ({ navigation }) => {
           autoPlay={true}
           data={products}
           renderItem={({ item, index }) => (
-            <TouchableOpacity
-              style={styles.slide}
-              onPress={() => setIsLoaded(!isLoaded)}
-            >
+            <TouchableOpacity style={styles.slide} key={index}>
               <Image
                 source={item.image}
                 resizeMode="cover"
@@ -55,23 +74,19 @@ const Home = ({ navigation }) => {
         </View>
       </View>
       <ScrollView>
-        {!isLoaded
-          ? accounts.map((acc, index) => {
-              return <HomeSkeleton key={index} />;
-            })
-          : accounts.map((accountsf) => {
+        {loadAccounts.isLoaded
+          ? Array.from("coopass").map((acc, index) => (
+              <HomeSkeleton key={index} />
+            ))
+          : loadAccounts.accounts.map((accountsf) => {
               return (
                 <ShowBalance
                   navigation={navigation}
-                  key={accountsf.openingDate}
+                  key={accountsf.accountId}
+                  accountsf={accountsf}
                 />
               );
             })}
-        {/* {accounts.map((accountsf) => {
-          return (
-            <ShowBalance navigation={navigation} key={accountsf.openingDate} />
-          );
-        })} */}
       </ScrollView>
     </View>
   );
