@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
@@ -12,8 +12,11 @@ import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
 import * as LocalAuthentication from "expo-local-authentication";
+import { BASE_URL } from "../../config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import store from "../../store";
 import setUpInterceptor from "../../lib/axios_interceptors";
+import { getAccountList } from "../../lib/api-calls/Accounts";
 
 const SignInScreen = ({ navigation }) => {
   const { handleUser, handleAccounts, fingerPrint } = useStateContext();
@@ -29,10 +32,6 @@ const SignInScreen = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   setUpInterceptor({ store });
-
-  // }, [])
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -90,22 +89,34 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const loginHandle = async () => {
-    if ((data.username < 4) | (data.password < 4)) {
+    // if ((data.username < 4) | (data.password < 4)) {
+    if (false) {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       setLoading(true);
       try {
-        const response = await axios.post(
-          "https://auth-atrt.onrender.com/login",
+        const res = await axios.post(
+          `${BASE_URL}/login`,
           {
             username: data.username,
             password: data.password,
+
           }
         );
-        handleUser(response.data.response[0].user[0]);
-        handleAccounts(response.data.response[1].accounts);
-        localStorage.setItem("AuthToken", JSON.stringify(res.data));
-        navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
+        // handleUser(response.data.response[0].user[0]);
+        // handleAccounts(response.data.response[1].accounts);c
+        AsyncStorage.setItem("AuthToken", JSON.stringify(res.data.access_token))
+          .then(() => {
+            console.log('Token saved successfully');
+            setUpInterceptor()
+              .then((res) => getAccountList("942177936"));
+            setLoading(false);
+          })
+          .catch((error) => {
+            setLoading(false);
+            console.log('Error saving token:', error);
+          });
+        // navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
         setLoading(false);
         if (error.message === "Network Error") {
