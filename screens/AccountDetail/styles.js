@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   },
   categoryListText: {
     fontSize: 17,
+    marginHorizontal: 10,
     fontWeight: "bold",
   },
 

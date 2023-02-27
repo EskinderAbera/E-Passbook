@@ -23,7 +23,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Registeration"
+        initialRouteName="SignUpScreen1"
       >
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
         <Stack.Screen name="OTPVerification" component={OTPVerification} />
