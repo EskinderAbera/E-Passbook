@@ -11,7 +11,6 @@ import { Modal } from "react-native";
 import { COLORS } from "../../constants/theme";
 import { useDispatch, useSelector } from "react-redux";
 import AccountActivate from "../Modals/AccountActivate";
-import Loading from "../Loader";
 import Modals from "../Modals";
 import SetPrimaryAction from "../../store/Actions/SetPrimary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -90,9 +89,6 @@ const SetPrimaryAccount = () => {
             <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
           </TouchableOpacity>
           <View style={{ flexDirection: "column" }}>
-            <Text style={{ alignSelf: "center", fontSize: 15 }}>
-              {totalAccounts?.accounts?.primaryAccount?.passcode}
-            </Text>
             <Text style={{ alignSelf: "center", fontSize: 15 }}>
               {totalAccounts?.accounts?.primaryAccount?.accountNumber}
             </Text>

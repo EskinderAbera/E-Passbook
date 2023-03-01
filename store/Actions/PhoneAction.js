@@ -13,7 +13,11 @@ const checkPhoneAction = (phoneNumber) => {
       dispatch(setLoading(false));
     } catch (e) {
       dispatch(setLoading(false));
-      dispatch(setError({ msg: e.response.status }));
+      if (e.message === "Network Error") {
+        dispatch(setError({ msg: e.message }));
+      } else {
+        dispatch(setError({ msg: e.response.status }));
+      }
     }
   };
 };

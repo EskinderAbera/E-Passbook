@@ -1,18 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ImageBackground, View, Text, TouchableOpacity } from "react-native";
 import banner from "../../assets/icons/coop-banner.png";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { Entypo } from "@expo/vector-icons";
 import QRCode from "react-native-qrcode-svg";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import RBSheet from "react-native-raw-bottom-sheet";
 
 const Header = ({ navigation, accounts }) => {
   const [balanceVisible, setBalanceVisible] = useState(false);
   const balance = "10200.125";
   const refRBSheet = useRef();
+
+  useEffect(() => {}, []);
 
   const BottomContent = () => (
     <View style={styles.textContainer}>
@@ -87,7 +87,7 @@ const Header = ({ navigation, accounts }) => {
             }}
             style={styles.qr}
           >
-            <QRCode value={accounts.accountNo} size={50} />
+            <QRCode value={accounts?.accountNumber} size={50} />
           </TouchableOpacity>
         </View>
       </ImageBackground>

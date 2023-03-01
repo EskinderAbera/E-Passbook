@@ -24,7 +24,7 @@ const AccountsSlice = createSlice({
       state.primaryAccount = true;
     },
     updateAccount: (state, action) => {
-      state.accounts = state.accounts.map((acct) =>
+      state.accounts.accounts = state.accounts.accounts.map((acct) =>
         acct.accountNumber === action.payload.accountNo
           ? action.payload.account
           : acct

@@ -5,13 +5,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 import cooplogo from "../../assets/icons/cooplogo.png";
-import { useStateContext } from "../../Contexts/ContextProvider";
 import axios from "axios";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
-import * as LocalAuthentication from "expo-local-authentication";
 import { BASE_URL } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import store from "../../store";
@@ -19,8 +17,6 @@ import setUpInterceptor from "../../lib/axios_interceptors";
 import { getAccountList } from "../../lib/api-calls/Accounts";
 
 const SignInScreen = ({ navigation }) => {
-  const { handleUser, handleAccounts, fingerPrint } = useStateContext();
-
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -29,9 +25,6 @@ const SignInScreen = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
-
-  const [loading, setLoading] = useState(false);
-
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -89,36 +82,23 @@ const SignInScreen = ({ navigation }) => {
   };
 
   const loginHandle = async () => {
-    // if ((data.username < 4) | (data.password < 4)) {
-    if (false) {
+    if ((data.username < 4) | (data.password < 4)) {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
-      setLoading(true);
       try {
-        const res = await axios.post(
-          `${BASE_URL}/login`,
-          {
-            username: data.username,
-            password: data.password,
-
-          }
-        );
-        // handleUser(response.data.response[0].user[0]);
-        // handleAccounts(response.data.response[1].accounts);c
+        const res = await axios.post(`${BASE_URL}/login`, {
+          username: data.username,
+          password: data.password,
+        });
         AsyncStorage.setItem("AuthToken", JSON.stringify(res.data.access_token))
           .then(() => {
-            console.log('Token saved successfully');
-            setUpInterceptor()
-              .then((res) => getAccountList("942177936"));
-            setLoading(false);
+            setUpInterceptor();
           })
           .catch((error) => {
-            setLoading(false);
-            console.log('Error saving token:', error);
+            console.log("Error saving token:", error);
           });
-        // navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
+        navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
       } catch (error) {
-        setLoading(false);
         if (error.message === "Network Error") {
           console.log("network error");
         } else {
@@ -128,14 +108,7 @@ const SignInScreen = ({ navigation }) => {
     }
   };
 
-  const LoginWithFingerPrint = async () => {
-    let result = await LocalAuthentication.authenticateAsync();
-    console.log("hey", result);
-  };
-
-  return loading ? (
-    <Loading msg="Please... Give us a moment" />
-  ) : (
+  return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#00adef" style="light" />
       <View style={styles.header}>
@@ -243,11 +216,6 @@ const SignInScreen = ({ navigation }) => {
               Sign Up
             </Text>
           </TouchableOpacity>
-          {fingerPrint && (
-            <TouchableOpacity onPress={() => LoginWithFingerPrint()}>
-              <Text>login with fingerprint</Text>
-            </TouchableOpacity>
-          )}
         </View>
       </Animatable.View>
     </View>

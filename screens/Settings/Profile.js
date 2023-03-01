@@ -18,6 +18,8 @@ import ContactUs from "./ContactUs";
 import Logout from "./Logout";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import Biometric from "./Biometric";
+import Security from "./Security";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -132,10 +134,15 @@ const Profile = ({ navigation }) => {
           <Tel style={{ marginTop: 10 }} number={`0${user.phone}`} />
           <Email name="Personal" email={user.email} />
           <Separator />
+
           <Password navigation={navigation} />
+
+          <Security />
+
           <Shares />
           <ContactUs />
           {isBiometric && <Biometric />}
+
           <Logout navigation={navigation} />
         </Card>
       </View>

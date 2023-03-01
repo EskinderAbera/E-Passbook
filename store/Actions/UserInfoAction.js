@@ -7,6 +7,7 @@ const AccountsAction = (phoneNumber) => {
     try {
       const res = await fetchAccounts(phoneNumber);
       setUserInfo(res);
+      dispatch(setError({}));
     } catch (e) {
       if (e.message === "Network Error") {
         dispatch(setError({ msg: e.message }));

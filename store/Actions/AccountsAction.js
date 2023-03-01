@@ -8,6 +8,7 @@ const AccountsAction = (phoneNumber) => {
       const res = await fetchAccounts(phoneNumber);
       dispatch(setAccounts(res));
       dispatch(setIsLoaded(false));
+      dispatch(setError({}));
     } catch (e) {
       if (e.message === "Network Error") {
         dispatch(setError({ msg: e.message }));

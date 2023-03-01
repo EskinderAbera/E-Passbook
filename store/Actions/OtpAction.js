@@ -9,7 +9,9 @@ const OtpVerifyAction = (otp) => {
       const res = await OtpVerifyAPI(otp);
       dispatch(setCheckStatus(res));
       dispatch(setLoading(false));
+      dispatch(setError({}));
     } catch (e) {
+      console.log(e);
       dispatch(setLoading(false));
       dispatch(setError({ msg: e.message }));
     }

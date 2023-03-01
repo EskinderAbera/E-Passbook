@@ -1,10 +1,11 @@
-import { View, Modal, Text, Image } from "react-native";
-import icons from "../../constants/icons";
+import { View, Modal, Text } from "react-native";
+// import COLORS from "../../constants/theme/apptheme";
 import styles from "./styles";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { COLORS } from "../../constants/theme";
 
 const Modals = ({ props }) => {
   const [showModal, setShowModal] = useState(true);
@@ -160,19 +161,25 @@ const Modals = ({ props }) => {
             <AntDesign name="questioncircleo" size={70} color="white" />
           </View>
 
-          {loader.error.msg === "404" ? (
+          {loader.error.msg === 404 ? (
             <Text
               style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
             >
               Hmm... you don't have account! {"\n"} {"\n"} please Onboard
               yourself
             </Text>
-          ) : (
+          ) : loader.error.msg === 409 ? (
             <Text
               style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
             >
               you have already registered {"\n"} {"\n"}
               please login!
+            </Text>
+          ) : (
+            <Text
+              style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+            >
+              Network Error
             </Text>
           )}
         </View>
@@ -183,7 +190,7 @@ const Modals = ({ props }) => {
         props.setModalOpen(false);
       }, 5000);
       return (
-        <View style={styles.modalContainer}>
+        <View style={[styles.modalContainer]}>
           <View
             style={{
               backgroundColor: COLORS.red,
@@ -234,12 +241,13 @@ const Modals = ({ props }) => {
         <View style={styles.modalContainer}>
           <View
             style={{
-              backgroundColor: COLORS.red,
+              backgroundColor: "red",
               padding: 10,
+              flex: 1,
               alignItems: "center",
             }}
           >
-            <AntDesign name="questioncircleo" size={70} color="white" />
+            <AntDesign name="questioncircleo" size={70} color="red" />
           </View>
           <Text
             style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}

@@ -23,7 +23,6 @@ const store = configureStore({
   },
 });
 
-// export * from "./Actions";
 export * from "./Slices";
 
 export default store;

@@ -1,9 +1,10 @@
 import { StyleSheet, Platform } from "react-native";
+import { COLORS } from "../../constants/theme";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#00adef",
+    backgroundColor: COLORS.primary,
   },
   header: {
     flex: 1,
@@ -14,16 +15,16 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 2,
-    backgroundColor: "white",
+    backgroundColor: COLORS.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    borderLeftColor: "white",
-    borderRightColor: "white",
+    borderLeftColor: COLORS.white,
+    borderRightColor: COLORS.white,
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
   text_header: {
-    color: "black",
+    color: COLORS.black,
     // fontWeight: "bold",
     fontSize: 20,
   },
@@ -34,8 +35,6 @@ const styles = StyleSheet.create({
   action: {
     flexDirection: "row",
     marginTop: 10,
-    // borderBottomWidth: 1,
-    // borderBottomColor: "#f2f2f2",
     paddingBottom: 5,
   },
   textInput: {
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   signin: {
-    borderColor: "#00adef",
+    borderColor: COLORS.primary,
     borderWidth: 1,
     marginTop: 15,
   },
   textSign: {
     fontSize: 18,
-    fontWeight: "bold",
+    color: COLORS.white,
   },
   textPrivate: {
     flexDirection: "row",
@@ -73,14 +72,14 @@ const styles = StyleSheet.create({
     color: "gray",
   },
   errorMsg: {
-    color: "#FF0000",
+    color: COLORS.red,
     fontSize: 14,
   },
   callingArea: {
     width: 100,
     height: 50,
     marginHorizontal: 5,
-    borderBottomColor: "#00adef",
+    borderBottomColor: COLORS.primary,
     borderBottomWidth: 1,
     flexDirection: "row",
   },
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#00adef",
+    borderBottomColor: COLORS.primary,
     height: 40,
     color: "#05375a",
     lineHeight: 22,

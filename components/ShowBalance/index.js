@@ -36,10 +36,10 @@ const ShowBalance = ({ navigation, accountsf }) => {
   function handleAccount() {
     let account;
     if (accountNo)
-      account = totalAccounts.accounts.accounts.filter(
+      account = totalAccounts?.accounts?.accounts?.filter(
         (account) => account.accountNumber === accountNo
       )[0];
-    if (Object.keys(account).length > 0) {
+    if (account) {
       setModalOpen(true);
       setAccount({ ...account, status: true });
       dispatch(
@@ -170,7 +170,11 @@ const ShowBalance = ({ navigation, accountsf }) => {
                 </View>
                 <View style={styles.accountContainer}>
                   <Text style={styles.accountText}>Account Number</Text>
-                  <Text style={styles.accountNumber}>{account?.accountNo}</Text>
+                  <Text style={styles.accountNumber}>
+                    {account?.status === true
+                      ? account?.accountNumber
+                      : "**********"}
+                  </Text>
                 </View>
               </View>
             </View>

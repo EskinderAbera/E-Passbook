@@ -9,6 +9,7 @@ const SignUpAction = (data) => {
       const res = await Signup(data);
       dispatch(setSignupStatus(res));
       dispatch(setLoading(false));
+      dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
       dispatch(setError({ msg: e.message }));

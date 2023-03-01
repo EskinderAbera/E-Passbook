@@ -16,9 +16,7 @@ import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
-import ErrorModal from "../../components/Modals/Error/index";
 import { useDispatch, useSelector } from "react-redux";
-import CheckPhone from "../../components/Modals/SuccessModal/CheckPhone";
 import checkPhoneAction from "../../store/Actions/PhoneAction";
 import { useEffect } from "react";
 import { useFocusEffect } from "@react-navigation/native";
@@ -111,7 +109,11 @@ const SignUpScreen1 = ({ navigation }) => {
               />
               {data.check_PhoneTextChange ? (
                 <Animatable.View animation="bounceIn" style={styles.animatable}>
-                  <Feather name="check-circle" color="#00adef" size={20} />
+                  <Feather
+                    name="check-circle"
+                    color={COLORS.primary}
+                    size={20}
+                  />
                 </Animatable.View>
               ) : null}
             </View>

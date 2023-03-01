@@ -9,6 +9,7 @@ const SetPrimaryAction = (phoneNumber, account, pin) => {
       const res = await PrimaryAccountAPI(phoneNumber, account, pin);
       dispatch(setPrimaryAccount());
       dispatch(setLoading(false));
+      dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
       dispatch(setError({ msg: e.response.data }));

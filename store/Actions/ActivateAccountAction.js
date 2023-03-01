@@ -9,6 +9,7 @@ const ActivateAccountAction = (accountNumber) => {
       const res = await ActivateAccount(accountNumber);
       dispatch(setActiveStatus(res));
       dispatch(setLoading(false));
+      dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
       dispatch(setError({ msg: e.response.data }));
