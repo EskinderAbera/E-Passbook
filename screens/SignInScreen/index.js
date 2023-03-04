@@ -15,8 +15,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import store from "../../store";
 import setUpInterceptor from "../../lib/axios_interceptors";
 import { getAccountList } from "../../lib/api-calls/Accounts";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
+import * as LocalAuthentication from "expo-local-authentication";
+import StoreCredentials from "./StoreCredentials";
 
 const SignInScreen = ({ navigation }) => {
+  const [showFinger, setShowFinger] = useState(false);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -25,6 +30,22 @@ const SignInScreen = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
+
+  useEffect(() => {
+    const checkFingerEnabled = async () => {
+      let result = await SecureStore.getItemAsync("checked");
+      if (result) {
+        if (result === "true") {
+          setShowFinger(true);
+        } else {
+          setShowFinger(false);
+        }
+      } else {
+        setShowFinger(false);
+      }
+    };
+    checkFingerEnabled();
+  }, []);
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -81,11 +102,16 @@ const SignInScreen = ({ navigation }) => {
     }
   };
 
+  const handleLoginWithFingerPrint = async () => {
+    const result = await LocalAuthentication.authenticateAsync();
+  };
+
   const loginHandle = async () => {
     if ((data.username < 4) | (data.password < 4)) {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       try {
+        await StoreCredentials(data.username, data.password);
         const res = await axios.post(`${BASE_URL}/login`, {
           username: data.username,
           password: data.password,
@@ -217,6 +243,25 @@ const SignInScreen = ({ navigation }) => {
             </Text>
           </TouchableOpacity>
         </View>
+        {showFinger && (
+          <TouchableOpacity
+            style={{
+              marginTop: 10,
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+            onPress={handleLoginWithFingerPrint}
+          >
+            <Text style={{ alignSelf: "center", fontSize: 15 }}>
+              Login with
+            </Text>
+            <MaterialCommunityIcons
+              name="fingerprint"
+              size={30}
+              style={COLORS.darkgray}
+            />
+          </TouchableOpacity>
+        )}
       </Animatable.View>
     </View>
   );

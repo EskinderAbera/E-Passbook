@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Icon } from "react-native-elements";
 import {
   Image,
@@ -17,9 +17,8 @@ import Shares from "./Share";
 import ContactUs from "./ContactUs";
 import Logout from "./Logout";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import Biometric from "./Biometric";
 import Security from "./Security";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import * as SecureStore from "expo-secure-store";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -100,8 +99,21 @@ const styles = StyleSheet.create({
 });
 
 const Profile = ({ navigation }) => {
-  const { user, isBiometric } = useStateContext();
-  console.log(isBiometric);
+  const { user } = useStateContext();
+  const [showSecurity, setShowSecurity] = useState(false);
+  useEffect(() => {
+    async function getValueForBiometric() {
+      let result = await SecureStore.getItemAsync("isBiometric");
+      if (result) {
+        if (result === "true") {
+          setShowSecurity(true);
+        } else {
+          setShowSecurity(false);
+        }
+      }
+    }
+    getValueForBiometric();
+  }, []);
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
@@ -137,11 +149,11 @@ const Profile = ({ navigation }) => {
 
           <Password navigation={navigation} />
 
-          <Security />
+          {showSecurity && <Security />}
 
           <Shares />
           <ContactUs />
-          {isBiometric && <Biometric />}
+          {/* {isBiometric && <Biometric />} */}
 
           <Logout navigation={navigation} />
         </Card>

@@ -32,7 +32,6 @@ const Home = ({ navigation }) => {
     const getPhone = async () => {
       try {
         const value = await AsyncStorage.getItem("phone");
-
         if (value !== null) {
           setPhoneNumber(value);
         }

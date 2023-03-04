@@ -4,6 +4,7 @@ import { COLORS } from "../../constants/theme";
 import styles from "./styles";
 
 const AccountActivate = (props) => {
+  console.log(props.msg);
   function SuccessModal() {
     return (
       <View style={styles.modalContainer}>
