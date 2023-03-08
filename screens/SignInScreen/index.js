@@ -19,6 +19,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import * as LocalAuthentication from "expo-local-authentication";
 import StoreCredentials from "./StoreCredentials";
+import { CommonActions } from "@react-navigation/native";
 
 const SignInScreen = ({ navigation }) => {
   const [showFinger, setShowFinger] = useState(false);
@@ -111,7 +112,7 @@ const SignInScreen = ({ navigation }) => {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       try {
-        await StoreCredentials(data.username, data.password);
+        // await StoreCredentials(data.username, data.password);
         const res = await axios.post(`${BASE_URL}/login`, {
           username: data.username,
           password: data.password,
@@ -123,7 +124,11 @@ const SignInScreen = ({ navigation }) => {
           .catch((error) => {
             console.log("Error saving token:", error);
           });
-        navigation.reset({ index: 0, routes: [{ name: "Dashboard" }] });
+        AsyncStorage.setItem("username", data.username);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Dashboard" }],
+        });
       } catch (error) {
         if (error.message === "Network Error") {
           console.log("network error");

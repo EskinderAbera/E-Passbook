@@ -19,6 +19,7 @@ import Logout from "./Logout";
 import { useStateContext } from "../../Contexts/ContextProvider";
 import Security from "./Security";
 import * as SecureStore from "expo-secure-store";
+import { useSelector } from "react-redux";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -100,6 +101,7 @@ const styles = StyleSheet.create({
 
 const Profile = ({ navigation }) => {
   const { user } = useStateContext();
+  const userInfo = useSelector((state) => state.userInfo);
   const [showSecurity, setShowSecurity] = useState(false);
   useEffect(() => {
     async function getValueForBiometric() {
@@ -127,7 +129,9 @@ const Profile = ({ navigation }) => {
                     uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU",
                   }}
                 />
-                <Text style={styles.userNameText}>{user.fullName}</Text>
+                <Text style={styles.userNameText}>
+                  {userInfo?.userInfo?.fullName}
+                </Text>
                 <View style={styles.userAddressRow}>
                   <View>
                     <Icon
@@ -137,14 +141,19 @@ const Profile = ({ navigation }) => {
                     />
                   </View>
                   <View style={styles.userCityRow}>
-                    <Text style={styles.userCityText}>{user.address}</Text>
+                    <Text style={styles.userCityText}>
+                      {userInfo?.userInfo.address.city}
+                    </Text>
                   </View>
                 </View>
               </View>
             </View>
           </View>
-          <Tel style={{ marginTop: 10 }} number={`0${user.phone}`} />
-          <Email name="Personal" email={user.email} />
+          <Tel
+            style={{ marginTop: 10 }}
+            number={`0${userInfo.userInfo.phoneNumber}`}
+          />
+          <Email name="Personal" email={userInfo.userInfo.email} />
           <Separator />
 
           <Password navigation={navigation} />

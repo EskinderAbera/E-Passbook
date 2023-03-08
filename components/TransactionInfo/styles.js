@@ -20,12 +20,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingRight: 10,
-    borderRightWidth: 1,
+    // borderRightWidth: 1,
     borderColor: "#ddd",
   },
-  accountDateView: { marginLeft: 5 },
-  accountDate: { color: COLORS.darkgray, marginTop: 3 },
-  txn: { flexDirection: "column", alignItems: "center" },
+  accountDateView: {
+    marginLeft: 5,
+  },
+  accountDate: {
+    color: COLORS.darkgray,
+    marginTop: 3,
+  },
+  txn: {
+    flexDirection: "column",
+    alignItems: "center",
+  },
 });
 
 export default styles;

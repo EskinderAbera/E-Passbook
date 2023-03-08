@@ -50,35 +50,45 @@ const HomeInfo = ({ navigation }) => {
               type: "ATM",
             })
           }
+          disabled={true}
         >
           <ListItem>
-            <AntDesign name="creditcard" size={28} color={COLORS.primary} />
+            <AntDesign
+              name="creditcard"
+              size={28}
+              color={COLORS.backgroundDark}
+            />
             <ListItem.Content>
-              <ListItem.Title>Request ATM Card</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                Request ATM Card
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
-        <Line />
+        {/* <Line /> */}
         <TouchableOpacity
           onPress={() => {
             setData({ ...data, isClicked: true, type: "Statement" });
             refRBSheet.current.open();
           }}
+          disabled={true}
         >
           <ListItem>
             <MaterialCommunityIcons
               name="card-account-details-outline"
               size={28}
-              color={COLORS.primary}
+              color={COLORS.backgroundDark}
             />
             <ListItem.Content>
-              <ListItem.Title>Request Account Statement</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                Request Account Statement
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
-        <Line />
+        {/* <Line /> */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("OTPVerification", {
@@ -86,20 +96,23 @@ const HomeInfo = ({ navigation }) => {
               type: "Cash",
             })
           }
+          disabled={true}
         >
           <ListItem>
             <MaterialCommunityIcons
               name="cash-multiple"
               size={28}
-              color={COLORS.primary}
+              color={COLORS.backgroundDark}
             />
             <ListItem.Content>
-              <ListItem.Title>Cardless Cash</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                Cardless Cash
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
-        <Line />
+        {/* <Line /> */}
         <TouchableOpacity
           onPress={() =>
             navigation.navigate("OTPVerification", {
@@ -107,28 +120,38 @@ const HomeInfo = ({ navigation }) => {
               type: "Pin",
             })
           }
+          disabled={true}
         >
           <ListItem>
-            <AntDesign name="pushpino" size={28} color={COLORS.primary} />
+            <AntDesign
+              name="pushpino"
+              size={28}
+              color={COLORS.backgroundDark}
+            />
             <ListItem.Content>
-              <ListItem.Title>ATM Pin Change</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                ATM Pin Change
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
-        <Line />
+        {/* <Line /> */}
         <TouchableOpacity
           onPress={() => {
             setData({ ...data, isClicked: true, type: "product" });
             refRBSheet.current.open();
           }}
+          disabled={true}
         >
           <ListItem>
-            <AntDesign name="plus" size={28} color={COLORS.primary} />
+            <AntDesign name="plus" size={28} color={COLORS.backgroundDark} />
             <ListItem.Content>
-              <ListItem.Title>New Product</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                New Product
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
         <TouchableOpacity
@@ -136,13 +159,20 @@ const HomeInfo = ({ navigation }) => {
             setData({ ...data, isClicked: true, type: "earlypay" });
             refRBSheet.current.open();
           }}
+          disabled={true}
         >
           <ListItem>
-            <FontAwesome5 name="amazon-pay" size={27} color={COLORS.primary} />
+            <FontAwesome5
+              name="amazon-pay"
+              size={27}
+              color={COLORS.backgroundDark}
+            />
             <ListItem.Content>
-              <ListItem.Title>Early Pay-Day</ListItem.Title>
+              <ListItem.Title style={{ color: COLORS.backgroundDark }}>
+                Early Pay-Day
+              </ListItem.Title>
             </ListItem.Content>
-            <ListItem.Chevron />
+            {/* <ListItem.Chevron /> */}
           </ListItem>
         </TouchableOpacity>
       </View>

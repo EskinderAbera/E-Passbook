@@ -6,24 +6,39 @@ import SkeletonItem from "./SkeletonItem";
 import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import TransactionsAction from "../../store/Actions/TransactionsAction";
 
 const TransactionInfo = ({ accounts }) => {
   const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {}, []);
+  const transactions = useSelector((state) => state.transactions);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(TransactionsAction(accounts.accountNumber));
+  }, []);
+
   return (
-    <TouchableOpacity
-      style={styles.transactionsList}
-      onPress={() => setIsLoaded(!isLoaded)}
-    >
+    <TouchableOpacity style={styles.transactionsList}>
       <ListItem>
         <ListItemContent>
-          {!isLoaded
-            ? accounts.statment.map((account) => {
-                return <SkeletonItem account={account} key={account.TXNREF} />;
-              })
-            : accounts.statment.map((account) => {
-                return <Item account={account} key={account.TXNREF} />;
-              })}
+          {transactions.isLoaded ? (
+            <SkeletonItem />
+          ) : transactions.statements.statement.length > 0 ? (
+            transactions.statements.statement.map((account, index) => {
+              return <Item account={account} key={index} />;
+            })
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>You don't have transactions!</Text>
+            </View>
+          )}
         </ListItemContent>
       </ListItem>
     </TouchableOpacity>

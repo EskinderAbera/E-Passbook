@@ -42,7 +42,7 @@ const SetPrimaryAccount = () => {
     } else {
       setIsModal(true);
       try {
-        const value = await AsyncStorage.getItem("phone");
+        const value = await AsyncStorage.getItem("username");
         if (value !== null) {
           dispatch(SetPrimaryAction(value, pinAccount, pin));
         }

@@ -10,6 +10,7 @@ import Animated from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import EarlyPay from "../../components/EarlyPay";
 import Donation from "../../components/Donation";
+import { useDispatch } from "react-redux";
 
 const AccountsDetail = ({ navigation, route }) => {
   const { accounts } = route.params;
@@ -31,17 +32,11 @@ const AccountsDetail = ({ navigation, route }) => {
     },
   ];
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  const categories = [
-    "Home",
-    "Account",
-    "Transaction",
-    "Early-Pay",
-    "Donations",
-  ];
+  const categories = ["Home", "Transaction", "Early-Pay", "Donations"];
   const [data, setData] = useState({
     home: true,
     transaction: false,
-    account: false,
+
     earlyPay: false,
     donations: false,
   });
@@ -54,35 +49,24 @@ const AccountsDetail = ({ navigation, route }) => {
           ...data,
           home: true,
           transaction: false,
-          account: false,
+
           earlyPay: false,
           donations: false,
         });
       } else if (index === 1) {
         setData({
           ...data,
-          account: true,
           home: false,
-          transaction: false,
+          transaction: true,
           earlyPay: false,
           donations: false,
         });
       } else if (index === 2) {
         setData({
           ...data,
-          transaction: true,
-          home: false,
-          account: false,
-          earlyPay: false,
-          donations: false,
-        });
-      } else if (index === 3) {
-        setData({
-          ...data,
-          earlyPay: true,
           transaction: false,
           home: false,
-          account: false,
+          earlyPay: true,
           donations: false,
         });
       } else {
@@ -91,11 +75,11 @@ const AccountsDetail = ({ navigation, route }) => {
           earlyPay: false,
           transaction: false,
           home: false,
-          account: false,
           donations: true,
         });
       }
     };
+
     return (
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.categoryListContainer}>
@@ -121,7 +105,7 @@ const AccountsDetail = ({ navigation, route }) => {
                   <View
                     style={{
                       height: 3,
-                      width: index === 2 ? 90 : 40,
+                      width: index !== 0 ? 70 : 40,
                       backgroundColor: COLORS.primary,
                       marginTop: 2,
                       marginHorizontal: 10,
@@ -146,9 +130,9 @@ const AccountsDetail = ({ navigation, route }) => {
         </View>
         <View style={{ height: "100%", display: "flex" }}>
           {data.home && <HomeInfo navigation={navigation} />}
-          {data.account && (
+          {/* {data.account && (
             <AccountInfo navigation={navigation} accounts={accounts} />
-          )}
+          )} */}
           {data.transaction && (
             <TransactionInfo navigation={navigation} accounts={accounts} />
           )}

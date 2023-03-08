@@ -41,7 +41,7 @@ const SignUpScreen1 = ({ navigation }) => {
     if (val.length >= 9) {
       setData({
         ...data,
-        phone: val,
+        phone: val.charAt(0) === "0" ? val.slice(1) : val,
         check_PhoneTextChange: true,
       });
     } else {
@@ -106,6 +106,7 @@ const SignUpScreen1 = ({ navigation }) => {
                 selectionColor={"black"}
                 keyboardType="number-pad"
                 onChangeText={(val) => phoneTextInputChange(val)}
+                editable={data.phone.length > 10 ? false : true}
               />
               {data.check_PhoneTextChange ? (
                 <Animatable.View animation="bounceIn" style={styles.animatable}>

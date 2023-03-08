@@ -1,12 +1,12 @@
 import { setError } from "../Slices";
-import { setAccounts, setIsLoaded } from "../Slices/HomeSlice";
-import { fetchAccounts } from "../../lib/api-calls/fetchAccounts";
+import { setStatements, setIsLoaded } from "../Slices/TransactionSlice";
+import { transactions } from "../../lib/api-calls/Transactions";
 
-const AccountsAction = (username) => {
+const TransactionsAction = (acct) => {
   return async (dispatch) => {
     try {
-      const res = await fetchAccounts(username);
-      dispatch(setAccounts(res));
+      const res = await transactions(acct);
+      dispatch(setStatements(res));
       dispatch(setIsLoaded(false));
       dispatch(setError({}));
     } catch (e) {
@@ -19,4 +19,4 @@ const AccountsAction = (username) => {
   };
 };
 
-export default AccountsAction;
+export default TransactionsAction;

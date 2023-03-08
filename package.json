@@ -24,7 +24,7 @@
     "date-fns": "2.29.3",
     "expo": "~47.0.8",
     "expo-checkbox": "2.2.2",
-    "expo-crypto": "^12.2.1",
+    "expo-crypto": "~12.0.0",
     "expo-image-picker": "14.0.2",
     "expo-linear-gradient": "^12.0.1",
     "expo-local-authentication": "^13.0.2",

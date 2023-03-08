@@ -54,7 +54,7 @@ const Email = ({ containerStyle, name, email }) => {
       </View>
       <View style={styles.emailRow}>
         <View style={styles.emailColumn}>
-          <Text style={styles.emailText}>{email}</Text>
+          <Text style={styles.emailText}>{email ? email : null}</Text>
         </View>
         <View style={styles.emailNameColumn}>
           {name.length !== 0 && <Text>{name}</Text>}
