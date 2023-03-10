@@ -92,7 +92,8 @@ const Modals = ({ props }) => {
           </Text>
         </View>
       );
-    } else if (props.type === "activateAccount") {
+    }
+    else if (props.type === "activateAccount") {
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -258,7 +259,35 @@ const Modals = ({ props }) => {
           </Text>
         </View>
       );
-    } else {
+    } else if (props.type === "login") {
+      const loader = useSelector((state) => state.loading);
+      setTimeout(() => {
+        setShowModal(false);
+        props.setModalOpen(false);
+      }, 5000);
+      return (
+        <View style={[styles.modalContainer]}>
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            {loader.error.msg === "Network Error"
+              ? "check your internet"
+              : "Invalid Username or Password!"}
+
+          </Text>
+        </View>
+      );
+    }
+    else {
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
