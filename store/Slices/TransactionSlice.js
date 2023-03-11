@@ -11,6 +11,7 @@ const TransactionSlice = createSlice({
   reducers: {
     setStatements: (state, { payload }) => {
       state.statements = payload;
+      state.isLoaded = false;
     },
     setIsLoaded: (state, { payload }) => {
       state.isLoaded = payload;

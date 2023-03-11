@@ -33,7 +33,7 @@ const OTPVerification = ({ route, navigation }) => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.loading);
-  const checkStatus = useSelector((state) => state.otp);
+  // const checkStatus = useSelector((state) => state.otp);
   const [ModalOpen, setModalOpen] = useState(false);
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -119,17 +119,15 @@ const OTPVerification = ({ route, navigation }) => {
       {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
         <Modals props={{ modalType: "error", setModalOpen }} />
       )}
-      {!loader.loading &&
-        Object.keys(checkStatus.res).length > 0 &&
-        ModalOpen && (
-          <Modals
-            props={{
-              modalType: "success",
-              type: "checkPhoneOtp",
-              setModalOpen,
-            }}
-          />
-        )}
+      {!loader.loading && Object.keys(f.res).length > 0 && ModalOpen && (
+        <Modals
+          props={{
+            modalType: "success",
+            type: "checkPhoneOtp",
+            setModalOpen,
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

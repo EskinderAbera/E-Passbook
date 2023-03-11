@@ -88,8 +88,8 @@ const SetPrimaryAccount = () => {
           >
             <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
           </TouchableOpacity>
-          <View style={{ flexDirection: "column" }}>
-            <Text style={{ alignSelf: "center", fontSize: 15 }}>
+          <View style={{ flexDirection: "column", justifyContent: "center" }}>
+            <Text style={{ fontSize: 15 }}>
               {totalAccounts?.accounts?.primaryAccount?.accountNumber}
             </Text>
           </View>

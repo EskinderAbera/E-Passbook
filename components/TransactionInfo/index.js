@@ -3,14 +3,12 @@ import { ListItem } from "react-native-elements";
 import { ListItemContent } from "@rneui/base/dist/ListItem/ListItem.Content";
 import Item from "./Item";
 import SkeletonItem from "./SkeletonItem";
-import { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TransactionsAction from "../../store/Actions/TransactionsAction";
 
 const TransactionInfo = ({ accounts }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const transactions = useSelector((state) => state.transactions);
   const dispatch = useDispatch();
 
