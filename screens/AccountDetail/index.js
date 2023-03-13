@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { COLORS } from "../../constants/theme";
 import HomeInfo from "../../components/HomeInfo";
@@ -10,26 +10,27 @@ import Animated from "react-native-reanimated";
 import { StatusBar } from "expo-status-bar";
 import EarlyPay from "../../components/EarlyPay";
 import Donation from "../../components/Donation";
+import { useDispatch, useSelector } from "react-redux";
+import { getDonations } from "../../store/Actions";
 
 const AccountsDetail = ({ navigation, route }) => {
-  const { accounts } = route.params;
-  const donations = [
-    {
-      campaignId: 359,
-      title: "New",
-      shortDescription:
-        "ect and pre-launch pages. Potential backers will also see them if your project appears on category pages, se",
-      city: "addis",
-      imageUrl:
-        "http://res.cloudinary.com/do394twgw/image/upload/v1676624263/o7zxj3m6fmvpoye2y3pt.jpg",
-      goalAmount: 5000.0,
-      owner: "hunda@gmail.com",
-      projectType: "businness",
-      campaignDuration: 30,
-      raised_amount: 450.0,
-      timeLeft: 14,
-    },
-  ];
+  // const { accounts } = route.params;
+  const accounts = [];
+  const {donations} = useSelector((state) => state?.donation);
+  console.log(donations)
+  // const donations = [
+  //   {
+  //     campaignId: 359,
+  //     title: "New",
+  //     city: "addis",
+  //     imageUrl:
+  //       "http://res.cloudinary.com/do394twgw/image/upload/v1676624263/o7zxj3m6fmvpoye2y3pt.jpg",
+  //     goalAmount: 5000.0,
+  //     campaignDuration: 30,
+  //     raised_amount: 450.0,
+  //     campaignDurationLeft: 14,
+  //   },
+  // ];
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categories = [
     "Home",
@@ -45,6 +46,12 @@ const AccountsDetail = ({ navigation, route }) => {
     earlyPay: false,
     donations: false,
   });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDonations());
+  }, [])
 
   const CategoryList = () => {
     const handleOnPress = (index) => {
@@ -154,16 +161,19 @@ const AccountsDetail = ({ navigation, route }) => {
           )}
           {data.earlyPay && <EarlyPay />}
           {data.donations &&
-            donations.map((donation, index) => (
+          <View style={styles.donationContainer}>
+            {donations.map((donation, index) => (
               <Donation
                 key={index}
                 imageSource={donation.imageUrl}
                 title={donation.title}
                 percent={donation.raised_amount / donation.goalAmount}
                 donationRaised={donation.raised_amount}
-                hoursLeft={donation.timeLeft}
+                hoursLeft={donation.campaignDurationLeft}
               />
             ))}
+            </View>
+}
         </View>
       </Animated.View>
     </ScrollView>

@@ -61,54 +61,15 @@ const Donation = ({
                 style={styles.donationRaised}
               >{`$${donationRaised} raised`}</Text>
             </View>
-            <Text style={styles.hoursLeft}>{`🕔 ${hoursLeft} hours left`}</Text>
+            <Text style={styles.hoursLeft}>{`🕔 ${hoursLeft}`}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.cta} >
+              <Text style={{color: "#fff"}}>Donate</Text>
+              </TouchableOpacity>
           </View>
         </View>
       </TouchableWithoutFeedback>
-      <Modal
-        animationType="slide"
-        visible={modalVisible}
-        transparent={true}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <TouchableOpacity
-          style={styles.centeredView}
-          activeOpacity={1}
-          onPress={() => setModalVisible(false)}
-        >
-          <TouchableOpacity activeOpacity={1} style={styles.modalContainer}>
-            <View style={styles.formContainer}>
-              <Text style={styles.donateText}>Donate</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Password"
-                secureTextEntry
-                value={password}
-                onChangeText={setPassword}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder="Donation amount"
-                keyboardType="numeric"
-                value={donationAmount}
-                onChangeText={setDonationAmount}
-              />
-              <TouchableOpacity
-                style={styles.donateButton}
-                onPress={handleDonate}
-              >
-                <Text style={styles.donateButtonText}>Donate</Text>
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        </TouchableOpacity>
-      </Modal>
     </>
   );
 };

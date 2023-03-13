@@ -8,6 +8,7 @@ import SignupReducer from "./Slices/SignupSlice";
 import onBoardingReducer from "./Slices/OnBoardingSlice";
 import AccountsReducer from "./Slices/HomeSlice";
 import SetUserInfoReducer from "./Slices/UserInfoSlice";
+import donationReducer from "./Slices/DonationSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     signup: SignupReducer,
     accounts: AccountsReducer,
     userInfo: SetUserInfoReducer,
+    donation:  donationReducer,
   },
 });
 

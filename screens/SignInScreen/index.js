@@ -20,8 +20,8 @@ import Modals from "../../components/Modals";
 
 const SignInScreen = ({ navigation }) => {
   const [data, setData] = useState({
-    username: "",
-    password: "",
+    username: "johndoe",
+    password: "123456",
     check_textInputChange: false,
     secureTextEntry: true,
     isValidUser: true,
@@ -99,7 +99,7 @@ const SignInScreen = ({ navigation }) => {
         });
         AsyncStorage.setItem("AuthToken", JSON.stringify(res.data.access_token))
           .then(() => {
-            dispatch(setUpInterceptor());
+            setUpInterceptor();
             setLoading(false);
           })
           .catch((error) => {
@@ -114,7 +114,6 @@ const SignInScreen = ({ navigation }) => {
         dispatch(setLoading(false));
         dispatch(setError(error.message))
         setModalOpen(true);
-
         if (error.message === "Network Error") {
           console.log("network error");
         } else {
@@ -237,7 +236,7 @@ const SignInScreen = ({ navigation }) => {
             </View>
           </Animatable.View>
         </View>}
-      {!status.loading && Object.keys(status.error).length > 0 && ModalOpen && (
+      {!status.loading && status.error.length > 0 && (
         <Modals
           props={{
             modalType: "error",

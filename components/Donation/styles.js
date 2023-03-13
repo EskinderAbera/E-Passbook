@@ -99,18 +99,16 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     marginVertical: 8,
   },
-  donateButton: {
+  buttonContainer:{
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cta: {
     backgroundColor: "#00ADEF",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginTop: 16,
-  },
-  donateButtonText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+    padding: 10,
+    borderRadius:5,
+    marginVertical: 10,
+  }
 });
 
 export default styles;
