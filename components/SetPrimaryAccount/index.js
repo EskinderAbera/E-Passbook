@@ -80,10 +80,11 @@ const SetPrimaryAccount = () => {
         >
           <TouchableOpacity
             onPress={() => setShowModal(true)}
+            disabled={totalAccounts?.accounts?.accounts?.length > 0 ? false : true}
             style={{
               height: 40,
               padding: 10,
-              backgroundColor: COLORS.primary,
+              backgroundColor: totalAccounts?.accounts?.accounts?.length > 0 ? COLORS.primary : COLORS.grey,
             }}
           >
             <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
