@@ -108,7 +108,21 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius:5,
     marginVertical: 10,
-  }
+  },
+  modalView: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    backgroundColor: "rgba(33,26,27,0.35)"
+},
+modalContent: {
+  width: "90%",
+  alignItems: "center",
+  backgroundColor: 'white',
+  borderRadius: 5, 
+  padding: 20,
+}
 });
 
 export default styles;

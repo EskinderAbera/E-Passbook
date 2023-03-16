@@ -14,23 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDonations } from "../../store/Actions";
 
 const AccountsDetail = ({ navigation, route }) => {
-  // const { accounts } = route.params;
-  const accounts = [];
+  const { accounts } = route.params;
   const {donations} = useSelector((state) => state?.donation);
-  console.log(donations)
-  // const donations = [
-  //   {
-  //     campaignId: 359,
-  //     title: "New",
-  //     city: "addis",
-  //     imageUrl:
-  //       "http://res.cloudinary.com/do394twgw/image/upload/v1676624263/o7zxj3m6fmvpoye2y3pt.jpg",
-  //     goalAmount: 5000.0,
-  //     campaignDuration: 30,
-  //     raised_amount: 450.0,
-  //     campaignDurationLeft: 14,
-  //   },
-  // ];
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categories = [
     "Home",
@@ -167,9 +152,11 @@ const AccountsDetail = ({ navigation, route }) => {
                 key={index}
                 imageSource={donation.imageUrl}
                 title={donation.title}
-                percent={donation.raised_amount / donation.goalAmount}
-                donationRaised={donation.raised_amount}
+                percent={donation.totalAmountCollected / donation.goalAmount}
+                donationRaised={donation.totalAmountCollected}
                 hoursLeft={donation.campaignDurationLeft}
+                shortDescription= {donation.shortDescription}
+                campaignId = {donation.campaignId}
               />
             ))}
             </View>
