@@ -117,6 +117,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  donationContainer: {
+    marginBottom: 20,
+  }
 });
 
 export default styles;

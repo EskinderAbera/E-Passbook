@@ -18,7 +18,7 @@ const Modals = ({ props }) => {
         setShowModal(false);
         props.setModalOpen(false);
         navigation.navigate("OTPVerification", { type: "SignUp" });
-      }, 5000);
+      }, 3000);
 
       return (
         <View style={styles.modalContainer}>

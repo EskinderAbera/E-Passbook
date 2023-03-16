@@ -7,7 +7,8 @@ import OtpReducer from "./Slices/OtpSlice";
 import SignupReducer from "./Slices/SignupSlice";
 import onBoardingReducer from "./Slices/OnBoardingSlice";
 import AccountsReducer from "./Slices/HomeSlice";
-import UserInfoReducer from "./Slices/UserInfoSlice";
+import SetUserInfoReducer from "./Slices/UserInfoSlice";
+import donationReducer from "./Slices/DonationSlice";
 import TransactionReducer from "./Slices/TransactionSlice";
 
 const store = configureStore({
@@ -20,7 +21,8 @@ const store = configureStore({
     otp: OtpReducer,
     signup: SignupReducer,
     accounts: AccountsReducer,
-    userInfo: UserInfoReducer,
+    userInfo: SetUserInfoReducer,
+    donation:  donationReducer,
     transactions: TransactionReducer,
   },
 });

@@ -99,18 +99,30 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
     marginVertical: 8,
   },
-  donateButton: {
+  buttonContainer:{
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  cta: {
     backgroundColor: "#00ADEF",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    marginTop: 16,
+    padding: 10,
+    borderRadius:5,
+    marginVertical: 10,
   },
-  donateButtonText: {
-    color: "#FFFFFF",
-    fontWeight: "bold",
-    fontSize: 16,
-  },
+  modalView: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+    backgroundColor: "rgba(33,26,27,0.35)"
+},
+modalContent: {
+  width: "90%",
+  alignItems: "center",
+  backgroundColor: 'white',
+  borderRadius: 5, 
+  padding: 20,
+}
 });
 
 export default styles;

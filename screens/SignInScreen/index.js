@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Image} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -12,17 +12,21 @@ import Loading from "../../components/Loader";
 import { StatusBar } from "expo-status-bar";
 import { BASE_URL } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import store from "../../store";
+import store, { setLoading, setError } from "../../store";
 import setUpInterceptor from "../../lib/axios_interceptors";
 import { getAccountList } from "../../lib/api-calls/Accounts";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as SecureStore from "expo-secure-store";
 import * as LocalAuthentication from "expo-local-authentication";
+import { useDispatch, useSelector } from "react-redux";
+import Modals from "../../components/Modals";
 import StoreCredentials from "./StoreCredentials";
 import { CommonActions } from "@react-navigation/native";
 
 const SignInScreen = ({ navigation }) => {
   const [showFinger, setShowFinger] = useState(false);
+  const status = useSelector((state) => state.loading);
+  const [ModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -31,6 +35,7 @@ const SignInScreen = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const checkFingerEnabled = async () => {
@@ -120,6 +125,7 @@ const SignInScreen = ({ navigation }) => {
         AsyncStorage.setItem("AuthToken", JSON.stringify(res.data.access_token))
           .then(() => {
             setUpInterceptor();
+            dispatch(setLoading(false));
           })
           .catch((error) => {
             console.log("Error saving token:", error);
@@ -130,6 +136,9 @@ const SignInScreen = ({ navigation }) => {
           routes: [{ name: "Dashboard" }],
         });
       } catch (error) {
+        dispatch(setLoading(false));
+        dispatch(setError(error.message))
+        setModalOpen(true);
         if (error.message === "Network Error") {
           console.log("network error");
         } else {
@@ -140,6 +149,7 @@ const SignInScreen = ({ navigation }) => {
   };
 
   return (
+    <>
     <View style={styles.container}>
       <StatusBar backgroundColor="#00adef" style="light" />
       <View style={styles.header}>
@@ -269,6 +279,17 @@ const SignInScreen = ({ navigation }) => {
         )}
       </Animatable.View>
     </View>
+    {!status.loading && status.error.length > 0 && (
+      <Modals
+        props={{
+          modalType: "error",
+          type: "login",
+          ModalOpen,
+          setModalOpen,
+        }}
+      />
+    )}
+    </>
   );
 };
 
