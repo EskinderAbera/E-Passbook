@@ -1,6 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { CheckBox } from "@rneui/themed";
+import * as LocalAuthentication from "expo-local-authentication";
+import Modals from "../../components/Modals";
+import { useState } from "react";
+import * as SecureStore from "expo-secure-store";
+import AccountActivate from "../../components/Modals/AccountActivate";
 
 const styles = StyleSheet.create({
   container: {
@@ -29,9 +35,9 @@ const styles = StyleSheet.create({
     fontWeight: "200",
   },
   emailRow: {
-    flex: 8,
-    flexDirection: "column",
-    justifyContent: "center",
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   emailText: {
     fontSize: 16,
@@ -43,21 +49,80 @@ const styles = StyleSheet.create({
 });
 
 const Security = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const handleFingerEnable = async () => {
+    if (!isEnrolled) {
+      setShowModal(true);
+    } else {
+      await SecureStore.setItemAsync("checked", (!checked).toString());
+      setChecked(!checked);
+      setShowSuccessModal(true);
+    }
+  };
+
+  useEffect(() => {
+    const checkEnrolledAsync = async () => {
+      const result = await LocalAuthentication.isEnrolledAsync();
+      console.log("enroll", result);
+      if (!result) {
+        setIsEnrolled(false);
+      } else {
+        setIsEnrolled(true);
+        let checkedValue = await SecureStore.getItemAsync("checked");
+        if (checkedValue === "true") {
+          setChecked(true);
+        } else {
+          setChecked(false);
+        }
+      }
+    };
+    checkEnrolledAsync();
+  }, []);
+
+  useEffect(() => {
+    if (showModal | showSuccessModal) {
+      setTimeout(() => {
+        setShowModal(false);
+        setShowSuccessModal(false);
+      }, 5000);
+    }
+  }, [showModal, showSuccessModal]);
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("OTP")}>
-      <View style={[styles.container]}>
-        <MaterialCommunityIcons
-          name="fingerprint"
-          size={30}
-          style={styles.emailIcon}
+    <View style={[styles.container]}>
+      {showModal && <Modals props={{ modalType: "error" }} />}
+      {showSuccessModal && (
+        <AccountActivate
+          msg="success"
+          desc={
+            checked
+              ? "Success, You have enabled fingerprint!"
+              : "Success, You have disabled fingerprint!"
+          }
+          // props={{
+          //   msg: "success",
+          //   desc: "Success, You have enabled fingerprint!",
+          // }}
         />
-        <View style={styles.emailRow}>
-          <View style={styles.emailColumn}>
-            <Text style={styles.emailText}>Enable Finger Print</Text>
-          </View>
-        </View>
+      )}
+      <MaterialCommunityIcons
+        name="fingerprint"
+        size={30}
+        style={styles.emailIcon}
+      />
+      <View style={styles.emailRow}>
+        <Text style={styles.emailText}>Enable Finger Print</Text>
+        <CheckBox
+          checked={checked}
+          containerStyle={{ bottom: 12.5 }}
+          onPress={handleFingerEnable}
+        />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

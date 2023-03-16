@@ -9,6 +9,7 @@ import onBoardingReducer from "./Slices/OnBoardingSlice";
 import AccountsReducer from "./Slices/HomeSlice";
 import SetUserInfoReducer from "./Slices/UserInfoSlice";
 import donationReducer from "./Slices/DonationSlice";
+import TransactionReducer from "./Slices/TransactionSlice";
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     accounts: AccountsReducer,
     userInfo: SetUserInfoReducer,
     donation:  donationReducer,
+    transactions: TransactionReducer,
   },
 });
 

@@ -15,7 +15,10 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
-  innerAccount: { flexDirection: "row", marginBottom: 8 },
+  innerAccount: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
   header: {
     color: COLORS.white,
     marginTop: 15,
@@ -38,22 +41,28 @@ const styles = StyleSheet.create({
     fontweight: "1500",
     marginRight: 20,
   },
-  productText: { flexDirection: "row" },
+  // productText: {
+  //   flexDirection: "row",
+  // },
   accountNo: {
     color: COLORS.white,
     marginLeft: 20,
     marginTop: 3,
-    fontSize: 15,
-    fontWeight: "bold",
+    fontSize: 17,
   },
-  balanceContainer: { flexDirection: "row", alignItems: "center" },
+  balanceContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20,
+  },
   balanceText: { marginRight: 10 },
   fullName: {
     position: "absolute",
-    bottom: 0,
+    bottom: 10,
     color: COLORS.white,
     margin: 15,
     fontweight: "900",
+    fontSize: 15,
   },
   qr: {
     position: "absolute",

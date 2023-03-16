@@ -14,23 +14,23 @@ const Item = ({ account }) => {
       <View style={styles.transactions}>
         <View style={styles.transactionDetails}>
           <Feather
-            name={account.CRAMT > 0 ? "arrow-up-right" : "arrow-down-left"}
+            name={account.cramt > 0 ? "arrow-up-right" : "arrow-down-left"}
             size={30}
-            color={account.CRAMT > 0 ? COLORS.primary : "red"}
+            color={account.cramt > 0 ? COLORS.primary : COLORS.red}
           />
           <View style={styles.accountDateView}>
-            <Text>{account.TXNREF}</Text>
-            <Text style={styles.accountDate}>{account.DATE}</Text>
+            <Text>{account.txnref}</Text>
+            <Text style={styles.accountDate}>{account.date}</Text>
           </View>
         </View>
         <View style={styles.txn}>
-          <Text>{account.CRAMT > 0 ? account.CRAMT : account.DRAMT}</Text>
+          <Text>{account.cramt > 0 ? account.cramt : account.dramt}</Text>
           <Text
             style={{
-              color: account.CRAMT > 0 ? COLORS.primary : "red",
+              color: account.cramt > 0 ? COLORS.primary : COLORS.red,
             }}
           >
-            {account.CRAMT > 0 ? "Cr" : "Dr"}
+            {account.cramt > 0 ? "Cr" : "Dr"}
           </Text>
         </View>
       </View>

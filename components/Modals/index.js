@@ -18,7 +18,7 @@ const Modals = ({ props }) => {
         setShowModal(false);
         props.setModalOpen(false);
         navigation.navigate("OTPVerification", { type: "SignUp" });
-      }, 5000);
+      }, 3000);
 
       return (
         <View style={styles.modalContainer}>
@@ -290,7 +290,7 @@ const Modals = ({ props }) => {
     else {
       setTimeout(() => {
         setShowModal(false);
-        props.setModalOpen(false);
+        // props.setModalOpen(false);
       }, 5000);
       return (
         <View style={styles.modalContainer}>
@@ -306,7 +306,7 @@ const Modals = ({ props }) => {
           <Text
             style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
           >
-            Invalid Token!
+            Please Enroll Fingerprint first!
           </Text>
         </View>
       );
