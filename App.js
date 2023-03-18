@@ -24,13 +24,13 @@ export default function App() {
     <ContextProvider>
       <Provider store={store}>
         <NativeBaseProvider>
-          <SafeAreaView
+          {/* <SafeAreaView
             style={{
               flex: 1,
             }}
           >
-            <RootStackScreen />
-          </SafeAreaView>
+        </SafeAreaView> */}
+          <RootStackScreen />
         </NativeBaseProvider>
       </Provider>
     </ContextProvider>

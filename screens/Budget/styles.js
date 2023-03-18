@@ -1,3 +1,4 @@
+import { Dimensions } from "react-native";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../constants/theme";
 
@@ -7,6 +8,7 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 10,
     flex: 1,
+    // aspectRatio: 1,
   },
   fab: {
     backgroundColor: COLORS.primary,
@@ -99,12 +101,6 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontSize: 15,
     fontWeight: "bold",
-  },
-  incomeBalance: {
-    color: COLORS.green,
-  },
-  expenseBalance: {
-    color: COLORS.red,
   },
 });
 
