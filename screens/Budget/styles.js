@@ -5,8 +5,8 @@ import { COLORS } from "../../constants/theme";
 const styles = StyleSheet.create({
   fabContainer: {
     position: "absolute",
-    bottom: 20,
-    right: 10,
+    // bottom: 20,
+    // right: 10,
     flex: 1,
     // aspectRatio: 1,
   },
@@ -21,11 +21,12 @@ const styles = StyleSheet.create({
   topContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 10,
   },
   title: {
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: "bold",
-    marginLeft: 5,
+    marginLeft: 10,
     marginTop: 17,
   },
   iconContainer: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   accountsContainer: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: 10,
+    marginTop: 20,
   },
   accounts: {
     backgroundColor: "aqua",

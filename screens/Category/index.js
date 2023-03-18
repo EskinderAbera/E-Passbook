@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./styles";
 import { ScrollView } from "react-native";
@@ -7,13 +7,13 @@ import { Divider } from "react-native-paper";
 
 const Category = () => {
   return (
-    <View style={styles.categoryContainer}>
+    <View style={{ flex: 1 }}>
       <View style={styles.categoryTitle}>
         <Text style={styles.title}>ALL CATEGORIES</Text>
       </View>
       <ScrollView style={{ flex: 1 }}>
         {categories.map((category, index) => (
-          <View
+          <TouchableOpacity
             style={{
               flexDirection: "column",
               flex: 1,
@@ -41,7 +41,7 @@ const Category = () => {
               </Text>
             </View>
             <Divider style={{ height: 0.8, flex: 1 }} />
-          </View>
+          </TouchableOpacity>
         ))}
         {/* <View
             style={{

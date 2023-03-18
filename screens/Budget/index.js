@@ -8,8 +8,10 @@ import { ScrollView } from "react-native";
 import { accounts } from "../../constants/data";
 import RecordsComponent from "../../components/RecordsComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PieCharts from "../../components/PieCharts";
 
 const Budget = ({ navigation }) => {
+  const [acct, setAcct] = React.useState(accounts[0]);
   const MyComponent = () => {
     const [state, setState] = React.useState({ open: false });
 
@@ -24,7 +26,7 @@ const Budget = ({ navigation }) => {
             open={open}
             visible
             icon={open ? "close" : "plus"}
-            style={styles.fabContainer}
+            style={[styles.fabContainer]}
             actions={[
               {
                 icon: "transfer",
@@ -61,7 +63,7 @@ const Budget = ({ navigation }) => {
           </View>
           <View style={styles.accountsContainer}>
             {accounts.map((acct, index) => (
-              <View
+              <TouchableOpacity
                 key={index}
                 style={{
                   ...styles.accounts,
@@ -70,37 +72,43 @@ const Budget = ({ navigation }) => {
                   margin: accounts.length <= 3 ? 0 : 5,
                   marginLeft: accounts.length <= 3 ? 10 : 15,
                 }}
+                onPress={() => setAcct(acct)}
               >
                 <Text>{acct.name}</Text>
                 <Text>{acct.amount}</Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
-        {/* <View
-        style={{
-          backgroundColor: "white",
-          height: "40%",
-          margin: 10,
-        }}
-      >
         <View
           style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
+            backgroundColor: "white",
+            height: "40%",
             margin: 10,
           }}
         >
-          <Text style={{ fontSize: 17, fontWeight: "bold" }}>
-            Expenses Structucre
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              margin: 10,
+            }}
+          >
+            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+              Expenses Structucre
+            </Text>
+            <Feather name="more-vertical" size={24} color="gray" />
+          </View>
+          <Text style={{ margin: 10 }}>THIS WEEK</Text>
+          <Text style={{ marginLeft: 10, fontWeight: "bold", fontSize: 20 }}>
+            {acct.amount}
           </Text>
-          <Feather name="more-vertical" size={24} color="gray" />
+          <View
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          >
+            <PieCharts acct={acct} />
+          </View>
         </View>
-        <Text style={{ margin: 10 }}>THIS WEEK</Text>
-        <Text style={{ marginLeft: 10, fontWeight: "bold", fontSize: 20 }}>
-          ETB 52,233.00
-        </Text>
-      </View> */}
         <View style={[styles.card, styles.elevation]}>
           <View style={styles.recordContainer}>
             <Text style={styles.recordTitle}>Last Records Overview</Text>

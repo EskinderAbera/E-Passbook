@@ -26,7 +26,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Category"
+        initialRouteName="Budget"
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
@@ -80,6 +80,8 @@ const RootStackScreen = () => {
               backgroundColor: COLORS.primary,
             },
             headerTintColor: "#fff",
+            // heade
+            // headerStatusBarHeight: 20,
 
             headerRight: () => (
               <View
