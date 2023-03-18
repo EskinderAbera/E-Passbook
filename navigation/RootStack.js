@@ -12,6 +12,7 @@ import { FormPagination } from "../components/Forms";
 import AgreementPolicy from "../components/OnBoarding/AgreementPolicy";
 import ImageViewer from "../components/OnBoarding/ImageViewer";
 import SignUpModal from "../components/Modals/SignupModal";
+import Budget from "../screens/Budget";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +21,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="SignInScreen"
+        initialRouteName="Budget"
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
@@ -32,6 +33,7 @@ const RootStackScreen = () => {
         <Stack.Screen name="EarlyPay" component={EarlyPayScreen} />
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
+        <Stack.Screen name="Budget" component={Budget} />
         <Stack.Screen
           options={{
             title: "Agreements and Policy",
