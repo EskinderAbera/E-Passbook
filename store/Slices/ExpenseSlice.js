@@ -35,6 +35,12 @@ const ExpenseSlice = createSlice({
     setBudgetAccounts: (state, { payload }) => {
       state.accounts = payload;
     },
+    updateAccounts: (state, action) => {
+      alert(action.payload.name);
+      // state.accounts = state.accounts.map((acct) =>
+      //   acct.name === action.payload.name ? action.payload.account : acct
+      // );
+    },
   },
 });
 
@@ -47,5 +53,6 @@ export const {
   setAmount,
   setRecords,
   setBudgetAccounts,
+  updateAccounts,
 } = actions;
 export default reducer;

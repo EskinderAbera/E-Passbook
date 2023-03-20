@@ -1,24 +1,26 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 import React from "react";
 import { FAB, Portal, Provider } from "react-native-paper";
 import styles from "./styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import { ScrollView } from "react-native";
-// import { accounts } from "../../constants/data";
 import RecordsComponent from "../../components/RecordsComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
-import { chooseAccount, chooseType } from "../../store/Actions";
+import {chooseAccount, chooseType } from "../../store/Actions";
+import AdjustBalance from "../../components/Modals/AdjustModal";
 import { useEffect } from "react";
 
 const Budget = ({ navigation }) => {
   const [acct, setAcct] = React.useState();
+  const [activeIndex, setActiveIndex] = React.useState(-1);
+  const [showModal, setShowModal] = React.useState(false);
   const dispatch = useDispatch();
   const { accounts } = useSelector((state) => state.expense);
-
+  
   useEffect(() => {
     dispatch(chooseAccount(acct?.name));
   }, [acct]);
@@ -73,6 +75,7 @@ const Budget = ({ navigation }) => {
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {showModal && <AdjustBalance setShowModal={setShowModal} acnt={acct} />}
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.topCard}>
           <View style={styles.topContainer}>
@@ -82,21 +85,24 @@ const Budget = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.accountsContainer}>
-            {accounts?.map((acct, index) => (
+            {accounts?.map((act, index) => (
               <TouchableOpacity
                 key={index}
                 style={{
                   ...styles.accounts,
-                  backgroundColor: COLORS.primary,
+                  backgroundColor:
+                    activeIndex === index ? COLORS.primary : COLORS.darkgray,
                   width: accounts.length > 2 ? "40%" : "30%",
                   margin: accounts.length <= 2 ? 0 : 5,
                   marginLeft: accounts.length <= 3 ? 10 : 15,
-                  // color: COLORS.white,
                 }}
-                onPress={() => setAcct(acct)}
+                onPress={() => {
+                  setActiveIndex(index);
+                  setAcct(act);
+                }}
               >
-                <Text style={{ color: "white" }}>{acct?.name}</Text>
-                <Text style={{ color: "white" }}>{acct?.amount}</Text>
+                <Text style={{ color: "white" }}>{act?.name}</Text>
+                <Text style={{ color: "white" }}>{act?.amount}</Text>
               </TouchableOpacity>
             ))}
             <TouchableOpacity
@@ -146,6 +152,8 @@ const Budget = ({ navigation }) => {
                 alignItems: "center",
                 justifyContent: "center",
               }}
+              onPress={() => setShowModal(true)}
+              disabled={acct ? false : true}
             >
               <Text style={{ paddingHorizontal: 10, fontSize: 15 }}>
                 ADJUST BALANCE
@@ -160,6 +168,8 @@ const Budget = ({ navigation }) => {
                 alignItems: "center",
                 right: 7,
               }}
+              onPress={() => navigation.navigate("Records", { acct })}
+              disabled={acct ? false : true}
             >
               <Text style={{ paddingHorizontal: 14, fontSize: 15 }}>
                 RECORDS
@@ -219,8 +229,16 @@ const Budget = ({ navigation }) => {
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => navigation.navigate("Records", { acct })}
+            disabled={acct ? false : true}
           >
-            <Text style={styles.buttontxt}>SHOW MORE</Text>
+            <Text
+              style={{
+                ...styles.buttontxt,
+                color: acct ? COLORS.primary : COLORS.darkgray,
+              }}
+            >
+              SHOW MORE
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={{ height: 100, width: "100%" }} />
