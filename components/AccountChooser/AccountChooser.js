@@ -1,12 +1,14 @@
 import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { chooseAccount, chooseReceiverAccount } from "../../store/Actions";
+import { accounts } from "../../constants/data";
 import styles from "./styles";
 
 const AccountChooser = ({ navigation, route }) => {
-  const { Accounts, type } = route.params;
+  const { type } = route.params;
+  const { accounts } = useSelector((state) => state.expense);
   const dispatch = useDispatch();
   const handleAccountChange = (account) => {
     if (type === "normal") {
@@ -19,7 +21,7 @@ const AccountChooser = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {Accounts.map((account, index) => (
+      {accounts.map((account, index) => (
         <TouchableOpacity
           onPress={() => handleAccountChange(account.name)}
           style={styles.accountContainer}
@@ -29,12 +31,12 @@ const AccountChooser = ({ navigation, route }) => {
             <FontAwesome name="coins" size={23} color="#fff" />
           </View>
           <View>
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-              {account.name}
+            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+              {account.name.toLowerCase() === "cash"
+                ? account.name
+                : `Account ${index}`}
             </Text>
-            <Text style={{ fontSize: 13, textAlign: "center" }}>
-              {account.name}
-            </Text>
+            <Text style={{ fontSize: 15 }}>{account.name}</Text>
           </View>
         </TouchableOpacity>
       ))}

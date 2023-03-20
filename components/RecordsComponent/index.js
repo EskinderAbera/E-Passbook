@@ -25,12 +25,12 @@ const RecordsComponent = ({ type, acct }) => {
             <View style={styles.balanceContainer}>
               <Text
                 style={
-                  rec.type === "income"
+                  rec.type === "INCOME"
                     ? styles.incomeBalance
                     : styles.expenseBalance
                 }
               >
-                {rec.type === "income" ? rec.balance : `- ${rec.balance}`}
+                {rec.type === "INCOME" ? rec.balance : `- ${rec.balance}`}
               </Text>
 
               <Text>{rec.date}</Text>

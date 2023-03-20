@@ -10,14 +10,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
-import { chooseType } from "../../store/Actions";
+import {chooseAccount, chooseType } from "../../store/Actions";
 import AdjustBalance from "../../components/Modals/AdjustModal";
+import { useEffect } from "react";
 
 const Budget = ({ navigation }) => {
   const [acct, setAcct] = React.useState();
   const [activeIndex, setActiveIndex] = React.useState(-1);
   const [showModal, setShowModal] = React.useState(false);
+  const dispatch = useDispatch();
   const { accounts } = useSelector((state) => state.expense);
+  
+  useEffect(() => {
+    dispatch(chooseAccount(acct?.name));
+  }, [acct]);
   const MyComponent = () => {
     const [state, setState] = React.useState({ open: false });
 
@@ -42,7 +48,7 @@ const Budget = ({ navigation }) => {
                 icon: "transfer",
                 label: "Transfer",
                 onPress: () => {
-                  navigation.navigate("ExpenseTracker");
+                  navigation.navigate("ExpenseTracker", { acct });
                   dispatch(chooseType("TRANSFER"));
                 },
                 style: { backgroundColor: COLORS.yellow },
@@ -51,7 +57,7 @@ const Budget = ({ navigation }) => {
                 icon: "pencil",
                 label: "New Record",
                 onPress: () => {
-                  navigation.navigate("ExpenseTracker");
+                  navigation.navigate("ExpenseTracker", { acct });
                   dispatch(chooseType("EXPENSE"));
                 },
               },
