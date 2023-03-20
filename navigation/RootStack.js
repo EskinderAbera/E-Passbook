@@ -18,6 +18,9 @@ import { COLORS } from "../constants/theme";
 import { View, Text } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import Category from "../screens/Category";
+import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
+import AccountChooser from "../components/AccountChooser/AccountChooser";
+import AccountHeader from "../components/AccountChooser/Header";
 import NewAccount from "../screens/NewAccount";
 
 const Stack = createStackNavigator();
@@ -125,6 +128,15 @@ const RootStackScreen = () => {
               </View>
             ),
           }}
+        />
+        <Stack.Screen name="ExpenseTracker" component={ExpenseTracker} />
+        <Stack.Screen
+          options={({ navigation }) => ({
+            headerShown: true,
+            header: () => <AccountHeader navigation={navigation} />,
+          })}
+          name="AccountChooser"
+          component={AccountChooser}
         />
         <Stack.Screen
           options={{

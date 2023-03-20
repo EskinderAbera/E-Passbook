@@ -8,8 +8,10 @@ import { ScrollView } from "react-native";
 import { accounts } from "../../constants/data";
 import RecordsComponent from "../../components/RecordsComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
+import { chooseType } from "../../store/Actions";
 
 const Budget = ({ navigation }) => {
   const [acct, setAcct] = React.useState();
@@ -17,6 +19,8 @@ const Budget = ({ navigation }) => {
     const [state, setState] = React.useState({ open: false });
 
     const onStateChange = ({ open }) => setState({ open });
+
+    const dispatch = useDispatch();
 
     const { open } = state;
 
@@ -34,13 +38,19 @@ const Budget = ({ navigation }) => {
               {
                 icon: "transfer",
                 label: "Transfer",
-                onPress: () => console.log("Pressed star"),
+                onPress: () => {
+                  navigation.navigate("ExpenseTracker");
+                  dispatch(chooseType("TRANSFER"));
+                },
                 style: { backgroundColor: COLORS.yellow },
               },
               {
                 icon: "pencil",
                 label: "New Record",
-                onPress: () => console.log("Pressed email"),
+                onPress: () => {
+                  navigation.navigate("ExpenseTracker");
+                  dispatch(chooseType("EXPENSE"));
+                },
               },
             ]}
             onStateChange={onStateChange}

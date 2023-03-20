@@ -1,11 +1,14 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import styles from "./styles";
+import { useDispatch } from "react-redux";
 import { ScrollView } from "react-native";
 import { categories } from "../../constants/data";
 import { Divider } from "react-native-paper";
+import { chooseCategory } from "../../store/Actions";
 
-const Category = () => {
+const Category = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.categoryTitle}>
@@ -14,13 +17,17 @@ const Category = () => {
       <ScrollView style={{ flex: 1 }}>
         {categories.map((category, index) => (
           <TouchableOpacity
+            onPress={() => {
+              dispatch(chooseCategory(category.name));
+              navigation.navigate("ExpenseTracker");
+            }}
+            key={index}
             style={{
               flexDirection: "column",
               flex: 1,
             }}
           >
             <View
-              key={index}
               style={{
                 flexDirection: "row",
                 marginLeft: 10,
