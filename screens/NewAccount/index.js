@@ -56,7 +56,7 @@ const NewAccount = ({ navigation }) => {
       />
       <Text style={{ marginTop: 15 }}>Type</Text>
       <Dropdown
-        style={[styles.dropdown, styles.input]}
+        style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
