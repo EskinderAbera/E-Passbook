@@ -457,13 +457,13 @@ export const accounts = [
   },
   {
     id: 3,
-    name: "Fazazaza",
+    name: "Faz",
     amount: "ETB 3400",
     color: COLORS.emerald,
   },
   {
     id: 4,
-    name: "bazzuzu",
+    name: "Foo",
     amount: "ETB 100",
     color: COLORS.yellow,
   },
@@ -577,3 +577,5 @@ export const categories = [
     ),
   },
 ];
+
+export const filterDate = ["7D", "30D", "12W", "6M", "1Y"];

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Divider, FAB, Portal, Provider } from "react-native-paper";
+import { FAB, Portal, Provider } from "react-native-paper";
 import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
@@ -9,6 +9,7 @@ import { accounts } from "../../constants/data";
 import RecordsComponent from "../../components/RecordsComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PieCharts from "../../components/PieCharts";
+import { Divider } from "react-native-elements";
 
 const Budget = ({ navigation }) => {
   const [acct, setAcct] = React.useState(accounts[0]);
@@ -26,7 +27,9 @@ const Budget = ({ navigation }) => {
             open={open}
             visible
             icon={open ? "close" : "plus"}
+            color={COLORS.white}
             style={[styles.fabContainer]}
+            fabStyle={{ backgroundColor: COLORS.primary }}
             actions={[
               {
                 icon: "transfer",
@@ -80,13 +83,7 @@ const Budget = ({ navigation }) => {
             ))}
           </View>
         </View>
-        <View
-          style={{
-            backgroundColor: "white",
-            height: "40%",
-            margin: 10,
-          }}
-        >
+        <View style={[styles.card, styles.elevation, styles.expenseContainer]}>
           <View
             style={{
               flexDirection: "row",
@@ -104,10 +101,22 @@ const Budget = ({ navigation }) => {
             {acct.amount}
           </Text>
           <View
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 12,
+            }}
           >
             <PieCharts acct={acct} />
           </View>
+          <Divider bold={true} style={styles.divider} />
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => console.log("expense")}
+          >
+            <Text style={styles.buttontxt}>SHOW MORE</Text>
+          </TouchableOpacity>
         </View>
         <View style={[styles.card, styles.elevation]}>
           <View style={styles.recordContainer}>
@@ -115,15 +124,16 @@ const Budget = ({ navigation }) => {
             <Feather name="more-vertical" size={24} color="gray" />
           </View>
           <Text style={styles.recordSubtitle}>LAST 30 DAYS</Text>
-          <RecordsComponent type="budget" />
+          <RecordsComponent type="budget" acct={acct} />
           <Divider bold={true} style={styles.divider} />
           <TouchableOpacity
             style={styles.buttonContainer}
-            onPress={() => navigation.navigate("Records")}
+            onPress={() => navigation.navigate("Records", { acct })}
           >
             <Text style={styles.buttontxt}>SHOW MORE</Text>
           </TouchableOpacity>
         </View>
+        <View style={{ height: 100, width: "100%" }} />
       </ScrollView>
       <MyComponent />
     </SafeAreaView>

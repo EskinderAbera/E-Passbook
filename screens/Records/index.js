@@ -1,12 +1,72 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import RecordsComponent from "../../components/RecordsComponent";
 import { ScrollView } from "react-native";
+import { filterDate } from "../../constants/data";
 
-const Records = () => {
+const Records = ({ route }) => {
+  const { acct } = route.params;
+  const [data, setData] = useState({
+    7: true,
+    30: false,
+    W: false,
+    Y: false,
+    M: false,
+  });
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+
+  const handlePress = (index) => {
+    setSelectedCategoryIndex(index);
+    if (index === 0) {
+      setData({
+        ...data,
+        7: true,
+        30: false,
+        W: false,
+        Y: false,
+        M: false,
+      });
+    } else if (index === 1) {
+      setData({
+        ...data,
+        7: false,
+        30: true,
+        W: false,
+        Y: false,
+        M: false,
+      });
+    } else if (index === 2) {
+      setData({
+        ...data,
+        7: false,
+        30: false,
+        W: true,
+        Y: false,
+        M: false,
+      });
+    } else if (index === 3) {
+      setData({
+        ...data,
+        7: false,
+        30: false,
+        W: false,
+        Y: false,
+        M: true,
+      });
+    } else {
+      setData({
+        ...data,
+        7: false,
+        30: false,
+        W: false,
+        M: false,
+        Y: true,
+      });
+    }
+  };
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.recordsContainer}>
@@ -30,8 +90,8 @@ const Records = () => {
           }}
         >
           <View style={{ margin: 10 }}>
-            <Text>Week 11</Text>
-            <Text>Balance ETB 15, 711.00</Text>
+            <Text>Days 7</Text>
+            <Text>Balance {acct.amount}</Text>
           </View>
           <View
             style={{ flexDirection: "row", alignItems: "flex-end", margin: 10 }}
@@ -44,73 +104,67 @@ const Records = () => {
           <RecordsComponent />
         </View>
       </ScrollView>
-      {/* <View
+      <View
         style={{
-          height: 50,
-          backgroundColor: "white",
+          height: 60,
+          width: "100%",
+          justifyContent: "center",
         }}
       >
         <View
           style={{
-            flexDirection: "row",
-            borderBottomWidth: 1,
-            borderColor: "black",
-            borderLeftWidth: 1,
-          }}
-        />
-
-        <View
-          style={{
-            flexDirection: "row",
-            borderBottomWidth: 1,
-            borderColor: "black",
             height: 40,
-            alignItems: "center",
+            flexDirection: "row",
+            margin: 10,
+            borderWidth: 2,
+            borderRadius: 15,
+            borderColor: COLORS.primary,
           }}
         >
-          <TouchableOpacity
-            style={{
-              width: "25%",
-              alignItems: "center",
-              borderRightWidth: 1,
-              borderColor: "black",
-              height: 40,
-            }}
-          >
-            <Text>Row 1, Cell 1</Text>
-          </TouchableOpacity>
-          <View
-            style={{
-              width: "25%",
-              alignItems: "center",
-              borderRightWidth: 1,
-              borderColor: "black",
-            }}
-          >
-            <Text>Row 1, Cell 2</Text>
-          </View>
-          <View
-            style={{
-              width: "25%",
-              alignItems: "center",
-              borderRightWidth: 1,
-              borderColor: "black",
-            }}
-          >
-            <Text>Row 1, Cell 3</Text>
-          </View>
-          <View
-            style={{
-              width: "25%",
-              alignItems: "center",
-              borderRightWidth: 1,
-              borderColor: "black",
-            }}
-          >
-            <Text>Row 1, Cell 4</Text>
-          </View>
+          {filterDate.map((item, index) => (
+            <React.Fragment key={index}>
+              <TouchableOpacity
+                style={{
+                  width: filterDate[index + 1] ? "20%" : "18%",
+                  borderTopLeftRadius: index === 0 ? 15 : 0,
+                  borderBottomLeftRadius: index === 0 ? 15 : 0,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor:
+                    selectedCategoryIndex === index
+                      ? COLORS.primary
+                      : COLORS.white,
+                  borderTopRightRadius: filterDate[index + 1] ? 0 : 15,
+                  borderBottomRightRadius: filterDate[index + 1] ? 0 : 15,
+                  // borderLeftWidth: 2,
+                }}
+                activeOpacity={0.8}
+                onPress={() => handlePress(index)}
+              >
+                <Text
+                  style={{
+                    color:
+                      selectedCategoryIndex == index
+                        ? COLORS.white
+                        : COLORS.primary,
+                  }}
+                >
+                  {item}
+                </Text>
+              </TouchableOpacity>
+              {filterDate[index + 1] && (
+                <View
+                  style={{
+                    height: 38,
+                    width: 2,
+                    backgroundColor: COLORS.primary,
+                  }}
+                />
+              )}
+            </React.Fragment>
+          ))}
         </View>
-      </View> */}
+      </View>
     </View>
   );
 };

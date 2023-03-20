@@ -103,6 +103,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
   },
+  expenseContainer: {
+    backgroundColor: "white",
+    height: 400,
+    margin: 10,
+  },
 });
 
 export default styles;

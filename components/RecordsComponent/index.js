@@ -5,11 +5,13 @@ import styles from "./styles";
 import { SIZES } from "../../constants/theme";
 import { Divider } from "react-native-paper";
 
-const RecordsComponent = ({ type }) => {
+const RecordsComponent = ({ type, acct }) => {
   function budget() {
-    const newRecord = record.slice(0, 5);
+    const newRecord = record.slice(0, 4);
     return newRecord
-      .filter((recor) => recor.date === "Yesterday")
+      .filter(
+        (recor) => (recor.date === "Yesterday") & (recor.name === acct.name)
+      )
       .map((rec, index) => (
         <View key={index}>
           <View style={styles.recordsContainer}>
