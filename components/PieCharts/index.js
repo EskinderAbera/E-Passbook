@@ -7,14 +7,21 @@ export default function PieCharts({ acct }) {
   const pieData = data.map((value, index) => ({
     value,
     svg: {
-      fill: acct?.color,
+      fill: "orange",
       onPress: () => console.log("press", index),
     },
     key: `pie-${index}`,
   }));
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* <View style> */}
       <Text style={{ position: "absolute", height: 60 }}>{acct?.name}</Text>
       <Text style={{ position: "absolute" }}>{acct?.amount}</Text>
       <PieChart

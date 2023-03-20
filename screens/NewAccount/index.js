@@ -3,20 +3,23 @@ import React from "react";
 import styles from "./styles";
 import { Dropdown } from "react-native-element-dropdown";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { accounts } from "../../constants/data";
+import { setBudgetAccounts } from "../../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const NewAccount = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [value, setValue] = React.useState(null);
   const [accountName, setAccountName] = React.useState(null);
   const [accountNumber, setAccountNumber] = React.useState(null);
   const [initialValue, setInitialValue] = React.useState(null);
+  const { accounts } = useSelector((state) => state.expense);
 
   const handleCheck = () => {
     if (value && accountName && accountNumber && initialValue) {
       const newAccount = { id: 4, name: accountName, amount: initialValue };
-      accounts.push(newAccount);
-      console.warn(accounts);
-      //   navigation.goBack();
+      const newAccounts = [...accounts, newAccount];
+      dispatch(setBudgetAccounts(newAccounts));
+      navigation.goBack();
     } else {
       console.log(accountName, value, accountNumber, initialValue);
     }

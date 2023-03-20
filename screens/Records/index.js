@@ -78,7 +78,7 @@ const Records = ({ route }) => {
               size={20}
               color={COLORS.white}
             />
-            <Text style={{ color: COLORS.white }}>ETB 100, 000</Text>
+            <Text style={{ color: COLORS.white }}>{acct?.amount}</Text>
           </View>
         </View>
         <View
@@ -91,13 +91,13 @@ const Records = ({ route }) => {
         >
           <View style={{ margin: 10 }}>
             <Text>Days 7</Text>
-            <Text>Balance {acct.amount}</Text>
+            <Text>Balance {acct?.amount}</Text>
           </View>
           <View
             style={{ flexDirection: "row", alignItems: "flex-end", margin: 10 }}
           >
             <MaterialCommunityIcons name="sigma" size={20} />
-            <Text>ETB 100, 000</Text>
+            <Text>{acct?.amount}</Text>
           </View>
         </View>
         <View style={styles.card}>

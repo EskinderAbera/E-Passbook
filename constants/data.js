@@ -43,7 +43,7 @@ export const record = [
         </View>
       </View>
     ),
-    category: "Bar, cafe",
+    category: "Food & Drinks",
     name: "Boo",
     balance: "ETB 500.00",
     date: "Yesterday",

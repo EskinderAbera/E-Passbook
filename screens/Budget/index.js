@@ -5,16 +5,18 @@ import styles from "./styles";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import { ScrollView } from "react-native";
-import { accounts } from "../../constants/data";
+// import { accounts } from "../../constants/data";
 import RecordsComponent from "../../components/RecordsComponent";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
 import { chooseType } from "../../store/Actions";
 
 const Budget = ({ navigation }) => {
   const [acct, setAcct] = React.useState();
+  const { accounts } = useSelector((state) => state.expense);
+  console.log(accounts);
   const MyComponent = () => {
     const [state, setState] = React.useState({ open: false });
 
@@ -80,15 +82,16 @@ const Budget = ({ navigation }) => {
                 key={index}
                 style={{
                   ...styles.accounts,
-                  backgroundColor: acct.color,
+                  backgroundColor: COLORS.primary,
                   width: accounts.length > 2 ? "40%" : "30%",
                   margin: accounts.length <= 2 ? 0 : 5,
                   marginLeft: accounts.length <= 3 ? 10 : 15,
+                  // color: COLORS.white,
                 }}
                 onPress={() => setAcct(acct)}
               >
-                <Text>{acct?.name}</Text>
-                <Text>{acct?.amount}</Text>
+                <Text style={{ color: "white" }}>{acct?.name}</Text>
+                <Text style={{ color: "white" }}>{acct?.amount}</Text>
               </TouchableOpacity>
             ))}
             <TouchableOpacity

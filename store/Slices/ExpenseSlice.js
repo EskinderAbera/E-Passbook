@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  accounts: [],
   expenseAccount: null,
   expenseReceiverAccount: null,
   expenseCategory: null,
@@ -31,6 +32,9 @@ const ExpenseSlice = createSlice({
     setRecords: (state, { payload }) => {
       state.records = payload;
     },
+    setBudgetAccounts: (state, { payload }) => {
+      state.accounts = payload;
+    },
   },
 });
 
@@ -42,5 +46,6 @@ export const {
   setType,
   setAmount,
   setRecords,
+  setBudgetAccounts,
 } = actions;
 export default reducer;

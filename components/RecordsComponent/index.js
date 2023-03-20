@@ -4,18 +4,20 @@ import { record } from "../../constants/data";
 import styles from "./styles";
 import { SIZES } from "../../constants/theme";
 import { Divider } from "react-native-paper";
+import { useSelector } from "react-redux";
 
 const RecordsComponent = ({ type, acct }) => {
+  const { records, expenseCategory } = useSelector((state) => state.expense);
   function budget() {
     const newRecord = record.slice(0, 4);
-    return newRecord
-      .filter(
-        (recor) => (recor.date === "Yesterday") & (recor.name === acct?.name)
-      )
+    return records
+      ?.filter((re) => re.name === acct?.name)
       .map((rec, index) => (
         <View key={index}>
           <View style={styles.recordsContainer}>
-            {rec.icon()}
+            {newRecord
+              .filter((rec) => rec.category === expenseCategory)
+              .map((re) => re.icon())}
             <View style={styles.categoryContainer}>
               <Text style={{ fontSize: SIZES.body3 }}>{rec.category}</Text>
               <Text style={{ fontSize: SIZES.body3 }}>{rec.name}</Text>
@@ -38,11 +40,12 @@ const RecordsComponent = ({ type, acct }) => {
       ));
   }
 
-  function records() {
-    return record.map((rec, index) => (
+  function functionrecords() {
+    // alert(expenseCategory);
+    return records?.map((rec, index) => (
       <View key={index}>
         <View style={styles.recordsContainer}>
-          {rec.icon()}
+          {record.filter((rec) => rec.category == expenseCategory)[0]?.icon()}
           <View style={styles.categoryContainer}>
             <Text style={{ fontSize: SIZES.body3 }}>{rec.category}</Text>
             <Text style={{ fontSize: SIZES.body3 }}>{rec.name}</Text>
@@ -50,12 +53,12 @@ const RecordsComponent = ({ type, acct }) => {
           <View style={styles.balanceContainer}>
             <Text
               style={
-                rec.type === "income"
+                rec.type === "INCOME"
                   ? styles.incomeBalance
                   : styles.expenseBalance
               }
             >
-              {rec.type === "income" ? rec.balance : `- ${rec.balance}`}
+              {rec.type === "INCOME" ? rec.balance : `- ${rec.balance}`}
             </Text>
             <Text>{rec.date}</Text>
           </View>
@@ -65,7 +68,7 @@ const RecordsComponent = ({ type, acct }) => {
     ));
   }
 
-  return <>{type === "budget" ? budget() : records()}</>;
+  return <>{type === "budget" ? budget() : functionrecords()}</>;
 };
 
 export default RecordsComponent;
