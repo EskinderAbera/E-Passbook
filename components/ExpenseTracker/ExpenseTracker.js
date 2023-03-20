@@ -4,7 +4,7 @@ import Ant from "react-native-vector-icons/AntDesign";
 import * as math from "mathjs";
 import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
-import { chooseType } from "../../store/Actions";
+import { changeRecords, chooseType } from "../../store/Actions";
 import { useEffect } from "react";
 import { format } from "date-fns";
 
@@ -16,6 +16,7 @@ export default function ExpenseTracker({ navigation }) {
     expenseCategory,
     expenseAccount,
     expenseReceiverAccount,
+    records,
   } = useSelector((state) => state?.expense);
   const dispatch = useDispatch();
   const Accounts = [
@@ -30,18 +31,22 @@ export default function ExpenseTracker({ navigation }) {
     },
   ];
 
+  let newRecords;
   let record;
   useEffect(() => {
     record = {
-      Category: expenseCategory,
-      Account: expenseAccount,
-      Amount: parseInt(result ? result : 0),
-      Date: format(new Date(), "dd-MM-yyyy"),
+      category: expenseCategory,
+      name: expenseAccount,
+      balance: parseInt(result ? result : 0),
+      type: expenseType,
+      date: format(new Date(), "dd-MM-yyyy"),
     };
-  }, [expenseAccount, expenseCategory, result]);
+    newRecords = records ? [...records, record] : [record];
+    dispatch(changeRecords(newRecords));
+  }, [expenseAccount, expenseCategory, expenseType, result]);
 
   const handleSubmit = () => {
-    alert(JSON.stringify(record));
+    alert(JSON.stringify(records));
   };
 
   function handlePress(button) {
@@ -155,7 +160,10 @@ export default function ExpenseTracker({ navigation }) {
                 {expenseAccount ? expenseAccount : "SELECT ACCOUNT"}
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{ alignItems: "center", width: "50%" }}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Category")}
+              style={{ alignItems: "center", width: "50%" }}
+            >
               <Text style={styles.actionTitle}>Category</Text>
               <Text style={styles.action}>
                 {expenseCategory ? expenseCategory : "SELECT CATEGORY"}

@@ -54,12 +54,14 @@
     "react-native-shimmer-placeholder": "^2.0.9",
     "react-native-signature-canvas": "4.5.0",
     "react-native-svg": "13.4.0",
+    "react-native-svg-charts": "^5.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-webview": "11.23.1",
     "react-redux": "^8.0.5",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "twrnc": "3.4.1",
+    "victory-native": "^36.6.8",
     "yup": "0.32.11"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import {
   setType,
   setAmount,
   setReceiverAccount,
+  setRecords,
 } from "../Slices";
 // import { fetchAccounts } from "../../lib/api-calls/fetchAccounts";
 
@@ -81,6 +82,23 @@ export const chooseType = (type) => {
     try {
       //   const res = await fetchAccounts(username);
       dispatch(setType(type));
+      //   dispatch(setIsLoaded(false));
+      //   dispatch(setError({}));
+    } catch (e) {
+      //   if (e.message === "Network Error") {
+      //     dispatch(setError({ msg: e.message }));
+      //   } else {
+      //     dispatch(setError({ msg: e.response.data }));
+      //   }
+    }
+  };
+};
+
+export const changeRecords = (records) => {
+  return async (dispatch) => {
+    try {
+      //   const res = await fetchAccounts(username);
+      dispatch(setRecords(records));
       //   dispatch(setIsLoaded(false));
       //   dispatch(setError({}));
     } catch (e) {

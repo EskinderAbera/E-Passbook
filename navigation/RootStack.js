@@ -12,6 +12,12 @@ import { FormPagination } from "../components/Forms";
 import AgreementPolicy from "../components/OnBoarding/AgreementPolicy";
 import ImageViewer from "../components/OnBoarding/ImageViewer";
 import SignUpModal from "../components/Modals/SignupModal";
+import Budget from "../screens/Budget";
+import Records from "../screens/Records";
+import { COLORS } from "../constants/theme";
+import { View, Text } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import Category from "../screens/Category";
 import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
 import AccountChooser from "../components/AccountChooser/AccountChooser";
 import AccountHeader from "../components/AccountChooser/Header";
@@ -23,7 +29,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="ExpenseTracker"
+        initialRouteName="Budget"
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
@@ -35,14 +41,78 @@ const RootStackScreen = () => {
         <Stack.Screen name="EarlyPay" component={EarlyPayScreen} />
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
+        <Stack.Screen name="Budget" component={Budget} />
+        <Stack.Screen
+          name="Records"
+          component={Records}
+          options={{
+            headerShown: true,
+            title: "Records",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "#fff",
+            // headerTitleStyle: {
+            //   fontWeight: "bold",
+            // },
+            headerRight: () => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  margin: 10,
+                }}
+              >
+                <Feather
+                  name="search"
+                  size={24}
+                  color={COLORS.white}
+                  style={{ marginRight: 20 }}
+                />
+                <Feather name="more-vertical" size={24} color={COLORS.white} />
+              </View>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="Category"
+          component={Category}
+          options={{
+            headerShown: true,
+            title: "Category",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "#fff",
+            // heade
+            // headerStatusBarHeight: 20,
+
+            headerRight: () => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  margin: 10,
+                }}
+              >
+                <Feather
+                  name="search"
+                  size={24}
+                  color={COLORS.white}
+                  style={{ marginRight: 30 }}
+                />
+                <Feather name="settings" size={24} color={COLORS.white} />
+              </View>
+            ),
+          }}
+        />
         <Stack.Screen name="ExpenseTracker" component={ExpenseTracker} />
-        <Stack.Screen 
-        options={({navigation}) => ({
-          headerShown: true,
-          header : () => <AccountHeader navigation={navigation} />
-        })}
-        name="AccountChooser" 
-        component={AccountChooser} />
+        <Stack.Screen
+          options={({ navigation }) => ({
+            headerShown: true,
+            header: () => <AccountHeader navigation={navigation} />,
+          })}
+          name="AccountChooser"
+          component={AccountChooser}
+        />
         <Stack.Screen
           options={{
             title: "Agreements and Policy",

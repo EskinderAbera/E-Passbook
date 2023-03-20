@@ -6,6 +6,7 @@ const initialState = {
   expenseCategory: null,
   expenseType: "INCOME",
   expenseAmount: null,
+  records: null,
 };
 
 const ExpenseSlice = createSlice({
@@ -27,6 +28,9 @@ const ExpenseSlice = createSlice({
     setAmount: (state, { payload }) => {
       state.expenseAmount = payload;
     },
+    setRecords: (state, { payload }) => {
+      state.records = payload;
+    },
   },
 });
 
@@ -37,5 +41,6 @@ export const {
   setCategory,
   setType,
   setAmount,
+  setRecords,
 } = actions;
 export default reducer;
