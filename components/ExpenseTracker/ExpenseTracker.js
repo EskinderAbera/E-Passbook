@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeRecords, chooseType } from "../../store/Actions";
 import { useEffect } from "react";
 import { format } from "date-fns";
+import { setBudgetAccounts } from "../../store/Slices";
 
 export default function ExpenseTracker({ navigation }) {
+  const { accounts } = useSelector((state) => state.expense);
   const [result, setResult] = useState("0");
   const [background, setBackground] = useState("");
   const {
@@ -19,21 +21,31 @@ export default function ExpenseTracker({ navigation }) {
     records,
   } = useSelector((state) => state?.expense);
   const dispatch = useDispatch();
-  const Accounts = [
-    {
-      name: "CASH",
-    },
-    {
-      name: "ACCOUNT 1",
-    },
-    {
-      name: "ACCOUNT 2",
-    },
-  ];
 
   let newRecords;
   let record;
-  useEffect(() => {
+
+  const handleSubmit = () => {
+    let newAccountsDetail = accounts.map((acc) => {
+      if (expenseType === "EXPENSE") {
+        if (acc?.name === expenseAccount) {
+          return { ...acc, amount: parseInt(acc.amount) - result };
+        }
+      } else if (expenseType === "INCOME") {
+        if (acc?.name === expenseAccount) {
+          return { ...acc, amount: parseInt(acc.amount) + parseInt(result) };
+        }
+      } else {
+        if (acc?.name === expenseAccount) {
+          return { ...acc, amount: parseInt(acc.amount) - parseInt(result) };
+        }
+        if (acc?.name === expenseReceiverAccount) {
+          return { ...acc, amount: parseInt(acc.amount) + parseInt(result) };
+        }
+      }
+      return acc;
+    });
+    dispatch(setBudgetAccounts(newAccountsDetail));
     record = {
       category: expenseCategory,
       name: expenseAccount,
@@ -43,10 +55,7 @@ export default function ExpenseTracker({ navigation }) {
     };
     newRecords = records ? [...records, record] : [record];
     dispatch(changeRecords(newRecords));
-  }, [expenseAccount, expenseCategory, expenseType, result]);
-
-  const handleSubmit = () => {
-    alert(JSON.stringify(records));
+    navigation.goBack();
   };
 
   function handlePress(button) {
@@ -149,7 +158,6 @@ export default function ExpenseTracker({ navigation }) {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("AccountChooser", {
-                  Accounts,
                   type: "normal",
                 })
               }
@@ -181,7 +189,6 @@ export default function ExpenseTracker({ navigation }) {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("AccountChooser", {
-                  Accounts,
                   type: "normal",
                 })
               }
@@ -196,7 +203,6 @@ export default function ExpenseTracker({ navigation }) {
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("AccountChooser", {
-                  Accounts,
                   type: "transfer",
                 })
               }
