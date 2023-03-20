@@ -3,6 +3,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { useDispatch } from "react-redux";
 import { chooseAccount, chooseReceiverAccount } from "../../store/Actions";
+import { accounts } from "../../constants/data";
 import styles from "./styles";
 
 const AccountChooser = ({ navigation, route }) => {
@@ -19,7 +20,7 @@ const AccountChooser = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      {Accounts.map((account, index) => (
+      {accounts.map((account, index) => (
         <TouchableOpacity
           onPress={() => handleAccountChange(account.name)}
           style={styles.accountContainer}
@@ -29,12 +30,10 @@ const AccountChooser = ({ navigation, route }) => {
             <FontAwesome name="coins" size={23} color="#fff" />
           </View>
           <View>
-            <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-              {account.name}
+            <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+              {account.name === "Cash" ? account.name : `Account ${index}`}
             </Text>
-            <Text style={{ fontSize: 13, textAlign: "center" }}>
-              {account.name}
-            </Text>
+            <Text style={{ fontSize: 15 }}>{account.name}</Text>
           </View>
         </TouchableOpacity>
       ))}
