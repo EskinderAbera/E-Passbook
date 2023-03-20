@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { FAB, Portal, Provider } from "react-native-paper";
 import styles from "./styles";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, Feather } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import { ScrollView } from "react-native";
 import { accounts } from "../../constants/data";
@@ -12,7 +12,7 @@ import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
 
 const Budget = ({ navigation }) => {
-  const [acct, setAcct] = React.useState(accounts[0]);
+  const [acct, setAcct] = React.useState();
   const MyComponent = () => {
     const [state, setState] = React.useState({ open: false });
 
@@ -65,22 +65,94 @@ const Budget = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.accountsContainer}>
-            {accounts.map((acct, index) => (
+            {accounts?.map((acct, index) => (
               <TouchableOpacity
                 key={index}
                 style={{
                   ...styles.accounts,
                   backgroundColor: acct.color,
-                  width: accounts.length > 3 ? "40%" : "30%",
-                  margin: accounts.length <= 3 ? 0 : 5,
+                  width: accounts.length > 2 ? "40%" : "30%",
+                  margin: accounts.length <= 2 ? 0 : 5,
                   marginLeft: accounts.length <= 3 ? 10 : 15,
                 }}
                 onPress={() => setAcct(acct)}
               >
-                <Text>{acct.name}</Text>
-                <Text>{acct.amount}</Text>
+                <Text>{acct?.name}</Text>
+                <Text>{acct?.amount}</Text>
               </TouchableOpacity>
             ))}
+            <TouchableOpacity
+              style={{
+                ...styles.accounts,
+                backgroundColor: COLORS.white,
+                width: accounts.length > 2 ? "40%" : "30%",
+                margin: accounts.length <= 2 ? 0 : 5,
+                marginLeft: accounts.length <= 3 ? 10 : 15,
+                borderRadius: 10,
+                borderColor: COLORS.primary,
+                borderWidth: 1,
+              }}
+              onPress={() => navigation.navigate("NewAccount")}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <View>
+                  <Text style={{ alignSelf: "center" }}>ADD</Text>
+                  <Text>ACCOUNT</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "flex-end",
+                    marginRight: 5,
+                  }}
+                >
+                  <AntDesign name="plus" size={24} color="black" />
+                </View>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              paddingVertical: 20,
+              marginLeft: 15,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                borderWidth: 0.2,
+                borderColor: "black",
+                borderRadius: 30,
+                padding: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ paddingHorizontal: 10, fontSize: 15 }}>
+                ADJUST BALANCE
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row-reverse",
+                borderWidth: 0.2,
+                borderColor: "black",
+                borderRadius: 30,
+                alignItems: "center",
+                right: 7,
+              }}
+            >
+              <Text style={{ paddingHorizontal: 14, fontSize: 15 }}>
+                RECORDS
+              </Text>
+              <Feather
+                name="list"
+                size={24}
+                color="black"
+                style={{ paddingLeft: 10 }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View style={[styles.card, styles.elevation, styles.expenseContainer]}>
@@ -98,7 +170,7 @@ const Budget = ({ navigation }) => {
           </View>
           <Text style={{ margin: 10 }}>THIS WEEK</Text>
           <Text style={{ marginLeft: 10, fontWeight: "bold", fontSize: 20 }}>
-            {acct.amount}
+            {acct?.amount}
           </Text>
           <View
             style={{
