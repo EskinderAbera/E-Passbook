@@ -12,6 +12,9 @@ import { FormPagination } from "../components/Forms";
 import AgreementPolicy from "../components/OnBoarding/AgreementPolicy";
 import ImageViewer from "../components/OnBoarding/ImageViewer";
 import SignUpModal from "../components/Modals/SignupModal";
+import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
+import AccountChooser from "../components/AccountChooser/AccountChooser";
+import AccountHeader from "../components/AccountChooser/Header";
 
 const Stack = createStackNavigator();
 
@@ -20,7 +23,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="SignInScreen"
+        initialRouteName="ExpenseTracker"
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
@@ -32,6 +35,14 @@ const RootStackScreen = () => {
         <Stack.Screen name="EarlyPay" component={EarlyPayScreen} />
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
+        <Stack.Screen name="ExpenseTracker" component={ExpenseTracker} />
+        <Stack.Screen 
+        options={({navigation}) => ({
+          headerShown: true,
+          header : () => <AccountHeader navigation={navigation} />
+        })}
+        name="AccountChooser" 
+        component={AccountChooser} />
         <Stack.Screen
           options={{
             title: "Agreements and Policy",

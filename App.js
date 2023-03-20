@@ -29,6 +29,7 @@ export default function App() {
               flex: 1,
             }}
           >
+            {/* <StatusBar hidden={true}/> */}
             <RootStackScreen />
           </SafeAreaView>
         </NativeBaseProvider>
