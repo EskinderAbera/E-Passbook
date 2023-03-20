@@ -16,11 +16,12 @@ import Budget from "../screens/Budget";
 import Records from "../screens/Records";
 import { COLORS } from "../constants/theme";
 import { View, Text } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import Category from "../screens/Category";
 import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
 import AccountChooser from "../components/AccountChooser/AccountChooser";
 import AccountHeader from "../components/AccountChooser/Header";
+import NewAccount from "../screens/NewAccount";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,30 @@ const RootStackScreen = () => {
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
         <Stack.Screen name="Budget" component={Budget} />
+        <Stack.Screen
+          name="NewAccount"
+          component={NewAccount}
+          options={{
+            headerShown: true,
+            title: "New Account",
+            headerStyle: {
+              backgroundColor: COLORS.primary,
+            },
+            headerTintColor: "#fff",
+            // headerTitleStyle: {
+            //   fontWeight: "bold",
+            // },
+            headerRight: () => (
+              <MaterialCommunityIcons
+                name="check"
+                size={24}
+                color="white"
+                style={{ marginRight: 15 }}
+                // onPress={() => console.warn(accountName)}
+              />
+            ),
+          }}
+        />
         <Stack.Screen
           name="Records"
           component={Records}

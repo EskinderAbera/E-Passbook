@@ -10,7 +10,7 @@ const RecordsComponent = ({ type, acct }) => {
     const newRecord = record.slice(0, 4);
     return newRecord
       .filter(
-        (recor) => (recor.date === "Yesterday") & (recor.name === acct.name)
+        (recor) => (recor.date === "Yesterday") & (recor.name === acct?.name)
       )
       .map((rec, index) => (
         <View key={index}>

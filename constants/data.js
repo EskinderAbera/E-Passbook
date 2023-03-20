@@ -443,30 +443,30 @@ export const record = [
 ];
 
 export const accounts = [
-  {
-    id: 1,
-    name: "Cash",
-    amount: "ETB 50, 000",
-    color: COLORS.darkgray,
-  },
-  {
-    id: 2,
-    name: "Boo",
-    amount: "ETB 100, 000",
-    color: COLORS.primary,
-  },
-  {
-    id: 3,
-    name: "Faz",
-    amount: "ETB 3400",
-    color: COLORS.emerald,
-  },
-  {
-    id: 4,
-    name: "Foo",
-    amount: "ETB 100",
-    color: COLORS.yellow,
-  },
+  // {
+  //   id: 1,
+  //   name: "Cash",
+  //   amount: "ETB 50, 000",
+  //   color: COLORS.darkgray,
+  // },
+  // {
+  //   id: 2,
+  //   name: "Boo",
+  //   amount: "ETB 100, 000",
+  //   color: COLORS.primary,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Faz",
+  //   amount: "ETB 3400",
+  //   color: COLORS.emerald,
+  // },
+  // {
+  //   id: 4,
+  //   name: "Foo",
+  //   amount: "ETB 100",
+  //   color: COLORS.yellow,
+  // },
 ];
 
 export const categories = [
