@@ -33,6 +33,7 @@ const OTPVerification = ({ route, navigation }) => {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.loading);
+  const res = useSelector((state) => state.otp);
   // const checkStatus = useSelector((state) => state.otp);
   const [ModalOpen, setModalOpen] = useState(false);
 
@@ -59,6 +60,8 @@ const OTPVerification = ({ route, navigation }) => {
       navigation.navigate("Home");
     } else if (type === "Account") {
       navigation.navigate("Home");
+    } else if (type === "changePassword") {
+      dispatch(OtpVerifyAction(value));
     } else {
       navigation.navigate("Home");
     }
@@ -70,7 +73,7 @@ const OTPVerification = ({ route, navigation }) => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <ScrollView>
-          {renderHeader()}
+          {/* {renderHeader()} */}
           <SafeAreaView style={styles.root}>
             <Text style={styles.title}>Verification</Text>
             <Image style={styles.icon} source={source} />
@@ -119,7 +122,7 @@ const OTPVerification = ({ route, navigation }) => {
       {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
         <Modals props={{ modalType: "error", setModalOpen }} />
       )}
-      {!loader.loading && Object.keys(f.res).length > 0 && ModalOpen && (
+      {!loader.loading && Object.keys(res).length > 0 && ModalOpen && (
         <Modals
           props={{
             modalType: "success",

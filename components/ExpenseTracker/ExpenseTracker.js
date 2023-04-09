@@ -5,9 +5,10 @@ import * as math from "mathjs";
 import styles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { changeRecords, chooseType } from "../../store/Actions";
-import { useEffect } from "react";
 import { format } from "date-fns";
-import { setBudgetAccounts } from "../../store/Slices";
+import { setacct, setBudgetAccounts } from "../../store/Slices";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
 
 export default function ExpenseTracker({ navigation }) {
   const { accounts } = useSelector((state) => state.expense);
@@ -29,14 +30,23 @@ export default function ExpenseTracker({ navigation }) {
     let newAccountsDetail = accounts.map((acc) => {
       if (expenseType === "EXPENSE") {
         if (acc?.name === expenseAccount) {
+          dispatch(
+            setacct({ ...acc, amount: parseInt(acc.amount) - parseInt(result) })
+          );
           return { ...acc, amount: parseInt(acc.amount) - result };
         }
       } else if (expenseType === "INCOME") {
         if (acc?.name === expenseAccount) {
+          dispatch(
+            setacct({ ...acc, amount: parseInt(acc.amount) + parseInt(result) })
+          );
           return { ...acc, amount: parseInt(acc.amount) + parseInt(result) };
         }
       } else {
         if (acc?.name === expenseAccount) {
+          dispatch(
+            setacct({ ...acc, amount: parseInt(acc.amount) - parseInt(result) })
+          );
           return { ...acc, amount: parseInt(acc.amount) - parseInt(result) };
         }
         if (acc?.name === expenseReceiverAccount) {
@@ -79,7 +89,8 @@ export default function ExpenseTracker({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      {/* <StatusBar backgroundColor="#0077CC" /> */}
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ant name="close" color={"#fff"} size={25} />
@@ -335,6 +346,6 @@ export default function ExpenseTracker({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

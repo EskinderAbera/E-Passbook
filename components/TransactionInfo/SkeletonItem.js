@@ -13,7 +13,7 @@ const SkeletonItem = () => {
         paddingBottom: 8,
       }}
     >
-      <ShimmerPlaceholder />
+      <ShimmerPlaceholder isInteraction={true} />
       <View style={styles.transactions}>
         <ShimmerPlaceholder />
         <View style={styles.transactionDetails}>

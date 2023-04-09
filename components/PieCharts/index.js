@@ -1,8 +1,10 @@
 import { PieChart } from "react-native-svg-charts";
 import { Text } from "react-native";
 import { View } from "react-native-animatable";
+import { useSelector } from "react-redux";
 
-export default function PieCharts({ acct }) {
+export default function PieCharts() {
+  const { acct } = useSelector((state) => state.expense);
   const data = [100];
   const pieData = data.map((value, index) => ({
     value,
@@ -23,7 +25,7 @@ export default function PieCharts({ acct }) {
     >
       {/* <View style> */}
       <Text style={{ position: "absolute", height: 60 }}>{acct?.name}</Text>
-      <Text style={{ position: "absolute" }}>{acct?.amount}</Text>
+      <Text style={{ position: "absolute" }}>{`ETB ${acct?.amount}`}</Text>
       <PieChart
         style={{ height: 200, width: 300 }}
         data={pieData}

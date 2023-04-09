@@ -7,6 +7,7 @@ const StateContext = createContext();
 export const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState({});
+  const [qrdata, setQrData] = useState("");
   const [accounts, setAccounts] = useState([
     {
       accountNo: "1000089352733",
@@ -340,6 +341,8 @@ export const ContextProvider = ({ children }) => {
   return (
     <StateContext.Provider
       value={{
+        qrdata,
+        setQrData,
         name,
         handleName,
         user,

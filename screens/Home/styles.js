@@ -37,10 +37,8 @@ const styles = StyleSheet.create({
   sliderContainer: {
     height: 200,
     width: "100%",
-    marginTop: 10,
     justifyContent: "center",
     alignSelf: "center",
-    borderRadius: 8,
   },
   slide: {
     flex: 1,

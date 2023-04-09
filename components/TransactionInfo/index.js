@@ -21,7 +21,9 @@ const TransactionInfo = ({ accounts }) => {
       <ListItem>
         <ListItemContent>
           {transactions.isLoaded ? (
-            <SkeletonItem />
+            Array.from("SkeletonItem").map((item, index) => (
+              <SkeletonItem key={index} />
+            ))
           ) : transactions.statements.statement.length > 0 ? (
             transactions.statements.statement.map((account, index) => {
               return <Item account={account} key={index} />;

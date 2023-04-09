@@ -15,13 +15,15 @@ import SignUpModal from "../components/Modals/SignupModal";
 import Budget from "../screens/Budget";
 import Records from "../screens/Records";
 import { COLORS } from "../constants/theme";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import Category from "../screens/Category";
 import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
 import AccountChooser from "../components/AccountChooser/AccountChooser";
 import AccountHeader from "../components/AccountChooser/Header";
 import NewAccount from "../screens/NewAccount";
+import ProfileScreen from "../screens/Settings";
+import QRCodeScanner from "../screens/QRCodeScanner";
 
 const Stack = createStackNavigator();
 
@@ -34,7 +36,15 @@ const RootStackScreen = () => {
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
-        <Stack.Screen name="OTPVerification" component={OTPVerification} />
+        <Stack.Screen
+          name="OTPVerification"
+          component={OTPVerification}
+          options={{
+            headerShown: true,
+            title: "OTP Verification",
+            headerTintColor: COLORS.primary,
+          }}
+        />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="Dashboard" component={RootTab} />
@@ -43,6 +53,16 @@ const RootStackScreen = () => {
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
         <Stack.Screen name="Budget" component={Budget} />
+        <Stack.Screen
+          name="QRCode"
+          component={QRCodeScanner}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen name="Profile" component={ProfileScreen} />
+
         <Stack.Screen
           name="NewAccount"
           component={NewAccount}

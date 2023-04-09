@@ -9,14 +9,15 @@ import { filterDate } from "../../constants/data";
 
 const Records = ({ route }) => {
   const { acct } = route.params;
-  const [data, setData] = useState({
-    7: true,
-    30: false,
-    W: false,
-    Y: false,
-    M: false,
-  });
+  // const [data, setData] = useState({
+  //   7: true,
+  //   30: false,
+  //   W: false,
+  //   Y: false,
+  //   M: false,
+  // });
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  // const [selectedItem, setSelectedItem] = useState({});
 
   const handlePress = (index) => {
     setSelectedCategoryIndex(index);
@@ -78,7 +79,9 @@ const Records = ({ route }) => {
               size={20}
               color={COLORS.white}
             />
-            <Text style={{ color: COLORS.white }}>{acct?.amount}</Text>
+            <Text
+              style={{ color: COLORS.white }}
+            >{` ETB ${acct?.amount}`}</Text>
           </View>
         </View>
         <View
@@ -91,17 +94,17 @@ const Records = ({ route }) => {
         >
           <View style={{ margin: 10 }}>
             <Text>Days 7</Text>
-            <Text>Balance {acct?.amount}</Text>
+            <Text>Balance {`ETB ${acct?.amount}`}</Text>
           </View>
           <View
             style={{ flexDirection: "row", alignItems: "flex-end", margin: 10 }}
           >
             <MaterialCommunityIcons name="sigma" size={20} />
-            <Text>{acct?.amount}</Text>
+            <Text>{`ETB ${acct?.amount}`}</Text>
           </View>
         </View>
         <View style={styles.card}>
-          <RecordsComponent />
+          <RecordsComponent acct={acct} />
         </View>
       </ScrollView>
       <View
@@ -139,7 +142,7 @@ const Records = ({ route }) => {
                   // borderLeftWidth: 2,
                 }}
                 activeOpacity={0.8}
-                onPress={() => handlePress(index)}
+                onPress={() => setSelectedCategoryIndex(index)}
               >
                 <Text
                   style={{

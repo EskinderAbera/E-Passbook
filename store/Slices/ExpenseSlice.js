@@ -8,6 +8,7 @@ const initialState = {
   expenseType: "INCOME",
   expenseAmount: null,
   records: null,
+  acct: {},
 };
 
 const ExpenseSlice = createSlice({
@@ -36,10 +37,13 @@ const ExpenseSlice = createSlice({
       state.accounts = payload;
     },
     updateAccounts: (state, action) => {
-      alert(action.payload.name);
+      alert(action.payload.account);
       // state.accounts = state.accounts.map((acct) =>
       //   acct.name === action.payload.name ? action.payload.account : acct
       // );
+    },
+    setacct: (state, { payload }) => {
+      state.acct = payload;
     },
   },
 });
@@ -54,5 +58,6 @@ export const {
   setRecords,
   setBudgetAccounts,
   updateAccounts,
+  setacct,
 } = actions;
 export default reducer;

@@ -566,7 +566,7 @@ export const categories = [
         style={{
           width: 45,
           height: 45,
-          backgroundColor: "green",
+          backgroundColor: COLORS.primary,
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 30,
