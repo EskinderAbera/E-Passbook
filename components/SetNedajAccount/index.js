@@ -15,7 +15,7 @@ import Modals from "../Modals";
 import SetPrimaryAction from "../../store/Actions/SetPrimary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SetPrimaryAccount = () => {
+const SetNedajAccount = () => {
   const totalAccounts = useSelector((state) => state.accounts);
   const [showModal, setShowModal] = useState({
     type: "",
@@ -24,7 +24,7 @@ const SetPrimaryAccount = () => {
   });
   const [selectedAccount, setSelectedAccount] = useState({});
   const [pinAccount, setPinAccount] = useState();
-  const [pin, setPin] = useState("");
+  const [nedajNumber, SetNedajNumber] = useState("");
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [isModal, setIsModal] = useState(false);
 
@@ -32,29 +32,20 @@ const SetPrimaryAccount = () => {
   const dispatch = useDispatch();
 
   const handleConfirm = async () => {
-    if (pin.length < 4) {
+    if (nedajNumber.length !== 0) {
+      setShowModal({
+        ...showModal,
+        type: "success",
+        show: true,
+        desc: "Nedaj Account has been set Successfully",
+      });
+    } else {
       setShowModal({
         ...showModal,
         type: "error",
         show: true,
-        desc: "pin length should be 4 or more",
+        desc: "Please Set Nedaj Account",
       });
-    } else {
-      setIsModal(true);
-      try {
-        const value = await AsyncStorage.getItem("username");
-        if (value !== null) {
-          dispatch(SetPrimaryAction(value, pinAccount, pin));
-        }
-      } catch (error) {
-        setIsModal(false);
-        setShowModal({
-          ...showModal,
-          type: "error",
-          show: true,
-          desc: "Wrong Phone",
-        });
-      }
     }
   };
 
@@ -84,13 +75,13 @@ const SetPrimaryAccount = () => {
             style={{
               height: 40,
               padding: 10,
-              backgroundColor:
-                totalAccounts?.accounts?.accounts?.length > 0
-                  ? COLORS.primary
-                  : COLORS.grey,
+              backgroundColor: COLORS.primary,
+              // totalAccounts?.accounts?.accounts?.length > 0
+              //   ? COLORS.primary
+              //   : COLORS.grey,
             }}
           >
-            <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
+            <Text style={{ color: COLORS.white }}>Set Nedaj Account</Text>
           </TouchableOpacity>
           <View style={{ flexDirection: "column", justifyContent: "center" }}>
             <Text style={{ fontSize: 15 }}>
@@ -113,9 +104,13 @@ const SetPrimaryAccount = () => {
                     marginVertical: 20,
                   }}
                 >
-                  Select Primary Account
+                  Insert Nedaj Account Number
                 </Text>
-                {totalAccounts?.accounts?.accounts
+                <TextInput
+                  onChangeText={SetNedajNumber}
+                  style={styles.accountStyle}
+                />
+                {/* {totalAccounts?.accounts?.accounts
                   ?.filter((acct) => acct.status === true)
                   .map((account, index) => (
                     <TouchableOpacity
@@ -144,9 +139,9 @@ const SetPrimaryAccount = () => {
                         {account.accountNumber}
                       </Text>
                     </TouchableOpacity>
-                  ))}
+                  ))} */}
 
-                <Text style={{ fontSize: 15, marginVertical: 20 }}>PIN</Text>
+                {/* <Text style={{ fontSize: 15, marginVertical: 20 }}>PIN</Text>
                 <View
                   style={[
                     styles.amtContainer,
@@ -161,7 +156,7 @@ const SetPrimaryAccount = () => {
                     onFocus={() => setIsInputFocus(true)}
                     onBlur={() => setIsInputFocus(false)}
                   />
-                </View>
+                </View> */}
                 <View style={styles.btnContainer}>
                   <TouchableOpacity
                     style={styles.applyBtn}
@@ -181,7 +176,7 @@ const SetPrimaryAccount = () => {
   return (
     <>
       {renderBody()}
-      {!loader.loading && isModal && totalAccounts.primaryAccount && (
+      {!loader.loading && isModal && (
         <Modals
           props={{
             modalType: "success",
@@ -194,4 +189,4 @@ const SetPrimaryAccount = () => {
   );
 };
 
-export default SetPrimaryAccount;
+export default SetNedajAccount;
