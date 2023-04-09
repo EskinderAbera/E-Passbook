@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserInfoAction from "../../store/Actions/UserInfoAction";
 import { COLORS } from "../../constants/theme";
+import SetNedajAccount from "../../components/SetNedajAccount";
 
 const Home = ({ navigation }) => {
   const loadAccounts = useSelector((state) => state.accounts);
@@ -73,6 +74,8 @@ const Home = ({ navigation }) => {
             }}
           > */}
           <SetPrimaryAccount />
+          <SetNedajAccount />
+
           {/* <TouchableOpacity
               onPress={() =>
                 navigation.navigate("OTPVerification", { type: "getPin" })
