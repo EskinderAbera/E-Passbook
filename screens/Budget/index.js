@@ -10,17 +10,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import PieCharts from "../../components/PieCharts";
 import { Divider } from "react-native-elements";
-import {chooseAccount, chooseType } from "../../store/Actions";
+import { chooseAccount, chooseType } from "../../store/Actions";
 import AdjustBalance from "../../components/Modals/AdjustModal";
 import { useEffect } from "react";
+import { setacct } from "../../store";
 
 const Budget = ({ navigation }) => {
-  const [acct, setAcct] = React.useState();
   const [activeIndex, setActiveIndex] = React.useState(-1);
   const [showModal, setShowModal] = React.useState(false);
   const dispatch = useDispatch();
-  const { accounts } = useSelector((state) => state.expense);
-  
+  const { accounts, acct } = useSelector((state) => state.expense);
+
+  console.log(acct);
+
   useEffect(() => {
     dispatch(chooseAccount(acct?.name));
   }, [acct]);
@@ -98,11 +100,11 @@ const Budget = ({ navigation }) => {
                 }}
                 onPress={() => {
                   setActiveIndex(index);
-                  setAcct(act);
+                  dispatch(setacct(act));
                 }}
               >
                 <Text style={{ color: "white" }}>{act?.name}</Text>
-                <Text style={{ color: "white" }}>{act?.amount}</Text>
+                <Text style={{ color: "white" }}>{`ETB ${act?.amount}`}</Text>
               </TouchableOpacity>
             ))}
             <TouchableOpacity
@@ -196,10 +198,37 @@ const Budget = ({ navigation }) => {
             </Text>
             <Feather name="more-vertical" size={24} color="gray" />
           </View>
-          <Text style={{ margin: 10 }}>THIS WEEK</Text>
-          <Text style={{ marginLeft: 10, fontWeight: "bold", fontSize: 20 }}>
-            {acct?.amount}
-          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginRight: 15,
+            }}
+          >
+            <View>
+              <Text style={{ margin: 10 }}>THIS WEEK</Text>
+              <Text
+                style={{ marginLeft: 10, fontWeight: "bold", fontSize: 20 }}
+              >
+                {`ETB ${acct?.amount}.00`}
+              </Text>
+            </View>
+            <View>
+              <Text style={{ margin: 10, color: COLORS.backgroundDark }}>
+                vs past period
+              </Text>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  // fontWeight: "bold",
+                  fontSize: 20,
+                  color: "red",
+                  alignSelf: "center",
+                }}
+              >{`> + 100%`}</Text>
+            </View>
+          </View>
           <View
             style={{
               flex: 1,
@@ -208,7 +237,7 @@ const Budget = ({ navigation }) => {
               marginBottom: 12,
             }}
           >
-            <PieCharts acct={acct} />
+            <PieCharts />
           </View>
           <Divider bold={true} style={styles.divider} />
           <TouchableOpacity

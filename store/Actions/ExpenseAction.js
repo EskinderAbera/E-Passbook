@@ -6,6 +6,7 @@ import {
   setAmount,
   setReceiverAccount,
   setRecords,
+  setacct,
 } from "../Slices";
 // import { fetchAccounts } from "../../lib/api-calls/fetchAccounts";
 
@@ -14,6 +15,7 @@ export const chooseAccount = (account) => {
     try {
       //   const res = await fetchAccounts(username);
       dispatch(setAccount(account));
+      // dispatch(setacct(account));
       //   dispatch(setIsLoaded(false));
       //   dispatch(setError({}));
     } catch (e) {
@@ -99,6 +101,7 @@ export const changeRecords = (records) => {
     try {
       //   const res = await fetchAccounts(username);
       dispatch(setRecords(records));
+      // dispatch(setacct())
       //   dispatch(setIsLoaded(false));
       //   dispatch(setError({}));
     } catch (e) {

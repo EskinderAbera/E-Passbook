@@ -12,6 +12,7 @@ import { HomeScreenNavigator } from "./CustomNavigation";
 import { COLORS } from "../constants/theme";
 import icons from "../constants/icons";
 import ProfileScreen from "../screens/Settings";
+import NedajScreen from "../screens/NedajScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -114,6 +115,7 @@ const RootTab = () => {
           },
         }}
         tabBar={(props) => <CustomTabBar props={props} />}
+        initialRouteName="Nedaj"
       >
         <Tab.Screen
           name="Home"
@@ -152,6 +154,26 @@ const RootTab = () => {
             ),
             tabBarButton: (props) => <TabBarCustomButton {...props} />,
             headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Nedaj Payment"
+          component={NedajScreen}
+          options={{
+            headerShown: true,
+
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={icons.more}
+                resizeMode="contain"
+                style={{
+                  width: 25,
+                  height: 25,
+                  tintColor: focused ? COLORS.white : COLORS.secondary,
+                }}
+              />
+            ),
+            tabBarButton: (props) => <TabBarCustomButton {...props} />,
           }}
         />
       </Tab.Navigator>

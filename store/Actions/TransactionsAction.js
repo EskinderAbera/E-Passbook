@@ -6,10 +6,12 @@ const TransactionsAction = (acct) => {
   return async (dispatch) => {
     try {
       const res = await transactions(acct);
+      console.log("res", res);
       dispatch(setStatements(res));
       dispatch(setIsLoaded(false));
       dispatch(setError({}));
     } catch (e) {
+      // console.log("tra", e);
       if (e.message === "Network Error") {
         dispatch(setError({ msg: e.message }));
       } else {

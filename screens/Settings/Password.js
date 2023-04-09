@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import PropTypes from "prop-types";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+import SendOtpAction from "../../store/Actions/SendOtpAction";
+import Loading from "../../components/Loader";
 
 const styles = StyleSheet.create({
   container: {
@@ -44,10 +48,23 @@ const styles = StyleSheet.create({
   },
 });
 
-const Password = ({ navigation }) => {
+const Password = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const ChangePassword = async () => {
+    const username = await AsyncStorage.getItem("username");
+    if (username) {
+      dispatch(SendOtpAction(username));
+      navigation.navigate("OTPVerification", { type: "changePassword" });
+    } else {
+      console.log(username);
+    }
+  };
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("OTP")}>
-      <View style={[styles.container]}>
+    <TouchableOpacity onPress={ChangePassword}>
+      <View style={styles.container}>
         <Icon name="form-textbox-password" size={30} style={styles.emailIcon} />
         <View style={styles.emailRow}>
           <View style={styles.emailColumn}>

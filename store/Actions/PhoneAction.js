@@ -16,7 +16,6 @@ const checkPhoneAction = (phoneNumber) => {
       if (e.message === "Network Error") {
         dispatch(setError({ msg: e.message }));
       } else {
-        console.log(e);
         dispatch(setError({ msg: e.response.status }));
       }
     }
@@ -24,3 +23,5 @@ const checkPhoneAction = (phoneNumber) => {
 };
 
 export default checkPhoneAction;
+
+1022200133541;
