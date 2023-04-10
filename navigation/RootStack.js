@@ -22,6 +22,7 @@ import ExpenseTracker from "../components/ExpenseTracker/ExpenseTracker";
 import AccountChooser from "../components/AccountChooser/AccountChooser";
 import AccountHeader from "../components/AccountChooser/Header";
 import NewAccount from "../screens/NewAccount";
+import ChangePassword from "../screens/ChangePassword";
 
 const Stack = createStackNavigator();
 
@@ -30,7 +31,7 @@ const RootStackScreen = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="Budget"
+        initialRouteName="SignInScreen"
       >
         <Stack.Screen name="modal" component={SignUpModal} />
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
@@ -43,6 +44,15 @@ const RootStackScreen = () => {
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
         <Stack.Screen name="Budget" component={Budget} />
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
+          options={{
+            headerShown: true,
+            title: "Change Password",
+            headerTintColor: COLORS.primary,
+          }}
+        />
         <Stack.Screen
           name="NewAccount"
           component={NewAccount}

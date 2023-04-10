@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 
 const Password = ({ navigation }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("OTP")}>
+    <TouchableOpacity onPress={() => navigation.navigate("ChangePassword")}>
       <View style={[styles.container]}>
         <Icon name="form-textbox-password" size={30} style={styles.emailIcon} />
         <View style={styles.emailRow}>

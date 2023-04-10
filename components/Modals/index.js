@@ -9,9 +9,11 @@ import { COLORS } from "../../constants/theme";
 
 const Modals = ({ props }) => {
   const [showModal, setShowModal] = useState(true);
+  const loader = useSelector((state) => state.loading);
+
   function SuccessModal() {
+    const navigation = useNavigation();
     if (props.type === "CheckPhone") {
-      const navigation = useNavigation();
       const user = useSelector((state) => state.user);
 
       setTimeout(() => {
@@ -92,8 +94,7 @@ const Modals = ({ props }) => {
           </Text>
         </View>
       );
-    }
-    else if (props.type === "activateAccount") {
+    } else if (props.type === "activateAccount") {
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -138,6 +139,30 @@ const Modals = ({ props }) => {
           >
             Well Done! {"\n"}
             you have set primary account
+          </Text>
+        </View>
+      );
+    } else if (props.type === "changePassword") {
+      setTimeout(() => {
+        setShowModal(false);
+        props.setShow(false);
+        navigation.reset({ index: 0, routes: [{ name: "SignInScreen" }] });
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            You have Successfully change your passsword
           </Text>
         </View>
       );
@@ -282,12 +307,34 @@ const Modals = ({ props }) => {
             {loader.error.msg === "Network Error"
               ? "check your internet"
               : "Invalid Username or Password!"}
-
           </Text>
         </View>
       );
-    }
-    else {
+    } else if (props.type === "changePassword") {
+      setTimeout(() => {
+        setShowModal(false);
+        props.setShow(false);
+        // props.setModalOpen(false);
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.red,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="questioncircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            {loader.error.message}
+          </Text>
+        </View>
+      );
+    } else {
       setTimeout(() => {
         setShowModal(false);
         // props.setModalOpen(false);

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CheckUserExistenceAPI } from "../../lib/api-calls/CheckUser";
 
 const initialState = {
   loading: false,

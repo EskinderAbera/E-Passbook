@@ -11,6 +11,7 @@ import SetUserInfoReducer from "./Slices/UserInfoSlice";
 import donationReducer from "./Slices/DonationSlice";
 import TransactionReducer from "./Slices/TransactionSlice";
 import ExpenseReducer from "./Slices/ExpenseSlice";
+import ChangePassword from "./Slices/ChangePasswordSlice";
 
 const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
     donation: donationReducer,
     transactions: TransactionReducer,
     expense: ExpenseReducer,
+    changePassword: ChangePassword,
   },
 });
 
