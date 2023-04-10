@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Button,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { StatusBar } from "expo-status-bar";
 import { useStateContext } from "../../Contexts/ContextProvider";
+import { AntDesign } from "@expo/vector-icons";
 
 const QRCodeScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [result, setResult] = useState(null);
+
   const { setQrData } = useStateContext();
-  const { width, height } = Dimensions.get("window");
-  const aspectRatio = height / width;
 
   useEffect(() => {
     (async () => {
@@ -27,14 +17,8 @@ const QRCodeScanner = ({ navigation }) => {
   }, []);
 
   const handleBarCodeScanned = ({ data }) => {
-    setScanned(true);
     setQrData(data);
     navigation.goBack();
-  };
-
-  const handleRetryScan = () => {
-    setScanned(false);
-    setResult(null);
   };
 
   const handleClose = () => {
@@ -60,16 +44,15 @@ const QRCodeScanner = ({ navigation }) => {
         <View style={styles.scanContainer}>
           <View style={styles.scanLine} />
         </View>
-        <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
+        <Text style={styles.closeButtonText}>Scan a merchant QR Code</Text>
+        <AntDesign
+          name="close"
+          size={30}
+          color="white"
+          style={styles.closeButton}
+          onPress={handleClose}
+        />
       </View>
-      {/* {scanned && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Result: {result}</Text>
-          <Button title="Retry Scan" onPress={handleRetryScan} />
-        </View>
-      )} */}
     </View>
   );
 };
@@ -110,13 +93,15 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    top: 30,
+    top: 70,
     right: 20,
   },
   closeButtonText: {
     fontSize: 18,
     color: "white",
     fontWeight: "bold",
+    top: 75,
+    position: "absolute",
   },
   resultContainer: {
     alignItems: "center",

@@ -92,8 +92,7 @@ const Modals = ({ props }) => {
           </Text>
         </View>
       );
-    }
-    else if (props.type === "activateAccount") {
+    } else if (props.type === "activateAccount") {
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -282,12 +281,10 @@ const Modals = ({ props }) => {
             {loader.error.msg === "Network Error"
               ? "check your internet"
               : "Invalid Username or Password!"}
-
           </Text>
         </View>
       );
-    }
-    else {
+    } else {
       setTimeout(() => {
         setShowModal(false);
         // props.setModalOpen(false);

@@ -104,11 +104,12 @@ const SetNedajAccount = () => {
                     marginVertical: 20,
                   }}
                 >
-                  Insert Nedaj Account Number
+                  Insert Nedaj Merchant Code
                 </Text>
                 <TextInput
                   onChangeText={SetNedajNumber}
                   style={styles.accountStyle}
+                  keyboardType="numeric"
                 />
                 {/* {totalAccounts?.accounts?.accounts
                   ?.filter((acct) => acct.status === true)

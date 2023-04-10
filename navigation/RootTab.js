@@ -164,7 +164,7 @@ const RootTab = () => {
 
             tabBarIcon: ({ focused }) => (
               <Image
-                source={icons.more}
+                source={icons.gasStation}
                 resizeMode="contain"
                 style={{
                   width: 25,
