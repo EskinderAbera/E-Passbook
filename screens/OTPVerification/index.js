@@ -8,6 +8,7 @@ import {
   ScrollView,
   Platform,
   View,
+  Keyboard,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
@@ -22,6 +23,8 @@ import OtpVerifyAction from "../../store/Actions/OtpAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loader";
 import Modals from "../../components/Modals";
+import * as SMS from "expo-sms";
+import { useEffect } from "react";
 
 const CELL_COUNT = 5;
 const source = {
@@ -51,6 +54,26 @@ const OTPVerification = ({ route, navigation }) => {
       </TouchableOpacity>
     );
   }
+
+  // useEffect(() => {
+  //   const smsListener = async (message) => {
+  //     if (message.body.includes("OTP")) {
+  //       const otpRegex = /OTP: (\d{6})/;
+  //       const match = message.body.match(otpRegex);
+  //       if (match) {
+  //         const receivedOtp = match[1];
+  //         setValue(receivedOtp);
+  //         Keyboard.dismiss();
+  //       }
+  //     }
+  //   };
+
+  //   SMS.addSmsListener(smsListener);
+
+  //   return () => {
+  //     SMS.removeSmsListener(smsListener);
+  //   };
+  // }, []);
 
   const handleVerification = () => {
     setModalOpen(true);

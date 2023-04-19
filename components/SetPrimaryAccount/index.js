@@ -80,16 +80,17 @@ const SetPrimaryAccount = () => {
         >
           <TouchableOpacity
             onPress={() => setShowModal(true)}
-            disabled={
-              totalAccounts?.accounts?.accounts?.length > 0 ? false : true
-            }
+            // disabled={
+            //   totalAccounts?.accounts?.accounts?.length > 0 ? false : true
+            // }
             style={{
               height: 40,
               padding: 10,
-              backgroundColor:
-                totalAccounts?.accounts?.accounts?.length > 0
-                  ? COLORS.primary
-                  : COLORS.grey,
+              backgroundColor: COLORS.primary,
+              // backgroundColor:
+              //   totalAccounts?.accounts?.accounts?.length > 0
+              //     ? COLORS.primary
+              //     : COLORS.grey,
             }}
           >
             <Text style={{ color: COLORS.white }}>Set Primary Account</Text>
@@ -117,9 +118,8 @@ const SetPrimaryAccount = () => {
                 >
                   Select Primary Account
                 </Text>
-                {totalAccounts?.accounts?.accounts
-                  ?.filter((acct) => acct.status === true)
-                  .map((account, index) => (
+                {totalAccounts?.accounts?.data?.accounts?.map(
+                  (account, index) => (
                     <TouchableOpacity
                       key={index}
                       onPress={() => {
@@ -146,7 +146,8 @@ const SetPrimaryAccount = () => {
                         {account.accountNumber}
                       </Text>
                     </TouchableOpacity>
-                  ))}
+                  )
+                )}
 
                 <Text style={{ fontSize: 15, marginVertical: 20 }}>PIN</Text>
                 <View

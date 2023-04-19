@@ -5459,6 +5459,11 @@ expo-secure-store@~12.0.0:
   resolved "https://registry.npmjs.org/expo-secure-store/-/expo-secure-store-12.0.0.tgz"
   integrity sha512-Rz5lYr2NxrnFvIPwuWcseUSbdUjFxNZG0oVulqM9puuK7t5lDG3/SAy+J22ELBhaltuci2VVO6hCdFwRoRiG/Q==
 
+expo-sms@^11.2.1:
+  version "11.2.1"
+  resolved "https://registry.yarnpkg.com/expo-sms/-/expo-sms-11.2.1.tgz#05719f30c6fc2bd827058c1219258fbbe6ecd991"
+  integrity sha512-ZvPSMsbDYlTK+35B4L/hl239xpKYasLo4+0D5cNSUUssv90x2dEOXeInqCPvvJHejNOYfj3ZDrRbf9LsdDVa5A==
+
 expo-status-bar@~1.4.2:
   version "1.4.2"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.4.2.tgz"

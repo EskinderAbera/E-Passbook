@@ -18,12 +18,7 @@ const QRCodeScanner = ({ navigation }) => {
 
   const handleBarCodeScanned = ({ data }) => {
     const newData = JSON.parse(data);
-    setQrData({
-      ...qrdata,
-      merchantId: newData.MerchantId,
-      merchantName: newData.Name,
-      amount: newData.Amount,
-    });
+    setQrData(newData);
     navigation.navigate("Nedaj Payment");
   };
 

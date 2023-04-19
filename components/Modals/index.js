@@ -17,7 +17,8 @@ const Modals = ({ props }) => {
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
-        navigation.navigate("OTPVerification", { type: "SignUp" });
+        // navigation.navigate("OTPVerification", { type: "SignUp" });
+        navigation.navigate("SignUpScreen");
       }, 3000);
 
       return (
@@ -185,6 +186,7 @@ const Modals = ({ props }) => {
         </View>
       );
     } else if (props.type === "signup") {
+      const loader = useSelector((state) => state.loading);
       setTimeout(() => {
         setShowModal(false);
         props.setModalOpen(false);
@@ -203,8 +205,7 @@ const Modals = ({ props }) => {
           <Text
             style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
           >
-            Sorry! {"\n"}
-            Username already exist!
+            {loader.error.msg}
           </Text>
         </View>
       );

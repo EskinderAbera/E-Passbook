@@ -116,7 +116,7 @@ const RootTab = () => {
         //   },
         // }}
         // tabBar={(props) => <CustomTabBar props={props} />}
-        initialRouteName="Nedaj"
+        initialRouteName="Home"
       >
         <Tab.Screen
           name="Home"
@@ -161,7 +161,7 @@ const RootTab = () => {
               />
             ),
             // tabBarButton: (props) => <TabBarCustomButton {...props} />,
-            headerShown: false,
+            // headerShown: true,
           }}
         />
         <Tab.Screen

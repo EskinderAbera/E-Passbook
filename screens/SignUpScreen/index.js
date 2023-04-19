@@ -98,16 +98,34 @@ const SignUpScreen = ({ navigation }) => {
       setShowWrongUsername(true);
     } else {
       setModalOpen(true);
+      // console.log("user", JSON.stringify(user, null, 2));
+      // dispatch(
+      //   setUserInfo({
+      //     ...user.userInfo.data.userInfo,
+      // username: data.username,
+      // password: data.password,
+      //   })
+      // );
+      // console.log("user", );
+      // console.log("updated", {
+      //   ...user.userInfo.data.userInfo,
+      // username: data.username,
+      // password: data.password,
+      // });
+
+      // dispatch(
+      //   setUserInfo({
+      //     ...user.userInfo.data.userInfo,
+      //     username: data.username,
+      //     password: data.password,
+      //   })
+      // );
       dispatch(
-        SignUpAction(
-          dispatch(
-            setUserInfo({
-              ...user.userInfo,
-              username: data.username,
-              password: data.password,
-            })
-          )
-        )
+        SignUpAction({
+          ...user.userInfo.userInfo,
+          username: data.username,
+          password: data.password,
+        })
       );
     }
   };

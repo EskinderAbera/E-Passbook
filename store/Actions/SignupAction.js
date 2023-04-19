@@ -6,13 +6,14 @@ const SignUpAction = (data) => {
   return async (dispatch) => {
     try {
       dispatch(setLoading(true));
-      const res = await Signup(data);
+      const res = await Signup({ userInfo: data });
       dispatch(setSignupStatus(res));
       dispatch(setLoading(false));
       dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
       dispatch(setError({ msg: e.message }));
+      console.log(e.message);
     }
   };
 };

@@ -7,7 +7,7 @@ const checkPhoneAction = (phoneNumber) => {
     try {
       dispatch(setLoading(true));
       const res = await CheckUserExistenceAPI(phoneNumber);
-      dispatch(setUserInfo(res));
+      dispatch(setUserInfo(res.data));
       dispatch(setError({}));
       await AsyncStorage.setItem("phone", phoneNumber);
       dispatch(setLoading(false));
