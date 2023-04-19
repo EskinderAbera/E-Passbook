@@ -10,8 +10,6 @@ import AccountsAction from "../../store/Actions/AccountsAction";
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserInfoAction from "../../store/Actions/UserInfoAction";
-import { COLORS } from "../../constants/theme";
-import SetNedajAccount from "../../components/SetNedajAccount";
 
 const Home = ({ navigation }) => {
   const loadAccounts = useSelector((state) => state.accounts);
@@ -74,7 +72,7 @@ const Home = ({ navigation }) => {
             }}
           > */}
           <SetPrimaryAccount />
-          <SetNedajAccount />
+          {/* <SetNedajAccount /> */}
 
           {/* <TouchableOpacity
               onPress={() =>
@@ -95,12 +93,12 @@ const Home = ({ navigation }) => {
         </View>
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        {loadAccounts.isLoaded ? (
+        {loadAccounts?.isLoaded ? (
           Array.from("coopass").map((acc, index) => (
             <HomeSkeleton key={index} />
           ))
-        ) : loadAccounts.accounts.accounts.length > 0 ? (
-          loadAccounts.accounts.accounts.map((accountsf) => {
+        ) : loadAccounts?.accounts?.accounts?.length > 0 ? (
+          loadAccounts?.accounts?.accounts?.map((accountsf) => {
             return (
               <ShowBalance
                 navigation={navigation}

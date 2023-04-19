@@ -7,14 +7,18 @@ const StateContext = createContext();
 export const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState({});
-  const [qrdata, setQrData] = useState("");
+  const [qrdata, setQrData] = useState({
+    merchantId: "",
+    amount: "",
+    merchantName: "",
+  });
   const [accounts, setAccounts] = useState([
     {
       accountNo: "1000089352733",
       balance: "11243.45",
       openingDate: "24 AUG 2016",
       product: "Ordinary Savings Account",
-      status: false,
+      status: true,
       statment: [
         {
           CRAMT: "1500.00",

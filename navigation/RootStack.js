@@ -24,6 +24,7 @@ import AccountHeader from "../components/AccountChooser/Header";
 import NewAccount from "../screens/NewAccount";
 import ProfileScreen from "../screens/Settings";
 import QRCodeScanner from "../screens/QRCodeScanner";
+import NedajHistory from "../screens/NedajHistory";
 
 const Stack = createStackNavigator();
 
@@ -167,6 +168,14 @@ const RootStackScreen = () => {
           component={AgreementPolicy}
         />
         <Stack.Screen name="ImageViewer" component={ImageViewer} />
+        <Stack.Screen
+          name="NedajHistory"
+          component={NedajHistory}
+          options={{
+            headerShown: true,
+            title: "Nedaj History",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

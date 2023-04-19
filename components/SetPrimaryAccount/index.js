@@ -80,7 +80,9 @@ const SetPrimaryAccount = () => {
         >
           <TouchableOpacity
             onPress={() => setShowModal(true)}
-            // disabled={totalAccounts?.accounts?.accounts?.length > 0 ? false : true}
+            disabled={
+              totalAccounts?.accounts?.accounts?.length > 0 ? false : true
+            }
             style={{
               height: 40,
               padding: 10,

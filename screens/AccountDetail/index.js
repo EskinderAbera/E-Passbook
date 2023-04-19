@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { COLORS } from "../../constants/theme";
 import HomeInfo from "../../components/HomeInfo";
-import AccountInfo from "../../components/AccountInfo";
 import TransactionInfo from "../../components/TransactionInfo";
 import Header from "../../components/Header";
 import styles from "./styles";
@@ -15,7 +14,7 @@ import { getDonations } from "../../store/Actions";
 
 const AccountsDetail = ({ navigation, route }) => {
   const { accounts } = route.params;
-  const {donations} = useSelector((state) => state?.donation);
+  const { donations } = useSelector((state) => state?.donation);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const categories = ["Home", "Transaction", "Early-Pay", "Donations"];
   const [data, setData] = useState({
@@ -30,7 +29,7 @@ const AccountsDetail = ({ navigation, route }) => {
 
   useEffect(() => {
     dispatch(getDonations());
-  }, [])
+  }, []);
 
   const CategoryList = () => {
     const handleOnPress = (index) => {
@@ -128,22 +127,22 @@ const AccountsDetail = ({ navigation, route }) => {
             <TransactionInfo navigation={navigation} accounts={accounts} />
           )}
           {data.earlyPay && <EarlyPay />}
-          {data.donations &&
-          <View style={styles.donationContainer}>
-            {donations.map((donation, index) => (
-              <Donation
-                key={index}
-                imageSource={donation.imageUrl}
-                title={donation.title}
-                percent={donation.totalAmountCollected / donation.goalAmount}
-                donationRaised={donation.totalAmountCollected}
-                hoursLeft={donation.campaignDurationLeft}
-                shortDescription= {donation.shortDescription}
-                campaignId = {donation.campaignId}
-              />
-            ))}
+          {data.donations && (
+            <View style={styles.donationContainer}>
+              {donations.map((donation, index) => (
+                <Donation
+                  key={index}
+                  imageSource={donation.imageUrl}
+                  title={donation.title}
+                  percent={donation.totalAmountCollected / donation.goalAmount}
+                  donationRaised={donation.totalAmountCollected}
+                  hoursLeft={donation.campaignDurationLeft}
+                  shortDescription={donation.shortDescription}
+                  campaignId={donation.campaignId}
+                />
+              ))}
             </View>
-}
+          )}
         </View>
       </Animated.View>
     </ScrollView>

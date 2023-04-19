@@ -7,7 +7,7 @@ import { AntDesign } from "@expo/vector-icons";
 const QRCodeScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
 
-  const { setQrData } = useStateContext();
+  const { setQrData, qrdata } = useStateContext();
 
   useEffect(() => {
     (async () => {
@@ -17,8 +17,14 @@ const QRCodeScanner = ({ navigation }) => {
   }, []);
 
   const handleBarCodeScanned = ({ data }) => {
-    setQrData(data);
-    navigation.goBack();
+    const newData = JSON.parse(data);
+    setQrData({
+      ...qrdata,
+      merchantId: newData.MerchantId,
+      merchantName: newData.Name,
+      amount: newData.Amount,
+    });
+    navigation.navigate("Nedaj Payment");
   };
 
   const handleClose = () => {

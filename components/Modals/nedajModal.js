@@ -1,16 +1,13 @@
 import { View, Modal, Text } from "react-native";
 // import COLORS from "../../constants/theme/apptheme";
 import styles from "./styles";
-import { useSelector } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 
 const NedajModal = ({ handleShow, show }) => {
   setTimeout(() => {
     handleShow();
-  }, 5000);
+  }, 3000);
 
   return (
     <Modal visible={show} transparent={true} animationType={"slide"}>

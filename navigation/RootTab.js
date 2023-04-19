@@ -13,6 +13,7 @@ import { COLORS } from "../constants/theme";
 import icons from "../constants/icons";
 import ProfileScreen from "../screens/Settings";
 import NedajScreen from "../screens/NedajScreen";
+import { Entypo } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -103,24 +104,27 @@ const RootTab = () => {
     <>
       {/* <NavigationContainer> */}
       <Tab.Navigator
-        screenOptions={{
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            postion: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: "transparent",
-            elevation: 0,
-          },
-        }}
-        tabBar={(props) => <CustomTabBar props={props} />}
+        // screenOptions={{
+        //   // tabBarShowLabel: false,
+        //   tabBarStyle: {
+        //     postion: "absolute",
+        //     bottom: 0,
+        //     left: 0,
+        //     right: 0,
+        //     backgroundColor: "transparent",
+        //     elevation: 0,
+        //   },
+        // }}
+        // tabBar={(props) => <CustomTabBar props={props} />}
         initialRouteName="Nedaj"
       >
         <Tab.Screen
           name="Home"
           component={HomeScreenNavigator}
           options={{
+            tabBarLabelStyle: {
+              fontSize: 13,
+            },
             tabBarIcon: ({ focused }) => (
               <Image
                 source={icons.more}
@@ -128,11 +132,12 @@ const RootTab = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? COLORS.white : COLORS.secondary,
+                  tintColor: focused ? COLORS.primary : COLORS.secondary,
                 }}
               />
             ),
-            tabBarButton: (props) => <TabBarCustomButton {...props} />,
+            // tabBarButton: (props) => <TabBarCustomButton {...props} />,
+            title: "Home",
             headerShown: false,
           }}
         />
@@ -141,6 +146,9 @@ const RootTab = () => {
           // component={SettingScreenNavigator}
           component={ProfileScreen}
           options={{
+            tabBarLabelStyle: {
+              fontSize: 13,
+            },
             tabBarIcon: ({ focused }) => (
               <Image
                 source={icons.settings}
@@ -148,11 +156,11 @@ const RootTab = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? COLORS.white : COLORS.secondary,
+                  tintColor: focused ? COLORS.primary : COLORS.secondary,
                 }}
               />
             ),
-            tabBarButton: (props) => <TabBarCustomButton {...props} />,
+            // tabBarButton: (props) => <TabBarCustomButton {...props} />,
             headerShown: false,
           }}
         />
@@ -161,7 +169,9 @@ const RootTab = () => {
           component={NedajScreen}
           options={{
             headerShown: true,
-
+            tabBarLabelStyle: {
+              fontSize: 13,
+            },
             tabBarIcon: ({ focused }) => (
               <Image
                 source={icons.gasStation}
@@ -169,11 +179,11 @@ const RootTab = () => {
                 style={{
                   width: 25,
                   height: 25,
-                  tintColor: focused ? COLORS.white : COLORS.secondary,
+                  tintColor: focused ? COLORS.primary : COLORS.secondary,
                 }}
               />
             ),
-            tabBarButton: (props) => <TabBarCustomButton {...props} />,
+            // tabBarButton: (props) => <TabBarCustomButton {...props} />,
           }}
         />
       </Tab.Navigator>

@@ -21,8 +21,6 @@ const Budget = ({ navigation }) => {
   const dispatch = useDispatch();
   const { accounts, acct } = useSelector((state) => state.expense);
 
-  console.log(acct);
-
   useEffect(() => {
     dispatch(chooseAccount(acct?.name));
   }, [acct]);
