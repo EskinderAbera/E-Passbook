@@ -1,13 +1,13 @@
 import RBSheet from "react-native-raw-bottom-sheet";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useRef, useCallback, useState, useEffect } from "react";
+import { useRef, useCallback, useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 
 const BottomSheet = () => {
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("23455");
   const [isFocus, setIsFocus] = useState(false);
   const [showError, setShowError] = useState(false);
   const loadAccounts = useSelector((state) => state.accounts);
@@ -30,9 +30,18 @@ const BottomSheet = () => {
     }
   };
 
-  // useEffect(() => {
-  //   refRBSheet.current.open();
-  // }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // if (!value) {
+      //   refRBSheet.current.open();
+      //   setShowError(false);
+      // }
+      !value && refRBSheet.current.open();
+      return () => {
+        refRBSheet.current.close();
+      };
+    }, [value])
+  );
 
   return (
     <RBSheet
@@ -143,7 +152,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 30,
     backgroundColor: "#00adef",
     padding: 10,
     margin: 20,

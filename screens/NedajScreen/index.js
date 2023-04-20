@@ -19,22 +19,22 @@ const NedajScreen = ({ navigation }) => {
   const { qrdata, setQrData } = useStateContext();
   const [show, setShow] = useState(false);
   const [editable, setEditable] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(true);
 
   const onVerify = () => {
     setEditable(true);
     setQrData({ ...qrdata, merchantName: "Total" });
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      setShowModal(true);
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setShowModal(true);
 
-      return () => {
-        setShowModal(false);
-      };
-    }, [])
-  );
+  //     return () => {
+  //       setShowModal(false);
+  //     };
+  //   }, [])
+  // );
 
   return (
     // <>
@@ -43,7 +43,7 @@ const NedajScreen = ({ navigation }) => {
     //   ) : (
     <ScrollView contentContainerStyle={styles.container}>
       {show && <NedajModal handleShow={() => setShow(false)} show={show} />}
-      {showModal && <BottomSheet />}
+      <BottomSheet />
       <View style={styles.inputBox}>
         <TextInput
           style={{
