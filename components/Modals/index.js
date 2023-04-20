@@ -141,6 +141,29 @@ const Modals = ({ props }) => {
           </Text>
         </View>
       );
+    } else {
+      setTimeout(() => {
+        setShowModal(false);
+      }, 5000);
+      return (
+        <View style={styles.modalContainer}>
+          <View
+            style={{
+              backgroundColor: COLORS.primary,
+              padding: 10,
+              alignItems: "center",
+            }}
+          >
+            <AntDesign name="checkcircleo" size={70} color="white" />
+          </View>
+          <Text
+            style={{ marginVertical: 50, fontSize: 20, textAlign: "center" }}
+          >
+            Successful! {"\n"}
+            you have paid Successfully
+          </Text>
+        </View>
+      );
     }
   }
   function ErrorModal() {

@@ -100,9 +100,8 @@ const styles = StyleSheet.create({
 });
 
 const Profile = ({ navigation }) => {
-  // const userInfo = useSelector((state) => state.userInfo);
+  const userInfo = useSelector((state) => state.userInfo);
   const [showSecurity, setShowSecurity] = useState(false);
-  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     async function getValueForBiometric() {
@@ -130,9 +129,9 @@ const Profile = ({ navigation }) => {
                     uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU",
                   }}
                 />
-                {/* <Text style={styles.userNameText}>
+                <Text style={styles.userNameText}>
                   {userInfo?.userInfo?.fullName}
-                </Text> */}
+                </Text>
                 <View style={styles.userAddressRow}>
                   <View>
                     <Icon
@@ -141,25 +140,25 @@ const Profile = ({ navigation }) => {
                       iconStyle={styles.placeIcon}
                     />
                   </View>
-                  {/* <View style={styles.userCityRow}>
+                  <View style={styles.userCityRow}>
                     <Text style={styles.userCityText}>
                       {userInfo?.userInfo.address.city}
                     </Text>
-                  </View> */}
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-          {/* <Tel
+          <Tel
             style={{ marginTop: 10 }}
             number={`0${userInfo.userInfo.phoneNumber}`}
-          /> */}
-          {/* <Email name="Personal" email={userInfo.userInfo.email} /> */}
+          />
+          <Email name="Personal" email={userInfo.userInfo.email} />
           <Separator />
 
           <Password />
 
-          {showSecurity && <Security />}
+          {/* {showSecurity && <Security />} */}
 
           <Shares />
           <ContactUs />

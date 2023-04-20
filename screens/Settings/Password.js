@@ -56,7 +56,7 @@ const Password = () => {
     const username = await AsyncStorage.getItem("username");
     if (username) {
       dispatch(SendOtpAction(username));
-      navigation.navigate("OTPVerification", { type: "changePassword" });
+      navigation.navigate("ChangePassword", { username });
     } else {
       console.log(username);
     }

@@ -5,9 +5,8 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import { AntDesign } from "@expo/vector-icons";
 
 const QRCodeScanner = ({ navigation }) => {
-  const [hasPermission, setHasPermission] = useState(null);
-
   const { setQrData, qrdata } = useStateContext();
+  const [hasPermission, setHasPermission] = useState(null);
 
   useEffect(() => {
     (async () => {
@@ -16,14 +15,22 @@ const QRCodeScanner = ({ navigation }) => {
     })();
   }, []);
 
-  const handleBarCodeScanned = ({ data }) => {
+  const handleBarCodeScanned = async ({ data }) => {
     const newData = JSON.parse(data);
-    setQrData(newData);
+    setQrData({
+      ...qrdata,
+      agentId: newData.AgentId,
+      merchantId: newData.MerchantId,
+      fuelType: newData.FuelType,
+      debitAmount: newData.Amount,
+    });
+    // alert(data);
+    // setQrData(newData);
     navigation.navigate("Nedaj Payment");
   };
 
   const handleClose = () => {
-    navigation.goBack(); // or navigate to a different screen
+    navigation.goBack();
   };
 
   if (hasPermission === null) {

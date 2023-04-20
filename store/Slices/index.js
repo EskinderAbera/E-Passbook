@@ -5,3 +5,4 @@ export * from "./loadingSlice";
 export * from "./OnBoardingSlice";
 export * from "./DonationSlice";
 export * from "./ExpenseSlice";
+export * from "./NedajSlice";

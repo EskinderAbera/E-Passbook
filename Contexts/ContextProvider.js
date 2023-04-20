@@ -9,9 +9,12 @@ export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [qrdata, setQrData] = useState({
     merchantId: "",
-    amount: "",
-    merchantName: "",
+    agentId: "",
+    fuelType: "",
+    debitAccount: "",
+    debitAmount: "",
   });
+  const merchantName = "TOTAL";
   const [accounts, setAccounts] = useState([
     {
       accountNo: "1000089352733",
@@ -375,6 +378,7 @@ export const ContextProvider = ({ children }) => {
         fingerPrint,
         updateAccounts,
         fingerPrint,
+        merchantName,
       }}
     >
       {children}

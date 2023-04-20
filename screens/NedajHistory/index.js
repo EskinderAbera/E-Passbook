@@ -1,17 +1,31 @@
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import styles from "./styles";
+import NedajSkeleton from "./NedajSkeleton";
 
 const NedajHistory = () => {
   const RecordItem = () => {
     return (
       <View style={styles.container}>
-        <FontAwesome5
-          name="gas-pump"
-          size={24}
-          color="#00adef"
-          style={styles.icon}
-        />
+        <View
+          style={{
+            width: 40,
+            height: 40,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 50,
+            backgroundColor: "lightgray",
+            marginRight: 10,
+          }}
+        >
+          <FontAwesome5
+            name="gas-pump"
+            size={24}
+            color="#00adef"
+            // style={styles.icon}
+          />
+        </View>
         <View style={styles.content}>
           <View style={styles.row}>
             <Text style={styles.name}>Petroleum</Text>
@@ -31,57 +45,12 @@ const NedajHistory = () => {
       <Text style={styles.recordTitle}>Last Record Overview</Text>
       <FlatList
         data={Array(12)}
-        renderItem={({ item }) => <RecordItem />}
+        // renderItem={({ item }) => <RecordItem />}
+        renderItem={({ item }) => <NedajSkeleton />}
         showsVerticalScrollIndicator={false}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  Totalcontainer: {
-    backgroundColor: "white",
-    flex: 1,
-    width: "100%",
-    padding: 10,
-  },
-  container: {
-    flexDirection: "row",
-    // marginHorizontal: 10,
-    marginVertical: 10,
-    alignItems: "center",
-  },
-  recordTitle: {
-    marginBottom: 10,
-    fontSize: 15,
-    fontWeight: "500",
-  },
-  icon: {
-    marginRight: 10,
-  },
-  image: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 10,
-  },
-  content: {
-    flex: 1,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "lightgray",
-    paddingBottom: 3,
-  },
-  row: {
-    flexDirection: "row",
-    // marginBottom: 5,
-  },
-  name: {
-    flex: 1,
-    fontWeight: "bold",
-  },
-  subTitle: {
-    color: "gray",
-  },
-});
 
 export default NedajHistory;

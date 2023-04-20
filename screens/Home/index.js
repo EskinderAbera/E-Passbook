@@ -13,7 +13,6 @@ import UserInfoAction from "../../store/Actions/UserInfoAction";
 
 const Home = ({ navigation }) => {
   const loadAccounts = useSelector((state) => state.accounts);
-  console.log("load", loadAccounts);
   const width = Dimensions.get("window").width;
   const dispatch = useDispatch();
 
@@ -98,8 +97,8 @@ const Home = ({ navigation }) => {
           Array.from("coopass").map((acc, index) => (
             <HomeSkeleton key={index} />
           ))
-        ) : loadAccounts?.accounts?.data?.accounts?.length > 0 ? (
-          loadAccounts?.accounts?.data?.accounts?.map((accountsf) => {
+        ) : loadAccounts?.accounts?.accounts?.length > 0 ? (
+          loadAccounts?.accounts?.accounts?.map((accountsf) => {
             return (
               <ShowBalance
                 navigation={navigation}

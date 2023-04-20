@@ -5,24 +5,23 @@ import { useFocusEffect } from "@react-navigation/native";
 import { Dropdown } from "react-native-element-dropdown";
 import { AntDesign } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
+import { useStateContext } from "../../Contexts/ContextProvider";
 
 const BottomSheet = () => {
-  const [value, setValue] = useState("23455");
+  const { qrdata, setQrData } = useStateContext();
   const [isFocus, setIsFocus] = useState(false);
   const [showError, setShowError] = useState(false);
   const loadAccounts = useSelector((state) => state.accounts);
 
   const refRBSheet = useRef();
 
-  const accountNumbers = loadAccounts?.accounts?.data?.accounts?.map(
-    (acct) => ({
-      label: acct.accountNumber,
-      value: acct.accountNumber,
-    })
-  );
+  const accountNumbers = loadAccounts?.accounts?.accounts.map((acct) => ({
+    label: acct.accountNumber,
+    value: acct.accountNumber,
+  }));
 
   const onPress = () => {
-    if (value !== null) {
+    if (qrdata.debitAmount !== null) {
       refRBSheet.current.close();
       setShowError(false);
     } else {
@@ -32,15 +31,11 @@ const BottomSheet = () => {
 
   useFocusEffect(
     useCallback(() => {
-      // if (!value) {
-      //   refRBSheet.current.open();
-      //   setShowError(false);
-      // }
-      !value && refRBSheet.current.open();
+      !qrdata.debitAccount && refRBSheet.current.open();
       return () => {
         refRBSheet.current.close();
       };
-    }, [value])
+    }, [qrdata.debitAccount])
   );
 
   return (
@@ -77,11 +72,11 @@ const BottomSheet = () => {
             valueField="value"
             placeholder={!isFocus ? "Select Account" : "..."}
             searchPlaceholder="Search..."
-            value={value}
+            value={qrdata.debitAmount}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
-              setValue(item.value);
+              setQrData({ ...qrdata, debitAmount: item.value });
               setIsFocus(false);
             }}
             renderLeftIcon={() => (

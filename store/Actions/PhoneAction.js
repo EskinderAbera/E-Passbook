@@ -23,5 +23,3 @@ const checkPhoneAction = (phoneNumber) => {
 };
 
 export default checkPhoneAction;
-
-1022200133541;

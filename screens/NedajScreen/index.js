@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
@@ -13,37 +13,63 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import NedajModal from "../../components/Modals/nedajModal";
 import LineChartItem from "./LineChartItem";
 import BottomSheet from "./BottomSheet";
-import { useFocusEffect } from "@react-navigation/native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Loading from "../../components/Loader";
 
 const NedajScreen = ({ navigation }) => {
-  const { qrdata, setQrData } = useStateContext();
-  const [show, setShow] = useState(false);
+  const { qrdata, setQrData, merchantName } = useStateContext();
+  // const [show, setShow] = useState(false);
   const [editable, setEditable] = useState(true);
-  const [showModal, setShowModal] = useState(true);
+  const [value, setValue] = useState(null);
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
+
+  // handle this using redux
+  const [showLoading, setShowLoading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const onVerify = () => {
     setEditable(true);
-    setQrData({ ...qrdata, merchantName: "Total" });
+    // setQrData({ ...qrdata });
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setShowModal(true);
+  React.useEffect(() => {
+    if (!qrdata.merchantId) {
+      setIsConfirmDisabled(true);
+    } else {
+      setIsConfirmDisabled(false);
+    }
+  }, [qrdata]);
 
-  //     return () => {
-  //       setShowModal(false);
-  //     };
-  //   }, [])
-  // );
+  const handleSubmit = async () => {
+    setIsConfirmDisabled(true);
+    setShowLoading(true);
+    const username = await AsyncStorage.getItem("username");
+    try {
+      const res = await axios.post(
+        `http://192.168.137.220:9000/api/nedaj/${username},`,
+        qrdata
+      );
+      if (res.status === 200) {
+        setShowSuccess(true);
+      } else {
+        setShowSuccess(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    // <>
-    //   {show ? (
-    //     <NedajModal handleShow={() => setShow(false)} show={show} />
-    //   ) : (
     <ScrollView contentContainerStyle={styles.container}>
-      {show && <NedajModal handleShow={() => setShow(false)} show={show} />}
-      <BottomSheet />
+      {showLoading && <Loading msg={"Loading"} />}
+      {showSuccess && (
+        <NedajModal
+          handleShow={() => setShowSuccess(false)}
+          show={showSuccess}
+        />
+      )}
+      <BottomSheet value={value} setValue={setValue} />
       <View style={styles.inputBox}>
         <TextInput
           style={{
@@ -100,7 +126,7 @@ const NedajScreen = ({ navigation }) => {
           }}
           placeholder="Merchant Name"
           placeholderTextColor={COLORS.darkgray}
-          value={qrdata.merchantName}
+          value={qrdata.merchantId && merchantName}
           editable={false}
         />
         <TextInput
@@ -116,7 +142,7 @@ const NedajScreen = ({ navigation }) => {
           }}
           placeholder="Amount"
           placeholderTextColor={COLORS.darkgray}
-          value={qrdata.amount}
+          value={qrdata.debitAmount}
           onChange={(txt) => setQrData({ ...qrdata, amount: txt })}
           // onChangeText={editable ? setAmount : ""}
           editable={editable}
@@ -125,7 +151,7 @@ const NedajScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={{
-          backgroundColor: COLORS.primary,
+          backgroundColor: isConfirmDisabled ? "gray" : COLORS.primary,
           marginTop: 30,
           height: 40,
           width: "60%",
@@ -133,24 +159,21 @@ const NedajScreen = ({ navigation }) => {
           alignItems: "center",
           borderRadius: 10,
         }}
-        onPress={() => {
-          setShow(true);
-          setQrData({
-            ...qrdata,
-            merchantId: "",
-            merchantName: "",
-            amount: "",
-          });
-        }}
+        onPress={handleSubmit}
+        disabled={isConfirmDisabled ? true : false}
       >
-        <Text style={{ color: "white", fontSize: 17, fontWeight: "bold" }}>
+        <Text
+          style={{
+            color: "white",
+            fontSize: 17,
+            fontWeight: isConfirmDisabled ? "normal" : "bold",
+          }}
+        >
           Submit
         </Text>
       </TouchableOpacity>
       <LineChartItem />
     </ScrollView>
-    // )}
-    // </>
   );
 };
 

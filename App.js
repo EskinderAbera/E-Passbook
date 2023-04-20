@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
 import RootStackScreen from "./navigation/RootStack";
 import { ContextProvider } from "./Contexts/ContextProvider";
 import { NativeBaseProvider } from "native-base";

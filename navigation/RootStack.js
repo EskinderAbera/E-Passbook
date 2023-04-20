@@ -25,6 +25,7 @@ import NewAccount from "../screens/NewAccount";
 import ProfileScreen from "../screens/Settings";
 import QRCodeScanner from "../screens/QRCodeScanner";
 import NedajHistory from "../screens/NedajHistory";
+import ChangePassword from "../screens/ChangePassword";
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,11 @@ const RootStackScreen = () => {
         <Stack.Screen name="Registeration" component={FormPagination} />
         <Stack.Screen name="Signiture" component={SigniturePad} />
         <Stack.Screen name="Budget" component={Budget} />
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
+          options={{ headerShown: true, title: "Change Password" }}
+        />
         <Stack.Screen
           name="QRCode"
           component={QRCodeScanner}
