@@ -12,6 +12,7 @@ import donationReducer from "./Slices/DonationSlice";
 import TransactionReducer from "./Slices/TransactionSlice";
 import ExpenseReducer from "./Slices/ExpenseSlice";
 import NedajSlice from "./Slices/NedajSlice";
+import ChangePasswordSlice from "./Slices/ChangePasswordSlice";
 
 const store = configureStore({
   reducer: {
@@ -28,6 +29,7 @@ const store = configureStore({
     transactions: TransactionReducer,
     expense: ExpenseReducer,
     nedaj: NedajSlice,
+    changePassword: ChangePasswordSlice,
   },
 });
 

@@ -16,6 +16,7 @@ import BottomSheet from "./BottomSheet";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Loading from "../../components/Loader";
+import * as Crypto from "expo-crypto";
 
 const NedajScreen = ({ navigation }) => {
   const { qrdata, setQrData, merchantName } = useStateContext();
@@ -44,19 +45,30 @@ const NedajScreen = ({ navigation }) => {
   const handleSubmit = async () => {
     setIsConfirmDisabled(true);
     setShowLoading(true);
+    const uuid = Crypto.randomUUID();
+    console.log("uuid", uuid);
     const username = await AsyncStorage.getItem("username");
+    const newQrdata = {
+      ...qrdata,
+      agentId: "3c8f8d7a-8426-495e-ad51-3ed6e11a7871",
+      merchantId: "709bdfb9-7f2e-4645-becd-d05e6792c87d",
+      debitAccount: "1045500030027",
+      messageId: uuid,
+    };
     try {
       const res = await axios.post(
-        `http://192.168.137.220:9000/api/nedaj/${username},`,
-        qrdata
+        `http://192.168.137.220:9001/api/nedaj/${username}`,
+        newQrdata
       );
       if (res.status === 200) {
         setShowSuccess(true);
+        setShowLoading(false);
       } else {
         setShowSuccess(false);
+        setShowLoading(false);
       }
     } catch (error) {
-      console.log(error);
+      setShowLoading(false);
     }
   };
 

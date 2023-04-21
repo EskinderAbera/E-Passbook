@@ -45,8 +45,8 @@ const NedajHistory = () => {
       <Text style={styles.recordTitle}>Last Record Overview</Text>
       <FlatList
         data={Array(12)}
-        // renderItem={({ item }) => <RecordItem />}
-        renderItem={({ item }) => <NedajSkeleton />}
+        renderItem={({ item }) => <RecordItem />}
+        // renderItem={({ item }) => <NedajSkeleton />}
         showsVerticalScrollIndicator={false}
       />
     </View>

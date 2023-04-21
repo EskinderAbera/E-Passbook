@@ -13,6 +13,7 @@ export const ContextProvider = ({ children }) => {
     fuelType: "",
     debitAccount: "",
     debitAmount: "",
+    messageId: "",
   });
   const merchantName = "TOTAL";
   const [accounts, setAccounts] = useState([

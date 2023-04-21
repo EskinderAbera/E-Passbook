@@ -4,16 +4,23 @@ import {
   FlatList,
   TouchableOpacity,
   TextInput,
-  Modal,
 } from "react-native";
 import React from "react";
 import styles from "./styles";
-import { AntDesign } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
+import ErrorModal from "./ErrorModal";
+import { useDispatch, useSelector } from "react-redux";
+import Loading from "../../components/Loader";
+import ChangePasswordAction from "../../store/Actions/ChangePasswordAction";
+import SuccessModal from "./SuccessModal";
 
 const ChangePassword = () => {
   const route = useRoute();
   const { username } = route.params;
+  const dispatch = useDispatch();
+  const loader = useSelector((state) => state.loading);
+  const changePass = useSelector((state) => state.changePassword);
+
   const [inputs, setInputs] = React.useState([
     {
       id: "currentPassword",
@@ -36,6 +43,9 @@ const ChangePassword = () => {
   ]);
   const [isConfirmDisabled, setIsConfirmDisabled] = React.useState(true);
   const [isErrorModalVisible, setIsErrorModalVisible] = React.useState(false);
+  const [isSuccessModalVisible, setIsSuccessModalVisible] =
+    React.useState(true);
+  const [msg, setMsg] = React.useState("");
 
   const handleInputChange = (id, text) => {
     setInputs((prevInputs) => {
@@ -53,8 +63,9 @@ const ChangePassword = () => {
     setIsConfirmDisabled(inputs.some((input) => input.value.length < 5));
   }, [inputs]);
 
-  const handleConfirmButtonPress = () => {
+  const handleConfirmButtonPress = async () => {
     if (inputs[1].value !== inputs[2].value) {
+      setMsg("Current password does not match confirm password.");
       setIsErrorModalVisible(true);
       return;
     } else {
@@ -62,7 +73,11 @@ const ChangePassword = () => {
         acc[input.id] = input.value;
         return acc;
       }, {});
-      console.log(data);
+      const newdata = {
+        oldPassword: data.currentPassword,
+        newPassword: data.newPassword,
+      };
+      dispatch(ChangePasswordAction(newdata, username));
     }
   };
 
@@ -104,60 +119,19 @@ const ChangePassword = () => {
       >
         <Text style={styles.btnTxt}>Confirm</Text>
       </TouchableOpacity>
-      <Modal
-        visible={isErrorModalVisible}
-        transparent={true}
-        animationType="fade"
-      >
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 10,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "red",
-                padding: 10,
-                alignItems: "center",
-              }}
-            >
-              <AntDesign name="questioncircleo" size={70} color="white" />
-            </View>
-            <Text
-              style={{
-                marginVertical: 50,
-                fontSize: 20,
-                textAlign: "center",
-                margin: 20,
-              }}
-            >
-              Current password does not match confirm password.
-            </Text>
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#00adef",
-                alignItems: "center",
-                marginLeft: 100,
-                marginRight: 100,
-                marginBottom: 10,
-              }}
-              onPress={() => setIsErrorModalVisible(false)}
-            >
-              <Text style={styles.btnTxt}>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <ErrorModal
+        isErrorModalVisible={isErrorModalVisible}
+        changeError={() => setIsErrorModalVisible(false)}
+        msg={msg}
+      />
+      {loader.loading && <Loading msg={"Give us a moment"} />}
+      {changePass.msg && (
+        <SuccessModal
+          isSuccessModalVisible={isSuccessModalVisible}
+          changeSuccess={() => setIsSuccessModalVisible(false)}
+          msg={changePass.msg}
+        />
+      )}
     </View>
   );
 };

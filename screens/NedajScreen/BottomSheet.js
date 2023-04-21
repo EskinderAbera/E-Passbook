@@ -76,7 +76,7 @@ const BottomSheet = () => {
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={(item) => {
-              setQrData({ ...qrdata, debitAmount: item.value });
+              setQrData({ ...qrdata, debitAccount: item.value });
               setIsFocus(false);
             }}
             renderLeftIcon={() => (
