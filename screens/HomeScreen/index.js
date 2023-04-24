@@ -11,11 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UserInfoAction from "../../store/Actions/UserInfoAction";
 
-const Home = ({ navigation }) => {
+const HomeScreen = ({ navigation }) => {
   const loadAccounts = useSelector((state) => state.accounts);
   const width = Dimensions.get("window").width;
   const dispatch = useDispatch();
-
   const products = [
     {
       image: require("../../assets/icons/michu.png"),
@@ -64,29 +63,7 @@ const Home = ({ navigation }) => {
       <View style={styles.accountContainer}>
         <View style={styles.innerAccountContainer}>
           <Text style={styles.accountText}>Your Payment Credentials</Text>
-          {/* <View
-            style={{
-              flexDirection: "row",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-            }}
-          > */}
           <SetPrimaryAccount />
-          {/* <SetNedajAccount /> */}
-
-          {/* <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("OTPVerification", { type: "getPin" })
-              }
-              style={{
-                height: 40,
-                padding: 10,
-                backgroundColor: COLORS.primary,
-              }}
-            >
-              <Text style={{ color: COLORS.white }}>Get PIN</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
         <View style={styles.innerAccountContainer}>
           <Text style={styles.accountText}>Your Account</Text>
@@ -123,4 +100,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default HomeScreen;

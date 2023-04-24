@@ -1,32 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { LinearGradient } from "expo-linear-gradient";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
+import { FontAwesome, Feather } from "@expo/vector-icons";
 import cooplogo from "../../assets/icons/cooplogo.png";
 import axios from "axios";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
-import { StatusBar } from "expo-status-bar";
 import { BASE_URL } from "../../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import store, { setLoading, setError } from "../../store";
 import setUpInterceptor from "../../lib/axios_interceptors";
-import { getAccountList } from "../../lib/api-calls/Accounts";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import * as SecureStore from "expo-secure-store";
-import * as LocalAuthentication from "expo-local-authentication";
 import { useDispatch, useSelector } from "react-redux";
-import Modals from "../../components/Modals";
-import StoreCredentials from "./StoreCredentials";
-import { CommonActions } from "@react-navigation/native";
+import ErrorModal from "../../components/Modals/ErrorModal";
+import { setError, setLoading } from "../../store/Slices/loadingSlice";
 
 const SignInScreen = ({ navigation }) => {
-  const [showFinger, setShowFinger] = useState(false);
   const status = useSelector((state) => state.loading);
-  const [ModalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -36,22 +26,6 @@ const SignInScreen = ({ navigation }) => {
     isValidPassword: true,
   });
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const checkFingerEnabled = async () => {
-      let result = await SecureStore.getItemAsync("checked");
-      if (result) {
-        if (result === "true") {
-          setShowFinger(true);
-        } else {
-          setShowFinger(false);
-        }
-      } else {
-        setShowFinger(false);
-      }
-    };
-    checkFingerEnabled();
-  }, []);
 
   const textInputChange = (val) => {
     if (val.trim().length >= 4) {
@@ -108,16 +82,12 @@ const SignInScreen = ({ navigation }) => {
     }
   };
 
-  const handleLoginWithFingerPrint = async () => {
-    const result = await LocalAuthentication.authenticateAsync();
-  };
-
   const loginHandle = async () => {
     if ((data.username < 4) | (data.password < 4)) {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
+      dispatch(setLoading(true));
       try {
-        // await StoreCredentials(data.username, data.password);
         const res = await axios.post(`${BASE_URL}/login`, {
           username: data.username,
           password: data.password,
@@ -131,27 +101,21 @@ const SignInScreen = ({ navigation }) => {
             console.log("Error saving token:", error);
           });
         AsyncStorage.setItem("username", data.username);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "Dashboard" }],
-        });
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: "Dashboard" }],
+        // });
+        navigation.navigate("Accounts");
       } catch (error) {
-        dispatch(setLoading(false));
+        dispatch(setsLoading(false));
         dispatch(setError(error.message));
-        setModalOpen(true);
-        if (error.message === "Network Error") {
-          console.log("network error");
-        } else {
-          console.log(error);
-        }
       }
     }
   };
 
-  return (
-    <>
+  function body() {
+    return (
       <View style={styles.container}>
-        {/* <StatusBar backgroundColor="#00adef" style="light" /> */}
         <View style={styles.header}>
           <Image source={cooplogo} style={styles.cooplogo} />
         </View>
@@ -258,37 +222,16 @@ const SignInScreen = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </View>
-          {showFinger && (
-            <TouchableOpacity
-              style={{
-                marginTop: 10,
-                flexDirection: "row",
-                justifyContent: "center",
-              }}
-              onPress={handleLoginWithFingerPrint}
-            >
-              <Text style={{ alignSelf: "center", fontSize: 15 }}>
-                Login with
-              </Text>
-              <MaterialCommunityIcons
-                name="fingerprint"
-                size={30}
-                style={COLORS.darkgray}
-              />
-            </TouchableOpacity>
-          )}
         </Animatable.View>
       </View>
-      {!status.loading && status.error.length > 0 && (
-        <Modals
-          props={{
-            modalType: "error",
-            type: "login",
-            ModalOpen,
-            setModalOpen,
-          }}
-        />
-      )}
+    );
+  }
+
+  return (
+    <>
+      {status.loading && <Loading msg={"Loading"} />}
+      {body()}
+      {status.error && <ErrorModal msg={status.error} />}
     </>
   );
 };

@@ -1,6 +1,6 @@
-import { setError } from "../Slices";
 import { setAccounts, setIsLoaded } from "../Slices/HomeSlice";
 import { fetchAccounts } from "../../lib/api-calls/fetchAccounts";
+import { setError } from "../Slices/loadingSlice";
 
 const AccountsAction = (username) => {
   return async (dispatch) => {
@@ -11,9 +11,9 @@ const AccountsAction = (username) => {
       dispatch(setError({}));
     } catch (e) {
       if (e.message === "Network Error") {
-        dispatch(setError({ msg: e.message }));
+        dispatch(setError("Network Error"));
       } else {
-        dispatch(setError({ msg: e.response.data }));
+        dispatch(setError(e.response.data.message));
       }
     }
   };

@@ -1,4 +1,4 @@
-import { setError } from "../Slices";
+import { setError } from "../Slices/loadingSlice";
 import { fetchUserInfo } from "../../lib/api-calls/UserInfo";
 import { setUserInfo } from "../Slices/UserInfoSlice";
 
@@ -7,14 +7,10 @@ const UserInfoAction = (username) => {
     try {
       const res = await fetchUserInfo(username);
       dispatch(setUserInfo(res));
-      dispatch(setError({}));
+      dispatch(setError(""));
     } catch (e) {
-      if (e.message === "Network Error") {
-        console.log(e);
-        dispatch(setError({ msg: e.message }));
-      } else {
-        dispatch(setError({ msg: e.response.data }));
-      }
+      console.log("error", e);
+      // dispatch(setError(e.reponse.data.message));
     }
   };
 };

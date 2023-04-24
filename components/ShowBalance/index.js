@@ -14,7 +14,7 @@ const ShowBalanceItem = ({ navigation, accountsf }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("Account", {
+        navigation.navigate("AccountDetail", {
           accounts: accountsf,
         })
       }

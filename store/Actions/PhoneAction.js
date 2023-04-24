@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { CheckUserExistenceAPI } from "../../lib/api-calls/CheckUser";
-import { setError, setLoading, setUserInfo } from "../Slices";
+import { setError, setLoading } from "../Slices/loadingSlice";
+import { setUserInfo } from "../Slices";
 
 const checkPhoneAction = (phoneNumber) => {
   return async (dispatch) => {
@@ -12,12 +13,8 @@ const checkPhoneAction = (phoneNumber) => {
       await AsyncStorage.setItem("phone", phoneNumber);
       dispatch(setLoading(false));
     } catch (e) {
+      dispatch(setError(e.response.data.message));
       dispatch(setLoading(false));
-      if (e.message === "Network Error") {
-        dispatch(setError({ msg: e.message }));
-      } else {
-        dispatch(setError({ msg: e.response.status }));
-      }
     }
   };
 };

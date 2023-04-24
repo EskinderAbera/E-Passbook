@@ -23,12 +23,13 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback } from "react";
 import { setUserInfo } from "../../store/Slices";
 import Modals from "../../components/Modals";
+import ErrorModal from "../../components/Modals/ErrorModal";
+import SuccessModal from "../../components/Modals/SuccessModal";
 
 const SignUpScreen1 = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const status = useSelector((state) => state.loading);
   const [disable, setDisable] = useState(true);
-  const [ModalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
   const [data, setData] = useState({
     account: "",
@@ -64,7 +65,6 @@ const SignUpScreen1 = ({ navigation }) => {
   function renderBody() {
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor="#00adef" hideTransitionAnimation="slide" />
         <View style={styles.header}>
           <Image source={cooplogo} style={{ width: 200, height: 200 }} />
         </View>
@@ -135,10 +135,7 @@ const SignUpScreen1 = ({ navigation }) => {
             <View style={styles.button}>
               <TouchableOpacity
                 style={styles.signIn}
-                onPress={() => {
-                  setModalOpen(true);
-                  dispatch(checkPhoneAction(data.phone));
-                }}
+                onPress={() => dispatch(checkPhoneAction(data.phone))}
                 disabled={disable}
               >
                 <LinearGradient
@@ -182,34 +179,12 @@ const SignUpScreen1 = ({ navigation }) => {
       </View>
     );
   }
-
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(setUserInfo({}));
-    }, [])
-  );
-
   return (
     <>
       {status.loading && <Loading msg={"Loading"} />}
       {renderBody()}
-      {!status.loading && Object.keys(status.error).length > 0 && ModalOpen && (
-        <Modals
-          props={{ modalType: "error", type: "CheckPhone", setModalOpen }}
-        />
-      )}
-      {!status.loading &&
-        Object.keys(user.userInfo).length > 0 &&
-        ModalOpen && (
-          <Modals
-            props={{
-              modalType: "success",
-              type: "CheckPhone",
-              ModalOpen,
-              setModalOpen,
-            }}
-          />
-        )}
+      {user.error && <ErrorModal msg={user.error} />}
+      {/* {user.userInfo && <SuccessModal msg={}/> } i will back to this one  */}
     </>
   );
 };
