@@ -4,6 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 import { setMessage } from "../../store/Slices/ChangePasswordSlice";
+import styles from "./styles";
 
 const SuccessModal = ({ isSuccessModalVisible, changeSuccess, msg }) => {
   const dispatch = useDispatch();

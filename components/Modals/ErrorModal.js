@@ -1,16 +1,16 @@
 import { View, Text, Modal, TouchableOpacity } from "react-native";
 import React from "react";
-import styles from "./styles";
 import { AntDesign } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
 import { setError } from "../../store/Slices/loadingSlice";
 
-const ErrorModal = ({ msg }) => {
+const ErrorModal = ({ msg, handleShow = () => {} }) => {
   const [showModal, setShowModal] = React.useState(false);
   const dispatch = useDispatch();
   const handlePress = () => {
     setShowModal(false);
     dispatch(setError(""));
+    handleShow();
   };
   React.useEffect(() => {
     msg && setShowModal(true);
@@ -30,6 +30,7 @@ const ErrorModal = ({ msg }) => {
           style={{
             backgroundColor: "white",
             borderRadius: 10,
+            width: "90%",
           }}
         >
           <View
@@ -64,7 +65,7 @@ const ErrorModal = ({ msg }) => {
             }}
             onPress={handlePress}
           >
-            <Text style={styles.btnTxt}>OK</Text>
+            <Text style={{ fontSize: 15 }}>OK</Text>
           </TouchableOpacity>
         </View>
       </View>

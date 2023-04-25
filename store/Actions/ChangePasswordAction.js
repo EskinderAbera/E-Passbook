@@ -1,6 +1,7 @@
 import { ChangePasswordApi } from "../../lib/api-calls/ChangePasswordApi";
-import { setLoading, setError } from "../Slices";
+import { setError } from "../Slices/loadingSlice";
 import { setMessage } from "../Slices/ChangePasswordSlice";
+import { setLoading } from "../Slices/loadingSlice";
 
 const ChangePasswordAction = (data, username) => {
   return async (dispatch) => {
@@ -9,10 +10,10 @@ const ChangePasswordAction = (data, username) => {
       const res = await ChangePasswordApi(username, data);
       dispatch(setMessage(res.message));
       dispatch(setLoading(false));
-      dispatch(setError({}));
+      dispatch(setError(""));
     } catch (e) {
       dispatch(setLoading(false));
-      dispatch(setError({ msg: e.message }));
+      dispatch(setError(e.response?.data?.message));
     }
   };
 };

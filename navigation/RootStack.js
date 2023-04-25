@@ -5,6 +5,7 @@ import SignInScreen from "../screens/SignInScreen";
 import HomeScreen from "../screens/HomeScreen";
 import AccountsDetail from "../screens/AccountDetail";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ChangePassword from "../screens/ChangePassword";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const RootStackScreen = () => {
         <Stack.Screen name="SignUpScreen1" component={SignUpScreen1} />
         <Stack.Screen name="Accounts" component={HomeScreen} />
         <Stack.Screen name="AccountDetail" component={AccountsDetail} />
+        <Stack.Screen
+          name="ChangePassword"
+          component={ChangePassword}
+          options={{ headerShown: true, title: "Change Password" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -12,6 +12,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 20,
   },
+  btnTxt: {
+    color: "white",
+    fontSize: 17,
+    fontWeight: "500",
+    letterSpacing: 1,
+  },
 });
 
 export default styles;

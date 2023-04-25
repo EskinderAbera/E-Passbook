@@ -1,4 +1,4 @@
-import { View, Text, Modal } from "react-native";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -53,9 +53,9 @@ const SuccessModal = ({ msg, handlePress = () => {} }) => {
               marginRight: 100,
               marginBottom: 10,
             }}
-            onPress={handlePress()}
+            onPress={() => handlePress()}
           >
-            <Text style={styles.btnTxt}>OK</Text>
+            <Text style={{ fontSize: 15 }}>OK</Text>
           </TouchableOpacity>
         </View>
       </View>

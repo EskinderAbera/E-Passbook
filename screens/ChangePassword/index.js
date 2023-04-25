@@ -8,15 +8,19 @@ import {
 import React from "react";
 import styles from "./styles";
 import { useRoute } from "@react-navigation/native";
-import ErrorModal from "./ErrorModal";
+// import ErrorModal from "./ErrorModal";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loader";
 import ChangePasswordAction from "../../store/Actions/ChangePasswordAction";
-import SuccessModal from "./SuccessModal";
+// import SuccessModal from "./SuccessModal";
+import { setError } from "../../store/Slices/loadingSlice";
+import ErrorModal from "../../components/Modals/ErrorModal";
+import SuccessModal from "../../components/Modals/SuccessModal";
 
-const ChangePassword = () => {
+const ChangePassword = ({ navigation }) => {
   const route = useRoute();
-  const { username } = route.params;
+  // const { username } = route.params; uncomment this one and remove the constant
+  const username = "fatty";
   const dispatch = useDispatch();
   const loader = useSelector((state) => state.loading);
   const changePass = useSelector((state) => state.changePassword);
@@ -42,9 +46,7 @@ const ChangePassword = () => {
     },
   ]);
   const [isConfirmDisabled, setIsConfirmDisabled] = React.useState(true);
-  const [isErrorModalVisible, setIsErrorModalVisible] = React.useState(false);
-  const [isSuccessModalVisible, setIsSuccessModalVisible] =
-    React.useState(true);
+  const [showModal, setShowModal] = React.useState(false);
   const [msg, setMsg] = React.useState("");
 
   const handleInputChange = (id, text) => {
@@ -64,9 +66,10 @@ const ChangePassword = () => {
   }, [inputs]);
 
   const handleConfirmButtonPress = async () => {
+    setShowModal(true);
     if (inputs[1].value !== inputs[2].value) {
-      setMsg("Current password does not match confirm password.");
-      setIsErrorModalVisible(true);
+      // setMsg("Current password does not match confirm password.");
+      dispatch(setError("Current password does not match confirm password."));
       return;
     } else {
       const data = inputs.reduce((acc, input) => {
@@ -119,16 +122,18 @@ const ChangePassword = () => {
       >
         <Text style={styles.btnTxt}>Confirm</Text>
       </TouchableOpacity>
-      <ErrorModal
-        isErrorModalVisible={isErrorModalVisible}
-        changeError={() => setIsErrorModalVisible(false)}
-        msg={msg}
-      />
-      {loader.loading && <Loading msg={"Give us a moment"} />}
-      {changePass.msg && (
+      {loader.error && showModal && !loader.loading && (
+        <ErrorModal msg={loader.error} handleShow={() => setShowModal(false)} />
+      )}
+      {loader.loading && showModal && !loader.error && (
+        <Loading msg={"Give us a moment"} />
+      )}
+      {changePass.msg && !loader.loading && showModal && !loader.error && (
         <SuccessModal
-          isSuccessModalVisible={isSuccessModalVisible}
-          changeSuccess={() => setIsSuccessModalVisible(false)}
+          handlePress={() => {
+            navigation.navigate("SignInScreen");
+            setShowModal(false);
+          }}
           msg={changePass.msg}
         />
       )}

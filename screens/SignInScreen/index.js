@@ -25,6 +25,7 @@ const SignInScreen = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
+  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
 
   const textInputChange = (val) => {
@@ -87,6 +88,7 @@ const SignInScreen = ({ navigation }) => {
       setData({ ...data, isValidUser: false, isValidPassword: false });
     } else {
       dispatch(setLoading(true));
+      setShowModal(true);
       try {
         const res = await axios.post(`${BASE_URL}/login`, {
           username: data.username,
@@ -105,10 +107,12 @@ const SignInScreen = ({ navigation }) => {
         //   index: 0,
         //   routes: [{ name: "Dashboard" }],
         // });
-        navigation.navigate("Accounts");
+        // current password is 34567890
+        setData({ ...data, password: "" });
+        navigation.navigate("ChangePassword");
       } catch (error) {
-        dispatch(setsLoading(false));
-        dispatch(setError(error.message));
+        dispatch(setLoading(false));
+        dispatch(setError(error.response.data.error));
       }
     }
   };
@@ -229,9 +233,13 @@ const SignInScreen = ({ navigation }) => {
 
   return (
     <>
-      {status.loading && <Loading msg={"Loading"} />}
+      {status.loading && showModal && !status.error && (
+        <Loading msg={"Loading"} />
+      )}
       {body()}
-      {status.error && <ErrorModal msg={status.error} />}
+      {status.error && showModal && !status.loading && (
+        <ErrorModal msg={status.error} handleShow={() => setShowModal(false)} />
+      )}
     </>
   );
 };
