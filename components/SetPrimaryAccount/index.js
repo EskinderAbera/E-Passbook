@@ -118,36 +118,34 @@ const SetPrimaryAccount = () => {
                 >
                   Select Primary Account
                 </Text>
-                {totalAccounts?.accounts?.data?.accounts?.map(
-                  (account, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => {
-                        setSelectedAccount({
-                          [index]: !selectedAccount?.[index],
-                        });
-                        setPinAccount(account?.accountNumber);
+                {totalAccounts.accounts.accounts.map((account, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => {
+                      setSelectedAccount({
+                        [index]: !selectedAccount?.[index],
+                      });
+                      setPinAccount(account?.accountNumber);
+                    }}
+                    style={
+                      selectedAccount?.[index] | account?.isMainAccount
+                        ? [styles.group, styles.selectedMember]
+                        : styles.group
+                    }
+                  >
+                    <Text
+                      style={{
+                        color:
+                          selectedAccount?.[index] | account?.isMainAccount
+                            ? COLORS.white
+                            : COLORS.primary,
+                        fontSize: 15,
                       }}
-                      style={
-                        selectedAccount?.[index] | account?.isMainAccount
-                          ? [styles.group, styles.selectedMember]
-                          : styles.group
-                      }
                     >
-                      <Text
-                        style={{
-                          color:
-                            selectedAccount?.[index] | account?.isMainAccount
-                              ? COLORS.white
-                              : COLORS.primary,
-                          fontSize: 15,
-                        }}
-                      >
-                        {account.accountNumber}
-                      </Text>
-                    </TouchableOpacity>
-                  )
-                )}
+                      {account.accountNumber}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
 
                 <Text style={{ fontSize: 15, marginVertical: 20 }}>PIN</Text>
                 <View
