@@ -1,5 +1,5 @@
 import { sendOtp } from "../../lib/api-calls/sendOtp";
-import { setLoading, setError } from "../Slices";
+import { setLoading, setError } from "../Slices/loadingSlice";
 import { setOtpStatus } from "../Slices/OtpSlice";
 
 const SendOtpAction = (username) => {

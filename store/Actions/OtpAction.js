@@ -1,5 +1,6 @@
 import { OtpVerifyAPI } from "../../lib/api-calls/OtpVerify";
-import { setLoading, setError } from "../Slices";
+// import { setLoading, setError } from "../Slices";
+import { setLoading, setError } from "../Slices/loadingSlice";
 import { setCheckStatus } from "../Slices/OtpSlice";
 
 const OtpVerifyAction = (otp) => {
@@ -9,11 +10,11 @@ const OtpVerifyAction = (otp) => {
       const res = await OtpVerifyAPI(otp);
       dispatch(setCheckStatus(res));
       dispatch(setLoading(false));
-      dispatch(setError({}));
+      dispatch(setError(""));
     } catch (e) {
       console.log(e);
       dispatch(setLoading(false));
-      dispatch(setError({ msg: e.message }));
+      dispatch(setError(e.message));
     }
   };
 };

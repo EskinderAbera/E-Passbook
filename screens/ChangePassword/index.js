@@ -131,7 +131,7 @@ const ChangePassword = ({ navigation }) => {
       {changePass.msg && !loader.loading && showModal && !loader.error && (
         <SuccessModal
           handlePress={() => {
-            navigation.navigate("SignInScreen");
+            navigation.navigate("Register");
             setShowModal(false);
           }}
           msg={changePass.msg}

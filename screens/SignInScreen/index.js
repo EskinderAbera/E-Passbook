@@ -13,7 +13,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import setUpInterceptor from "../../lib/axios_interceptors";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorModal from "../../components/Modals/ErrorModal";
-import { setError, setLoading } from "../../store/Slices/loadingSlice";
+import { setError } from "../../store/Slices/loadingSlice";
+import { setLoading } from "../../store/Slices/loadingSlice";
 
 const SignInScreen = ({ navigation }) => {
   const status = useSelector((state) => state.loading);
@@ -103,13 +104,13 @@ const SignInScreen = ({ navigation }) => {
             console.log("Error saving token:", error);
           });
         AsyncStorage.setItem("username", data.username);
-        // navigation.reset({
-        //   index: 0,
-        //   routes: [{ name: "Dashboard" }],
-        // });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "Dashboard" }],
+        });
         // current password is 34567890
-        setData({ ...data, password: "" });
-        navigation.navigate("ChangePassword");
+        setData({ ...data, password: "", username: "" });
+        // navigation.navigate("ChangePassword");
       } catch (error) {
         dispatch(setLoading(false));
         dispatch(setError(error.response.data.error));

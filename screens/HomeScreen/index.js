@@ -1,4 +1,12 @@
-import { View, Text, ScrollView, Image, Dimensions } from "react-native";
+import React from "react";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
 import ShowBalance from "../../components/ShowBalance";
 import styles from "./styles";
 import SetPrimaryAccount from "../../components/SetPrimaryAccount";
@@ -13,6 +21,7 @@ import UserInfoAction from "../../store/Actions/UserInfoAction";
 
 const HomeScreen = ({ navigation }) => {
   const loadAccounts = useSelector((state) => state.accounts);
+  const [refreshing, setRefreshing] = React.useState(false);
   const width = Dimensions.get("window").width;
   const dispatch = useDispatch();
   const products = [
@@ -27,19 +36,21 @@ const HomeScreen = ({ navigation }) => {
     },
   ];
 
-  useEffect(() => {
-    const getAccounts = async () => {
-      try {
-        const value = await AsyncStorage.getItem("username");
-        if (value !== null) {
-          dispatch(AccountsAction(value));
-          dispatch(UserInfoAction(value));
-        }
-      } catch (e) {
-        console.log(e);
+  const getAccounts = async () => {
+    try {
+      const value = await AsyncStorage.getItem("username");
+      if (value !== null) {
+        dispatch(AccountsAction(value));
+        dispatch(UserInfoAction(value));
       }
-    };
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
     getAccounts();
+    return () => setRefreshing(false);
   }, []);
 
   return (
@@ -69,7 +80,12 @@ const HomeScreen = ({ navigation }) => {
           <Text style={styles.accountText}>Your Account</Text>
         </View>
       </View>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getAccounts} />
+        }
+      >
         {loadAccounts?.isLoaded ? (
           Array.from("coopass").map((acc, index) => (
             <HomeSkeleton key={index} />

@@ -3,17 +3,14 @@ import { useState } from "react";
 import {
   View,
   Text,
-  Image,
   Modal,
   TouchableWithoutFeedback,
-  TextInput,
   TouchableOpacity,
-  TouchableHighlight,
 } from "react-native";
 import styles from "./styles";
 import ProgressiveImage from "./ProgressiveImage";
 import icons from "../../constants/icons";
-import * as WebBrowser from 'expo-web-browser';
+import * as WebBrowser from "expo-web-browser";
 
 const Donation = ({
   imageSource,
@@ -22,13 +19,15 @@ const Donation = ({
   donationRaised,
   hoursLeft,
   shortDescription,
-  campaignId
+  campaignId,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleDonate = async () => {
     console.log(campaignId);
-    let result = await WebBrowser.openBrowserAsync(`http://10.1.177.121/campaign/${campaignId}`);
+    let result = await WebBrowser.openBrowserAsync(
+      `http://10.1.177.121/campaign/${campaignId}`
+    );
     console.log(result);
     setModalVisible(false);
   };
@@ -47,11 +46,18 @@ const Donation = ({
           <Text style={styles.title}>{title}</Text>
           <View style={styles.progressBarContainer}>
             <View style={styles.progressBar}>
-              <View style={[styles.progress, Boolean(percent) ?{ width: percent * 100 + "%"}: {width: 0}]} />
+              <View
+                style={[
+                  styles.progress,
+                  Boolean(percent)
+                    ? { width: percent * 100 + "%" }
+                    : { width: 0 },
+                ]}
+              />
             </View>
-            <Text style={styles.progressText}>{Boolean(percent) ? `${(percent * 100).toFixed(
-              2
-            )}%` : `0%`}</Text>
+            <Text style={styles.progressText}>
+              {Boolean(percent) ? `${(percent * 100).toFixed(2)}%` : `0%`}
+            </Text>
           </View>
           <View style={styles.rowContainer}>
             <View>
@@ -62,7 +68,6 @@ const Donation = ({
             </View>
             <Text style={styles.hoursLeft}>{`🕔 ${hoursLeft}`}</Text>
           </View>
-
         </View>
       </TouchableWithoutFeedback>
       <Modal
@@ -72,18 +77,22 @@ const Donation = ({
         onRequestClose={() => {
           setModalVisible(!modalVisible);
           onClose();
-        }}>
-        <TouchableOpacity style={styles.modalView} onPress={() => setModalVisible(false)}>
+        }}
+      >
+        <TouchableOpacity
+          style={styles.modalView}
+          onPress={() => setModalVisible(false)}
+        >
           <View style={styles.modalContent}>
-            <View style={{alignItems: "center"}}>
-              <Text style={{fontWeight: "600", fontSize: 17}}>{title}</Text>
+            <View style={{ alignItems: "center" }}>
+              <Text style={{ fontWeight: "600", fontSize: 17 }}>{title}</Text>
               <Text>{shortDescription}</Text>
             </View>
             <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.cta} onPress={handleDonate}>
-              <Text style={{color: "#fff"}}>Donate</Text>
+              <TouchableOpacity style={styles.cta} onPress={handleDonate}>
+                <Text style={{ color: "#fff" }}>Donate</Text>
               </TouchableOpacity>
-          </View>
+            </View>
           </View>
         </TouchableOpacity>
       </Modal>

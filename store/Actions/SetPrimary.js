@@ -1,4 +1,4 @@
-import { setError, setLoading } from "../Slices";
+import { setLoading, setError } from "../Slices/loadingSlice";
 import { PrimaryAccountAPI } from "../../lib/api-calls/PrimaryAccountAPI";
 import { setPrimaryAccount } from "../Slices/HomeSlice";
 
@@ -12,7 +12,7 @@ const SetPrimaryAction = (username, account, pin) => {
       dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
-      dispatch(setError({ msg: e.response.data }));
+      dispatch(setError(e.response.data));
     }
   };
 };

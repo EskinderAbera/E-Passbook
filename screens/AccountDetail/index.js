@@ -20,7 +20,6 @@ const AccountsDetail = ({ navigation, route }) => {
   const [data, setData] = useState({
     home: true,
     transaction: false,
-
     earlyPay: false,
     donations: false,
   });

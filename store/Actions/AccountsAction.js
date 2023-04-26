@@ -8,13 +8,14 @@ const AccountsAction = (username) => {
       const res = await fetchAccounts(username);
       dispatch(setAccounts(res));
       dispatch(setIsLoaded(false));
-      dispatch(setError({}));
+      dispatch(setError(""));
     } catch (e) {
-      if (e.message === "Network Error") {
-        dispatch(setError("Network Error"));
-      } else {
-        dispatch(setError(e.response.data.message));
-      }
+      console.log("account action", e);
+      // if (e.message === "Network Error") {
+      //   dispatch(setError("Network Error"));
+      // } else {
+      //   dispatch(setError(e.response.data.message));
+      // }
     }
   };
 };

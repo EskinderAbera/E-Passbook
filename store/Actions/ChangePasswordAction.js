@@ -1,7 +1,6 @@
 import { ChangePasswordApi } from "../../lib/api-calls/ChangePasswordApi";
-import { setError } from "../Slices/loadingSlice";
+import { setError, setLoading } from "../Slices/loadingSlice";
 import { setMessage } from "../Slices/ChangePasswordSlice";
-import { setLoading } from "../Slices/loadingSlice";
 
 const ChangePasswordAction = (data, username) => {
   return async (dispatch) => {

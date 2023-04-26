@@ -46,7 +46,7 @@ const Logout = ({ navigation }) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.reset({ index: 0, routes: [{ name: "SignInScreen" }] })
+        navigation.reset({ index: 0, routes: [{ name: "Register" }] })
       }
     >
       <View style={[styles.container]}>

@@ -1,4 +1,4 @@
-import { setError, setLoading } from "../Slices";
+import { setLoading, setError } from "../Slices/loadingSlice";
 import { ActivateAccount } from "../../lib/api-calls/ActivateAccount";
 import { setActiveStatus } from "../Slices/HomeSlice";
 
@@ -12,7 +12,7 @@ const ActivateAccountAction = (accountNumber) => {
       dispatch(setError({}));
     } catch (e) {
       dispatch(setLoading(false));
-      dispatch(setError({ msg: e.response.data }));
+      dispatch(setError(e.response.data));
     }
   };
 };

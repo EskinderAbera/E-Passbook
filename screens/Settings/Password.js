@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch, useSelector } from "react-redux";
-import SendOtpAction from "../../store/Actions/SendOtpAction";
-import Loading from "../../components/Loader";
 
 const styles = StyleSheet.create({
   container: {
@@ -50,12 +47,10 @@ const styles = StyleSheet.create({
 
 const Password = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const ChangePassword = async () => {
     const username = await AsyncStorage.getItem("username");
     if (username) {
-      dispatch(SendOtpAction(username));
       navigation.navigate("ChangePassword", { username });
     } else {
       console.log(username);
