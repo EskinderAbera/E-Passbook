@@ -10,12 +10,8 @@ import ProfileScreen from "../screens/Settings";
 import NedajScreen from "../screens/NedajScreen";
 import NedajHistory from "../screens/NedajHistory";
 import SignUpScreen from "../screens/SignUpScreen";
-import {
-  AntDesign,
-  Entypo,
-  FontAwesome,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
+import QRCodeScanner from "../screens/QRCodeScanner";
 
 const Stack = createStackNavigator();
 
@@ -87,6 +83,11 @@ const NedajStackNavigator = () => {
     <NedajStack.Navigator initialRouteName="NedajScreen">
       <NedajStack.Screen name="NedajScreen" component={NedajScreen} />
       <NedajStack.Screen name="NedajHistory" component={NedajHistory} />
+      <NedajStack.Screen
+        name="QRCode"
+        component={QRCodeScanner}
+        options={{ headerShown: false }}
+      />
     </NedajStack.Navigator>
   );
 };
@@ -104,12 +105,6 @@ const HomeTabs = () => {
         component={HomeStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            // <Entypo
-            //   size={28}
-            //   style={{ marginBottom: -3 }}
-            //   color={color}
-            //   name="code"
-            // />
             <Entypo name="home" size={28} color={color} />
           ),
         }}
@@ -119,12 +114,6 @@ const HomeTabs = () => {
         component={SettingStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            // <FontAwesome
-            //   size={28}
-            //   style={{ marginBottom: -3 }}
-            //   color={color}
-            //   name="code"
-            // />
             <AntDesign name="setting" size={28} color={color} />
           ),
         }}
@@ -134,12 +123,6 @@ const HomeTabs = () => {
         component={NedajStackNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            // <FontAwesome
-            //   size={28}
-            //   style={{ marginBottom: -3 }}
-            //   color={color}
-            //   name="code"
-            // />
             <FontAwesome5
               name="gas-pump"
               size={25}

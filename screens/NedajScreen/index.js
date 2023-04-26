@@ -46,7 +46,6 @@ const NedajScreen = ({ navigation }) => {
     setIsConfirmDisabled(true);
     setShowLoading(true);
     const uuid = Crypto.randomUUID();
-    console.log("uuid", uuid);
     const username = await AsyncStorage.getItem("username");
     const newQrdata = {
       ...qrdata,
@@ -108,7 +107,7 @@ const NedajScreen = ({ navigation }) => {
           }}
         />
       </View>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           backgroundColor: COLORS.primary,
           marginTop: 30,
@@ -123,7 +122,7 @@ const NedajScreen = ({ navigation }) => {
         <Text style={{ color: "white", fontSize: 17, fontWeight: "bold" }}>
           Verify Merchant
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       <View style={{ width: "100%", marginTop: 40 }}>
         <TextInput
           style={{
