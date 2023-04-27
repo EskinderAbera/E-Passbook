@@ -8,12 +8,16 @@ export const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [user, setUser] = useState({});
   const [qrdata, setQrData] = useState({
-    merchantId: "",
-    agentId: "",
-    fuelType: "",
+    MerchantId: "",
+    AgentId: "",
+    Amount: "",
+    Liter: "",
+    FuelType: "",
+    PlateRegion: "",
+    PlateCode: "",
+    PlateNumber: "",
     debitAccount: "",
-    debitAmount: "",
-    messageId: "",
+    username: "",
   });
   const merchantName = "TOTAL";
   const [accounts, setAccounts] = useState([

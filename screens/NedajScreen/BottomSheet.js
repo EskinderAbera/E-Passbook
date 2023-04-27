@@ -13,7 +13,7 @@ const BottomSheet = () => {
   const [showError, setShowError] = useState(false);
   const loadAccounts = useSelector((state) => state.accounts);
 
-  const refRBSheet = useRef();
+  const refRBSheet = useRef(true);
 
   const accountNumbers = loadAccounts?.accounts?.accounts.map((acct) => ({
     label: acct.accountNumber,
@@ -21,7 +21,7 @@ const BottomSheet = () => {
   }));
 
   const onPress = () => {
-    if (qrdata.debitAmount !== null) {
+    if (qrdata.Amount !== null) {
       refRBSheet.current.close();
       setShowError(false);
     } else {
@@ -31,11 +31,11 @@ const BottomSheet = () => {
 
   useFocusEffect(
     useCallback(() => {
-      !qrdata.debitAccount && refRBSheet.current.open();
+      !qrdata.Account && !qrdata.MerchantId && refRBSheet.current.open();
       return () => {
         refRBSheet.current.close();
       };
-    }, [qrdata.debitAccount])
+    }, [qrdata])
   );
 
   return (

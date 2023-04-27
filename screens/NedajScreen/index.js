@@ -13,15 +13,12 @@ import { useStateContext } from "../../Contexts/ContextProvider";
 import NedajModal from "../../components/Modals/nedajModal";
 import LineChartItem from "./LineChartItem";
 import BottomSheet from "./BottomSheet";
-import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Loading from "../../components/Loader";
-import * as Crypto from "expo-crypto";
+import uuid from "react-native-uuid";
 
 const NedajScreen = ({ navigation }) => {
   const { qrdata, merchantName } = useStateContext();
-  // const [show, setShow] = useState(false);
-  const [editable, setEditable] = useState(true);
   const [value, setValue] = useState(null);
   const [isConfirmDisabled, setIsConfirmDisabled] = useState(true);
 
@@ -30,7 +27,7 @@ const NedajScreen = ({ navigation }) => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   React.useEffect(() => {
-    if (!qrdata.merchantId) {
+    if (!qrdata.MerchantId) {
       setIsConfirmDisabled(true);
     } else {
       setIsConfirmDisabled(false);
@@ -39,31 +36,31 @@ const NedajScreen = ({ navigation }) => {
 
   const handleSubmit = async () => {
     setIsConfirmDisabled(true);
-    setShowLoading(true);
-    const uuid = Crypto.randomUUID();
+    const id = uuid.v4();
     const username = await AsyncStorage.getItem("username");
     const newQrdata = {
       ...qrdata,
-      agentId: "3c8f8d7a-8426-495e-ad51-3ed6e11a7871",
-      merchantId: "709bdfb9-7f2e-4645-becd-d05e6792c87d",
-      debitAccount: "1045500030027",
-      messageId: uuid,
+      debitAccount: value,
+      messageId: qrdata?.FuelType?.slice(0, 2).toUpperCase() + id,
+      username,
     };
-    try {
-      const res = await axios.post(
-        `http://192.168.137.220:9001/api/nedaj/${username}`,
-        newQrdata
-      );
-      if (res.status === 200) {
-        setShowSuccess(true);
-        setShowLoading(false);
-      } else {
-        setShowSuccess(false);
-        setShowLoading(false);
-      }
-    } catch (error) {
-      setShowLoading(false);
-    }
+    console.log(JSON.stringify(newQrdata, null, 2));
+    // alert(newQrdata);
+    // try {
+    //   const res = await axios.post(
+    //     `http://192.168.137.220:9001/api/nedaj/${username}`,
+    //     newQrdata
+    //   );
+    //   if (res.status === 200) {
+    //     setShowSuccess(true);
+    //     setShowLoading(false);
+    //   } else {
+    //     setShowSuccess(false);
+    //     setShowLoading(false);
+    //   }
+    // } catch (error) {
+    //   setShowLoading(false);
+    // }
   };
 
   return (
@@ -83,10 +80,11 @@ const NedajScreen = ({ navigation }) => {
             borderBottomColor: COLORS.primary,
             borderBottomWidth: 1,
             fontSize: 20,
+            color: "black",
           }}
           placeholder="Merchant Code"
           placeholderTextColor={COLORS.darkgray}
-          value={qrdata.merchantId}
+          value={qrdata.MerchantId}
           keyboardType="numeric"
           editable={false}
         />
@@ -111,7 +109,7 @@ const NedajScreen = ({ navigation }) => {
           }}
           placeholder="Merchant Name"
           placeholderTextColor={COLORS.darkgray}
-          value={qrdata.merchantId && merchantName}
+          value={qrdata.MerchantId && merchantName}
           editable={false}
         />
         <TextInput
@@ -127,7 +125,7 @@ const NedajScreen = ({ navigation }) => {
           }}
           placeholder="Amount"
           placeholderTextColor={COLORS.darkgray}
-          value={qrdata.debitAmount}
+          value={qrdata.Amount}
           editable={false}
           keyboardType="numeric"
         />

@@ -19,14 +19,17 @@ const QRCodeScanner = ({ navigation }) => {
     const newData = JSON.parse(data);
     setQrData({
       ...qrdata,
-      agentId: newData.AgentId,
-      merchantId: newData.MerchantId,
-      fuelType: newData.FuelType,
+      AgentId: newData.AgentId,
+      MerchantId: newData.MerchantId,
+      FuelType: newData.FuelType,
+      PlateRegion: newData.PlateRegion,
+      PlateCode: newData.PlateCode,
+      PlateNumber: newData.PlateNumber,
       debitAmount: newData.Amount,
     });
     // alert(data);
     // setQrData(newData);
-    navigation.navigate("Nedaj Payment");
+    navigation.navigate("NedajScreen");
   };
 
   const handleClose = () => {
