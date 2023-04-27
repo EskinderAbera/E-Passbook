@@ -10,8 +10,8 @@ import styles from "./styles";
 import { Modal } from "react-native";
 import { COLORS } from "../../constants/theme";
 import { useDispatch, useSelector } from "react-redux";
-import AccountActivate from "../Modals/AccountActivate";
-import Modals from "../Modals";
+// import AccountActivate from "../Modals/AccountActivate";
+// import Modals from "../Modals";
 import SetPrimaryAction from "../../store/Actions/SetPrimary";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -68,9 +68,9 @@ const SetPrimaryAccount = () => {
   function renderBody() {
     return (
       <>
-        {showModal.show && (
+        {/* {showModal.show && (
           <AccountActivate msg={showModal.type} desc={showModal.desc} />
-        )}
+        )} */}
         <View
           style={{
             flexDirection: "row",
@@ -179,20 +179,7 @@ const SetPrimaryAccount = () => {
     );
   }
 
-  return (
-    <>
-      {renderBody()}
-      {!loader.loading && isModal && totalAccounts.primaryAccount && (
-        <Modals
-          props={{
-            modalType: "success",
-            type: "PrimaryAccount",
-            setIsModal,
-          }}
-        />
-      )}
-    </>
-  );
+  return <>{renderBody()}</>;
 };
 
 export default SetPrimaryAccount;

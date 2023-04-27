@@ -15,16 +15,10 @@ import Ethiopia from "../../assets/icons/Ethiopia.png";
 import styles from "./styles";
 import { COLORS } from "../../constants/theme";
 import Loading from "../../components/Loader";
-import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
 import checkPhoneAction from "../../store/Actions/PhoneAction";
 import { useEffect } from "react";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
-import { setUserInfo } from "../../store/Slices";
-import Modals from "../../components/Modals";
 import ErrorModal from "../../components/Modals/ErrorModal";
-import SuccessModal from "../../components/Modals/SuccessModal";
 
 const SignUpScreen1 = ({ navigation }) => {
   const user = useSelector((state) => state.user);

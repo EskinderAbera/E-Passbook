@@ -7,12 +7,11 @@ import Feather from "react-native-vector-icons/Feather";
 import styles from "./styles";
 import cooplogo from "../../assets/icons/cooplogo.png";
 import { COLORS } from "../../constants/theme";
-import Loading from "../../components/Loader";
 import { useEffect } from "react";
 import SignUpAction from "../../store/Actions/SignupAction";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from "../../store/Slices";
-import Modals from "../../components/Modals";
+import ErrorModal from "../../components/Modals/ErrorModal";
+import SuccessModal from "../../components/Modals/SuccessModal";
 
 const SignUpScreen = ({ navigation }) => {
   const [data, setData] = useState({
@@ -265,16 +264,10 @@ const SignUpScreen = ({ navigation }) => {
     <>
       {renderBody()}
       {!loader.loading && Object.keys(loader.error).length > 0 && ModalOpen && (
-        <Modals props={{ modalType: "error", setModalOpen, type: "signup" }} />
+        <ErrorModal msg={"hello"} />
       )}
       {!loader.loading && signup.statusCode === 200 && ModalOpen && (
-        <Modals
-          props={{
-            modalType: "success",
-            type: "signup",
-            setModalOpen,
-          }}
-        />
+        <SuccessModal msg={"bye"} />
       )}
     </>
   );

@@ -1,7 +1,6 @@
 import React from "react";
 import RootStackScreen from "./navigation/RootStack";
 import { ContextProvider } from "./Contexts/ContextProvider";
-import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
 import store from "./store";
 import { StatusBar } from "expo-status-bar";
@@ -22,10 +21,8 @@ export default function App() {
   return (
     <ContextProvider>
       <Provider store={store}>
-        <NativeBaseProvider>
-          <RootStackScreen />
-          <StatusBar style="light" />
-        </NativeBaseProvider>
+        <RootStackScreen />
+        <StatusBar style="light" />
       </Provider>
     </ContextProvider>
   );

@@ -10,7 +10,7 @@ import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import { COLORS } from "../../constants/theme";
 import { useStateContext } from "../../Contexts/ContextProvider";
-import NedajModal from "../../components/Modals/nedajModal";
+// import NedajModal from "../../components/Modals/nedajModal";
 import LineChartItem from "./LineChartItem";
 import BottomSheet from "./BottomSheet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -66,12 +66,12 @@ const NedajScreen = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {showLoading && <Loading msg={"Loading"} />}
-      {showSuccess && (
+      {/* {showSuccess && (
         <NedajModal
           handleShow={() => setShowSuccess(false)}
           show={showSuccess}
         />
-      )}
+      )} */}
       <BottomSheet value={value} setValue={setValue} />
       <View style={styles.inputBox}>
         <TextInput
