@@ -12,6 +12,7 @@ import NedajHistory from "../screens/NedajHistory";
 import SignUpScreen from "../screens/SignUpScreen";
 import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
 import QRCodeScanner from "../screens/QRCodeScanner";
+import Setting from "../screens/Settings/Setting";
 
 const Stack = createStackNavigator();
 
@@ -71,7 +72,7 @@ const SettingStackNavigator = () => {
         component={ChangePassword}
         options={{ headerShown: true, title: "Change Password" }}
       />
-      <SettingStack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <SettingStack.Screen name="ProfileScreen" component={Setting} />
     </SettingStack.Navigator>
   );
 };
@@ -116,6 +117,8 @@ const HomeTabs = () => {
           tabBarIcon: ({ color }) => (
             <AntDesign name="setting" size={28} color={color} />
           ),
+          headerShown: true,
+          title: "Profile",
         }}
       />
       <Tab.Screen

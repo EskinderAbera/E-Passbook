@@ -9,6 +9,7 @@ const Ethiopia = require("../assets/icons/Ethiopia.png");
 const error = require("../assets/icons/error.png");
 const defaultImage = require("../assets/icons/default-img.jpg");
 const gasStation = require("../assets/icons/gas_station.png");
+const changePassword = require("../assets/icons/changePassword.png");
 
 const icons = {
   back,
@@ -22,6 +23,7 @@ const icons = {
   error,
   defaultImage,
   gasStation,
+  changePassword,
 };
 
 export default icons;

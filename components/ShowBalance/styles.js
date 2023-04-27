@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
-import { COLORS, SIZES } from "../../constants/theme";
+import { COLORS } from "../../constants/theme";
 
 const styles = StyleSheet.create({
   card: {
     width: "90%",
     backgroundColor: "#00adef",
-    marginLeft: 25,
+    marginLeft: 15,
     padding: 10,
     borderRadius: 15,
   },

@@ -19,7 +19,7 @@ import Loading from "../../components/Loader";
 import * as Crypto from "expo-crypto";
 
 const NedajScreen = ({ navigation }) => {
-  const { qrdata, setQrData, merchantName } = useStateContext();
+  const { qrdata, merchantName } = useStateContext();
   // const [show, setShow] = useState(false);
   const [editable, setEditable] = useState(true);
   const [value, setValue] = useState(null);
@@ -28,11 +28,6 @@ const NedajScreen = ({ navigation }) => {
   // handle this using redux
   const [showLoading, setShowLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  const onVerify = () => {
-    setEditable(true);
-    // setQrData({ ...qrdata });
-  };
 
   React.useEffect(() => {
     if (!qrdata.merchantId) {
@@ -89,40 +84,19 @@ const NedajScreen = ({ navigation }) => {
             borderBottomWidth: 1,
             fontSize: 20,
           }}
-          onChange={(text) => {
-            setQrData({ ...qrdata, merchantId: text });
-          }}
           placeholder="Merchant Code"
           placeholderTextColor={COLORS.darkgray}
           value={qrdata.merchantId}
           keyboardType="numeric"
+          editable={false}
         />
         <Ionicons
           name="qr-code-outline"
           size={40}
           color="black"
-          onPress={() => {
-            navigation.navigate("QRCode");
-            setEditable(false);
-          }}
+          onPress={() => navigation.navigate("QRCode")}
         />
       </View>
-      {/* <TouchableOpacity
-        style={{
-          backgroundColor: COLORS.primary,
-          marginTop: 30,
-          height: 40,
-          width: "60%",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 10,
-        }}
-        onPress={onVerify}
-      >
-        <Text style={{ color: "white", fontSize: 17, fontWeight: "bold" }}>
-          Verify Merchant
-        </Text>
-      </TouchableOpacity> */}
       <View style={{ width: "100%", marginTop: 40 }}>
         <TextInput
           style={{
@@ -154,9 +128,7 @@ const NedajScreen = ({ navigation }) => {
           placeholder="Amount"
           placeholderTextColor={COLORS.darkgray}
           value={qrdata.debitAmount}
-          onChange={(txt) => setQrData({ ...qrdata, amount: txt })}
-          // onChangeText={editable ? setAmount : ""}
-          editable={editable}
+          editable={false}
           keyboardType="numeric"
         />
       </View>

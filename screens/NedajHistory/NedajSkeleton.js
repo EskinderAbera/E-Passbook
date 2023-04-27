@@ -22,13 +22,13 @@ const NedajSkeleton = () => {
             style={[
               {
                 height: 15,
-                width: 100,
+                width: "100%",
                 backgroundColor: "lightgray",
                 paddingBottom: 25,
               },
             ]}
           />
-          <View
+          {/* <View
             style={[
               styles.subTitle,
               {
@@ -39,12 +39,12 @@ const NedajSkeleton = () => {
                 paddingBottom: 25,
               },
             ]}
-          />
+          /> */}
         </View>
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <View style={styles.name} />
           <View style={styles.subTitle} />
-        </View>
+        </View> */}
       </View>
     </View>
     // </View>

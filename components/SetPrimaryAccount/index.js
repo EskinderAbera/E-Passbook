@@ -118,7 +118,7 @@ const SetPrimaryAccount = () => {
                 >
                   Select Primary Account
                 </Text>
-                {totalAccounts.accounts.accounts.map((account, index) => (
+                {totalAccounts?.accounts?.accounts?.map((account, index) => (
                   <TouchableOpacity
                     key={index}
                     onPress={() => {

@@ -16,8 +16,6 @@ import Password from "./Password";
 import Shares from "./Share";
 import ContactUs from "./ContactUs";
 import Logout from "./Logout";
-import { useStateContext } from "../../Contexts/ContextProvider";
-import Security from "./Security";
 import * as SecureStore from "expo-secure-store";
 import { useSelector } from "react-redux";
 
